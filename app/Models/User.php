@@ -49,4 +49,20 @@ class User extends Authenticatable
             'two_factor_confirmed_at' => 'datetime',
         ];
     }
+
+    /**
+     * Les organisations créées par l'utilisateur.
+     */
+    public function organizations()
+    {
+        return $this->hasMany(Organization::class);
+    }
+
+    /**
+     * Les organisations dont l'utilisateur est membre.
+     */
+    public function organizationMemberships()
+    {
+        return $this->hasMany(OrganizationMember::class);
+    }
 }
