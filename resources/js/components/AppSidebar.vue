@@ -1,6 +1,18 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-vue-next';
+import { 
+    BookOpen, 
+    FolderGit2, 
+    LayoutGrid, 
+    Home, 
+    Users, 
+    MessageSquare, 
+    Bell, 
+    Globe, 
+    Building2, 
+    Newspaper,
+    Settings2
+} from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -11,13 +23,18 @@ import {
     SidebarFooter,
     SidebarHeader,
     SidebarMenu,
-    SidebarMenuButton,
     SidebarMenuItem,
+    SidebarMenuButton,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
+    {
+        title: 'Accueil',
+        href: '/',
+        icon: Home,
+    },
     {
         title: 'Dashboard',
         href: dashboard(),
@@ -25,15 +42,51 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
+const raoNavItems: NavItem[] = [
+    {
+        title: 'Annuaire OSC',
+        href: '/rao',
+        icon: Globe,
+    },
+    {
+        title: 'Ma Structure',
+        href: '/rao/join',
+        icon: Building2,
+    },
+    {
+        title: 'Communauté',
+        href: '/community',
+        icon: Users,
+    },
+    {
+        title: 'Actualités',
+        href: '/posts',
+        icon: Newspaper,
+    },
+];
+
+const personalNavItems: NavItem[] = [
+    {
+        title: 'Messages',
+        href: '/messages',
+        icon: MessageSquare,
+    },
+    {
+        title: 'Notifications',
+        href: '/notifications',
+        icon: Bell,
+    },
+];
+
 const footerNavItems: NavItem[] = [
     {
-        title: 'Repository',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: FolderGit2,
+        title: 'Paramètres',
+        href: '/settings/profile',
+        icon: Settings2,
     },
     {
         title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
+        href: 'https://laravel.com/docs',
         icon: BookOpen,
     },
 ];
@@ -54,7 +107,9 @@ const footerNavItems: NavItem[] = [
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="mainNavItems" />
+            <NavMain title="Navigation" :items="mainNavItems" />
+            <NavMain title="Réseau" :items="raoNavItems" />
+            <NavMain title="Personnel" :items="personalNavItems" />
         </SidebarContent>
 
         <SidebarFooter>
