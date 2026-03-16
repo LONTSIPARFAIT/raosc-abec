@@ -8,17 +8,23 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
 
-const props = defineProps({
-    organizations: Object,
-    categories: Array,
-    filters: Object
-});
+// const props = defineProps({
+//     organizations: Object,
+//     categories: Array,
+//     filters: Object
+// });
+
+const props = defineProps<{
+    organizations: any; // ou ton type OrganizationResource[]
+    categories: any[];
+    filters: Record<string, string>;
+}>();
 
 const searchQuery = ref(props.filters.search || '');
 const selectedCategory = ref(props.filters.category || '');
 
 const handleSearch = () => {
-    router.get(route('rao.index'), {
+    router.get('/rao', {
         search: searchQuery.value,
         category: selectedCategory.value
     }, { preserveState: true, replace: true });
@@ -52,7 +58,7 @@ watch([searchQuery, selectedCategory], () => {
                 </p>
                 
                 <div class="mt-10 flex items-center justify-center gap-x-6">
-                    <Link :href="route('rao.create')">
+                    <Link href="/rao/join">
                         <Button size="lg" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white rounded-full px-8 shadow-lg shadow-blue-500/25 transition-all duration-300 hover:scale-105">
                             Rejoindre le Réseau
                         </Button>
@@ -104,7 +110,7 @@ watch([searchQuery, selectedCategory], () => {
                 <Link 
                     v-for="org in organizations.data" 
                     :key="org.id" 
-                    :href="route('rao.show', org.slug)"
+                    :href="`/rao/orga/${org.slug}`"
                     class="group"
                 >
                     <Card class="h-full overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border-gray-100 dark:border-gray-800 bg-white dark:bg-slate-900/50">
