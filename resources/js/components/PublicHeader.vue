@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { dashboard, login, register } from '@/routes';
-import UserInfo from '@/components/UserInfo.vue';
-import ThemeToggle from '@/components/ThemeToggle.vue';
 import { BuildingIcon, ArrowRightIcon } from 'lucide-vue-next';
+import ThemeToggle from '@/components/ThemeToggle.vue';
+import UserInfo from '@/components/UserInfo.vue';
+import { dashboard, login, register } from '@/routes';
 
 defineProps<{
     user: any;

@@ -1,10 +1,5 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import HeroSlider from '@/components/HeroSlider.vue';
-import PublicFooter from '@/components/PublicFooter.vue';
-import PublicHeader from '@/components/PublicHeader.vue';
-import OrganizationCard from '@/components/OrganizationCard.vue';
-import { dashboard, login, register } from '@/routes';
 import { 
     UsersIcon, 
     GlobeIcon, 
@@ -16,6 +11,11 @@ import {
     TrophyIcon,
     BuildingIcon
 } from 'lucide-vue-next';
+import HeroSlider from '@/components/HeroSlider.vue';
+import OrganizationCard from '@/components/OrganizationCard.vue';
+import PublicFooter from '@/components/PublicFooter.vue';
+import PublicHeader from '@/components/PublicHeader.vue';
+import { dashboard, login, register } from '@/routes';
 
 interface Category {
     id: number;
