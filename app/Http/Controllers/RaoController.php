@@ -111,7 +111,7 @@ class RaoController extends Controller
         ]);
 
         return redirect()->route('rao.index')
-                         ->with('success', 'Votre organisation a été soumise avec succès. Elle est en cours d\'examen.');
+        ->with('success', 'Votre organisation a été soumise avec succès. Elle est en cours d\'examen.');
     }
 }
 

@@ -15,7 +15,7 @@ import HeroSlider from '@/components/HeroSlider.vue';
 import OrganizationCard from '@/components/OrganizationCard.vue';
 import PublicFooter from '@/components/PublicFooter.vue';
 import PublicHeader from '@/components/PublicHeader.vue';
-import { dashboard, login, register } from '@/routes';
+import { register } from '@/routes';
 
 interface Category {
     id: number;
