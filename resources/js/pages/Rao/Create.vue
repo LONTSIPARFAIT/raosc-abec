@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { Building2, Info, ArrowRight } from 'lucide-vue-next';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
 
-const props = defineProps({
-    categories: Array
-});
+const props = defineProps<{
+    categories: any[];  // ou ton type OrganizationCategoryResource[]
+}>();
 
 const form = useForm({
     name: '',
@@ -22,7 +22,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('rao.store'));
+    form.post('/rao/join');
 };
 
 const toggleCategory = (id: number) => {
@@ -137,7 +137,7 @@ const toggleCategory = (id: number) => {
                         </div>
 
                         <div class="pt-6 border-t dark:border-slate-800 flex justify-end gap-4">
-                            <Link :href="route('rao.index')">
+                            <Link href="/rao">
                                 <Button type="button" variant="outline" class="px-6">Annuler</Button>
                             </Link>
                             <Button type="submit" :disabled="form.processing" class="px-8 bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20">

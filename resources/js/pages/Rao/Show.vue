@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
 
-defineProps({
-    organization: Object
-});
+defineProps<{
+    organization: any;  // Idéalement : import type { OrganizationResource } from '@/types'; puis OrganizationResource
+}>();
 </script>
 
 <template>
@@ -24,7 +24,7 @@ defineProps({
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
             
             <div class="absolute top-4 left-4">
-                <Link :href="route('rao.index')">
+                <Link href="/rao">
                     <Button variant="outline" size="sm" class="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20">
                         <ArrowLeft class="w-4 h-4 mr-2" /> Retour à l'annuaire
                     </Button>
