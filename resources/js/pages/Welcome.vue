@@ -146,7 +146,7 @@ const features = [
                             <h2 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">Organisations à la une</h2>
                             <p class="mt-4 text-lg leading-8 text-zinc-600 dark:text-zinc-400">Découvrez les associations et ONG récemment ajoutées sur notre réseau coopératif.</p>
                         </div>
-                        <Link href="/rao" class="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-2 hover:gap-3 transition-all group">
+                        <Link href="/rao" class="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-2 hover:gap-3 transition-all group" prefetch>
                             Voir tout l'annuaire <ArrowRightIcon class="h-4 w-4" />
                         </Link>
                     </div>
@@ -165,7 +165,7 @@ const features = [
                         </div>
                         <h3 class="text-xl font-bold text-zinc-900 dark:text-white">Aucune organisation pour le moment</h3>
                         <p class="text-zinc-500 dark:text-zinc-400 mt-2 max-w-xs mx-auto">Nous préparons l'arrivée des premières associations partenaires.</p>
-                        <Link href="/rao" class="text-emerald-600 dark:text-emerald-400 mt-6 inline-block font-semibold">Voir tout de même la liste →</Link>
+                        <Link href="/rao" class="text-emerald-600 dark:text-emerald-400 mt-6 inline-block font-semibold" prefetch>Voir tout de même la liste →</Link>
                     </div>
                 </div>
             </div>
@@ -185,10 +185,11 @@ const features = [
                                 v-if="!$page.props.auth.user"
                                 :href="register()" 
                                 class="rounded-full bg-white px-8 py-4 text-sm font-bold text-emerald-700 shadow-sm hover:bg-emerald-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all transform hover:scale-105"
+                                prefetch
                             >
                                 Inscrire mon organisation
                             </Link>
-                            <Link href="/about" class="text-sm font-semibold leading-6 text-white hover:text-emerald-200 transition-colors">
+                            <Link href="/about" class="text-sm font-semibold leading-6 text-white hover:text-emerald-200 transition-colors" prefetch>
                                 En savoir plus <span aria-hidden="true">→</span>
                             </Link>
                         </div>

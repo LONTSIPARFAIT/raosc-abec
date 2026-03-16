@@ -91,6 +91,7 @@ onUnmounted(() => {
                 <Link
                     href="/rao"
                     class="rounded-full bg-emerald-600 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-emerald-600/30 hover:bg-emerald-500 transition-all hover:-translate-y-1 active:scale-95"
+                    prefetch
                 >
                     Parcourir les organisations
                 </Link>
@@ -98,6 +99,7 @@ onUnmounted(() => {
                     v-if="!user"
                     :href="register()"
                     class="group flex items-center gap-2 text-sm font-bold text-white hover:text-emerald-400 transition-all drop-shadow-md"
+                    prefetch
                 >
                     Rejoindre le mouvement 
                     <ArrowRightIcon class="h-4 w-4 transition-transform group-hover:translate-x-1" />

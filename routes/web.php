@@ -6,7 +6,7 @@ use Laravel\Fortify\Features;
 Route::get('/', function () {
     return inertia('Welcome', [
         'canRegister' => Features::enabled(Features::registration()),
-        'organizations' => \App\Models\Organization::with('categories')->latest()->take(3)->get(),
+        'organizations' => \App\Models\Organization::with('categories')->where('status', 'approved')->latest()->take(3)->get(),
     ]);
 })->name('home');
 

@@ -9,7 +9,7 @@ import { BuildingIcon } from 'lucide-vue-next';
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <!-- Brand Column -->
             <div class="col-span-1 md:col-span-2">
-                <Link href="/" class="flex items-center gap-3 mb-6 group">
+                <Link href="/" class="flex items-center gap-3 mb-6 group" prefetch>
                     <div class="flex h-10 w-10 items-center justify-center rounded bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 grayscale group-hover:grayscale-0 transition-all">
                         <BuildingIcon class="h-6 w-6" />
                     </div>
@@ -35,11 +35,11 @@ import { BuildingIcon } from 'lucide-vue-next';
             <div>
                 <h3 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Navigation</h3>
                 <ul class="space-y-4 text-sm font-medium">
-                    <li><Link href="/" class="hover:text-emerald-400 transition-colors">Accueil</Link></li>
-                    <li><Link href="/rao" class="hover:text-emerald-400 transition-colors">Annuaire OSC</Link></li>
-                    <li><Link href="/posts" class="hover:text-emerald-400 transition-colors">Actualités</Link></li>
-                    <li><Link href="/about" class="hover:text-emerald-400 transition-colors">À propos</Link></li>
-                    <li><Link href="/contact" class="hover:text-emerald-400 transition-colors">Contact</Link></li>
+                    <li><Link href="/" class="hover:text-emerald-400 transition-colors" prefetch>Accueil</Link></li>
+                    <li><Link href="/rao" class="hover:text-emerald-400 transition-colors" prefetch>Annuaire OSC</Link></li>
+                    <li><Link href="/posts" class="hover:text-emerald-400 transition-colors" prefetch>Actualités</Link></li>
+                    <li><Link href="/about" class="hover:text-emerald-400 transition-colors" prefetch>À propos</Link></li>
+                    <li><Link href="/contact" class="hover:text-emerald-400 transition-colors" prefetch>Contact</Link></li>
                 </ul>
             </div>
 
@@ -50,7 +50,7 @@ import { BuildingIcon } from 'lucide-vue-next';
                     <li><a href="https://universalwelfare.org/a-propos" target="_blank" class="hover:text-emerald-400 transition-colors">Notre Mission</a></li>
                     <li><a href="https://universalwelfare.org/nos-actions" target="_blank" class="hover:text-emerald-400 transition-colors">Nos Actions</a></li>
                     <li><a href="https://universalwelfare.org/contact" target="_blank" class="hover:text-emerald-400 transition-colors">Devenir Membre</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Mentions Légales</a></li>
+                    <li><Link href="/mentions-legales" class="hover:text-emerald-400 transition-colors" prefetch>Mentions Légales</Link></li>
                 </ul>
             </div>
         </div>
@@ -63,9 +63,9 @@ import { BuildingIcon } from 'lucide-vue-next';
                 </a>. &copy; {{ new Date().getFullYear() }} Tous droits réservés.
             </p>
             <div class="flex gap-6 text-xs text-zinc-600">
-                <a href="#" class="hover:text-zinc-400">Vie privée</a>
-                <a href="#" class="hover:text-zinc-400">Conditions</a>
-                <a href="#" class="hover:text-zinc-400">Cookies</a>
+                <Link href="/privacy" class="hover:text-zinc-400" prefetch>Vie privée</Link>
+                <Link href="/terms" class="hover:text-zinc-400" prefetch>Conditions</Link>
+                <Link href="/cookies" class="hover:text-zinc-400" prefetch>Cookies</Link>
             </div>
         </div>
     </div>

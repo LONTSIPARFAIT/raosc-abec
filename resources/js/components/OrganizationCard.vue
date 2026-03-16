@@ -29,7 +29,7 @@ defineProps<{
     <!-- Image de couverture de l'org ou placeholder Unsplash -->
     <div class="w-full h-48 bg-zinc-200 dark:bg-zinc-800 relative overflow-hidden shrink-0">
         <!-- Lien invisible pour rendre toute la carte cliquable plus classiquement mais on ciblera le header principal -->
-        <Link :href="`/rao/orga/${org.slug}`" class="absolute inset-0 z-0">
+        <Link :href="`/rao/orga/${org.slug}`" class="absolute inset-0 z-0" prefetch>
             <span class="sr-only">Voir l'organisation {{ org.name }}</span>
         </Link>
         
@@ -66,7 +66,7 @@ defineProps<{
         
         <div class="pr-16 sm:pr-24 relative z-10 w-full">
             <h3 class="mt-2 text-xl font-bold leading-tight text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                <Link :href="`/rao/orga/${org.slug}`" class="focus:outline-none">
+                <Link :href="`/rao/orga/${org.slug}`" class="focus:outline-none" prefetch>
                     {{ org.name }}
                 </Link> 
             </h3>
@@ -77,7 +77,7 @@ defineProps<{
         </p>
         
         <div class="mt-6 flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm relative z-10">
-            <Link :href="`/rao/orga/${org.slug}`" class="flex items-center gap-2 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Link :href="`/rao/orga/${org.slug}`" class="flex items-center gap-2 hover:text-emerald-700 dark:hover:text-emerald-300" prefetch>
                 <span>Visiter le profil</span>
                 <span class="group-hover:translate-x-1.5 transition-transform duration-300">→</span>
             </Link>
