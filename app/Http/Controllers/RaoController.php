@@ -59,7 +59,11 @@ class RaoController extends Controller
 
         return Inertia::render('Rao/Show', [
             // On retourne ici une simple instanciation de notre ressource
-            'organization' => new OrganizationResource($organization)
+            'organization' => new OrganizationResource($organization),
+            'back_to_index_url' => route('rao.index'),
+            'join_url' => route('rao.join', $organization->slug),
+            'is_member' => $organization->isMember(auth()->user()),
+            
         ]);
     }
 
