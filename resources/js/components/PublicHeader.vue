@@ -16,30 +16,35 @@ defineProps<{
     <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
             <Link href="/" class="-m-1.5 p-1.5 flex items-center gap-3 group" prefetch>
-                <div class="flex h-10 w-10 items-center justify-center rounded bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 transition-transform group-hover:scale-110">
-                    <BuildingIcon class="h-6 w-6" />
+                <div class="flex h-12 w-12 items-center justify-center transition-transform group-hover:scale-105">
+                    <img src="/images/Logo_Raosc-removebg-preview.png" alt="RAOSC Logo" class="h-12 w-auto" />
                 </div>
-                <span class="text-xl font-bold tracking-tight text-zinc-900 dark:text-white transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
-                    RAOSC
-                </span>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-tighter text-zinc-900 dark:text-white leading-none">
+                        RAOSC
+                    </span>
+                    <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-widest uppercase leading-none mt-1">
+                        ONG ABEC
+                    </span>
+                </div>
             </Link>
         </div>
 
         <!-- Desktop Navigation Links -->
         <div class="hidden lg:flex lg:gap-x-10 items-center">
-            <Link href="/" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors" prefetch>
+            <Link href="/" class="text-sm font-bold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors uppercase tracking-wider" prefetch>
                 Accueil
             </Link>
-            <Link href="/rao" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors" prefetch>
-                Organisations
+            <Link href="/rao" class="text-sm font-bold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors uppercase tracking-wider" prefetch>
+                Associations
             </Link>
-            <Link href="/posts" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors" prefetch>
+            <Link href="/posts" class="text-sm font-bold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors uppercase tracking-wider" prefetch>
                 Actualités
             </Link>
-            <Link href="/about" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors" prefetch>
-                À propos
+            <Link href="/about" class="text-sm font-bold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors uppercase tracking-wider" prefetch>
+                À Propos
             </Link>
-            <Link href="/contact" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors" prefetch>
+            <Link href="/contact" class="text-sm font-bold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors uppercase tracking-wider" prefetch>
                 Contact
             </Link>
         </div>
@@ -71,7 +76,7 @@ defineProps<{
                 <Link
                     v-if="canRegister"
                     :href="register()"
-                    class="rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 transition-all hover:-translate-y-0.5"
+                    class="rounded-full bg-[#008751] px-6 py-3 text-sm font-black text-white shadow-xl shadow-[#008751]/20 hover:bg-[#006b40] transition-all hover:-translate-y-0.5 uppercase tracking-widest"
                     prefetch
                 >
                     S'inscrire

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
 import { Link } from '@inertiajs/vue3';
-import { register } from '@/routes';
 import { ArrowRightIcon } from 'lucide-vue-next';
+import { onMounted, onUnmounted, ref } from 'vue';
 
-const props = defineProps<{
+import { register } from '@/routes';
+
+defineProps<{
     user: any;
 }>();
 
@@ -60,13 +61,14 @@ onUnmounted(() => {
     <!-- Text Slider Content -->
     <div class="absolute inset-0 z-10 flex h-full flex-col justify-center px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="max-w-3xl relative">
-            <div class="mb-8 flex animate-in fade-in slide-in-from-left-4 duration-1000">
-                <div class="rounded-full bg-emerald-600/20 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-emerald-400 border border-emerald-500/30 backdrop-blur-md shadow-2xl">
-                    Une initiative de l'ONG ABEC
+            <div class="mb-10 flex animate-in fade-in slide-in-from-left-4 duration-1000">
+                <div class="flex items-center gap-3 rounded-full bg-white/10 px-4 py-2 border border-white/20 backdrop-blur-xl shadow-2xl">
+                    <img src="/images/Logo_Raosc-removebg-preview.png" alt="Logo" class="h-6 w-auto" />
+                    <span class="text-xs font-black uppercase tracking-[0.2em] text-white">Une initiative de l'ONG ABEC</span>
                 </div>
             </div>
             
-            <div class="relative min-h-[18rem] sm:min-h-[16rem]">
+            <div class="relative min-h-[22rem] sm:min-h-[18rem]">
                 <transition-group name="slide-up">
                     <div 
                         v-for="(slide, index) in slides" 
@@ -74,35 +76,37 @@ onUnmounted(() => {
                         v-show="currentIndex === index" 
                         class="absolute inset-0"
                     >
-                        <h1 class="text-5xl font-extrabold tracking-tight text-white sm:text-7xl leading-[1.1]">
+                        <h1 class="text-5xl font-black tracking-tighter text-white sm:text-8xl leading-[0.9] uppercase italic">
                             <span class="block drop-shadow-2xl">{{ slide.title.split(' ').slice(0, -2).join(' ') }}</span>
-                            <span class="block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-blue-400 pb-2">
+                            <span class="block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-yellow-400 to-red-400 pb-4">
                                 {{ slide.title.split(' ').slice(-2).join(' ') }}
                             </span>
                         </h1>
-                        <p class="mt-8 text-xl leading-relaxed text-zinc-300 max-w-2xl drop-shadow-lg font-medium">
+                        <p class="mt-8 text-xl leading-relaxed text-zinc-100 max-w-2xl drop-shadow-lg font-bold border-l-4 border-emerald-500 pl-6 bg-black/20 p-4 rounded-r-2xl backdrop-blur-sm">
                             {{ slide.description }}
                         </p>
                     </div>
                 </transition-group>
             </div>
             
-            <div class="mt-12 flex flex-wrap items-center gap-6 relative z-30">
+            <div class="mt-16 flex flex-wrap items-center gap-8 relative z-30">
                 <Link
                     href="/rao"
-                    class="rounded-full bg-emerald-600 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-emerald-600/30 hover:bg-emerald-500 transition-all hover:-translate-y-1 active:scale-95"
+                    class="rounded-full bg-[#008751] px-10 py-5 text-sm font-black text-white shadow-2xl shadow-emerald-950/50 hover:bg-[#006b40] transition-all hover:-translate-y-1 active:scale-95 uppercase tracking-widest"
                     prefetch
                 >
-                    Parcourir les organisations
+                    Explorer l'annuaire
                 </Link>
                 <Link
                     v-if="!user"
                     :href="register()"
-                    class="group flex items-center gap-2 text-sm font-bold text-white hover:text-emerald-400 transition-all drop-shadow-md"
+                    class="group flex items-center gap-3 text-sm font-black text-white hover:text-yellow-400 transition-all drop-shadow-md uppercase tracking-widest"
                     prefetch
                 >
-                    Rejoindre le mouvement 
-                    <ArrowRightIcon class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    Nous Rejoindre
+                    <div class="h-10 w-10 flex items-center justify-center rounded-full bg-white/10 group-hover:bg-yellow-400 group-hover:text-black transition-all">
+                        <ArrowRightIcon class="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    </div>
                 </Link>
             </div>
         </div>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BuildingIcon } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -9,13 +8,18 @@ import { BuildingIcon } from 'lucide-vue-next';
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <!-- Brand Column -->
             <div class="col-span-1 md:col-span-2">
-                <Link href="/" class="flex items-center gap-3 mb-6 group" prefetch>
-                    <div class="flex h-10 w-10 items-center justify-center rounded bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 grayscale group-hover:grayscale-0 transition-all">
-                        <BuildingIcon class="h-6 w-6" />
+                <Link href="/" class="flex items-center gap-4 mb-6 group" prefetch>
+                    <div class="flex h-14 w-14 items-center justify-center transition-all group-hover:scale-105">
+                        <img src="/images/Logo_Raosc-removebg-preview.png" alt="RAOSC Logo" class="h-14 w-auto" />
                     </div>
-                    <span class="text-2xl font-bold tracking-tight text-white">
-                        RAOSC
-                    </span>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black tracking-tighter text-white leading-none">
+                            RAOSC
+                        </span>
+                        <span class="text-[10px] font-bold text-emerald-500 tracking-widest uppercase leading-none mt-1">
+                            ONG ABEC
+                        </span>
+                    </div>
                 </Link>
                 <p class="text-sm leading-7 max-w-sm mb-6">
                     Le Réseau des Associations et ONG de la Société Civile est une plateforme d'échange et de collaboration dédiée au renforcement des capacités des organisations communautaires.

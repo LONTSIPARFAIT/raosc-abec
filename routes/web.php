@@ -26,4 +26,15 @@ Route::prefix('rao')->name('rao.')->group(function () {
     });
 });
 
+// Autres pages publiques
+Route::get('/posts', function() { return inertia('Posts'); })->name('posts');
+Route::get('/about', function() { return inertia('About'); })->name('about');
+Route::get('/contact', function() { return inertia('Contact'); })->name('contact');
+Route::get('/community', function() { return inertia('Community'); })->name('community');
+
+// Pages de politique
+Route::get('/privacy', function() { return inertia('Legal/Privacy'); })->name('privacy');
+Route::get('/terms', function() { return inertia('Legal/Terms'); })->name('terms');
+Route::get('/cookies', function() { return inertia('Legal/Cookies'); })->name('cookies');
+
 require __DIR__.'/settings.php';
