@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import PublicHeader from '@/components/PublicHeader.vue';
-import PublicFooter from '@/components/PublicFooter.vue';
 import HeroSlider from '@/components/HeroSlider.vue';
+import PublicFooter from '@/components/PublicFooter.vue';
+import PublicHeader from '@/components/PublicHeader.vue';
 import OrganizationCard from '@/components/OrganizationCard.vue';
 import { dashboard, login, register } from '@/routes';
 import { 
