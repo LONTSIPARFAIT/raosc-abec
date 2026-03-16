@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { 
     MapPin, Building2, Calendar, Mail, Phone, Globe, 
     Share2, ArrowLeft, CheckCircle2, Users
 } from 'lucide-vue-next';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import AppLayout from '@/layouts/AppLayout.vue';
 
 defineProps({
     organization: Object
@@ -16,7 +16,7 @@ defineProps({
 
 <template>
     <AppLayout>
-        <Head :title="organization.name + ' - RAO'" />
+        <Head :title="organization.name + ' - RAOSC'" />
 
         <!-- Header Hero Image -->
         <div class="relative h-64 md:h-80 w-full overflow-hidden bg-slate-100 dark:bg-slate-900 border-b dark:border-slate-800">

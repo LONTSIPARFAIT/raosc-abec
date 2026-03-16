@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Building2, Info, ArrowRight } from 'lucide-vue-next';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import AppLayout from '@/layouts/AppLayout.vue';
 
 const props = defineProps({
     categories: Array
@@ -37,11 +37,11 @@ const toggleCategory = (id: number) => {
 
 <template>
     <AppLayout>
-        <Head title="Enregistrer une organisation - RAO" />
+        <Head title="Enregistrer une organisation - RAOSC" />
 
         <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
             <div class="mb-10 text-center">
-                <Badge variant="outline" class="mb-4 bg-blue-50 text-blue-700 border-blue-200">Inscription RAO</Badge>
+                <Badge variant="outline" class="mb-4 bg-blue-50 text-blue-700 border-blue-200">Inscription RAOSC</Badge>
                 <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
                     Soumettre votre Organisation
                 </h1>

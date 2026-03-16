@@ -31,7 +31,7 @@ watch([searchQuery, selectedCategory], () => {
 
 <template>
     <AppLayout>
-        <Head title="Réseau Africain des Organisations (RAO)" />
+        <Head title="Réseau Africain des Organisations de la Societe Civile (RAOSC)" />
 
         <!-- Header Section avec Glassmorphism -->
         <div class="relative overflow-hidden bg-slate-950 px-6 py-24 sm:px-12 sm:py-32 lg:px-16 text-center shadow-2xl">

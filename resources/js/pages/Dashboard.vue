@@ -36,7 +36,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <!-- Action Cards -->
                 <div class="group relative overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-8 shadow-sm transition-all hover:shadow-md hover:-translate-y-1">
                     <div class="absolute top-0 right-0 -mr-4 -mt-4 h-24 w-24 rounded-full bg-emerald-500/5 transition-all group-hover:scale-150"></div>
-                    <h3 class="text-xl font-bold mb-2">Annuaire RAO</h3>
+                    <h3 class="text-xl font-bold mb-2">Annuaire RAOSC</h3>
                     <p class="text-sm text-zinc-500 dark:text-zinc-400 mb-6">Explorez la base de données des associations et ONG partenaires.</p>
                     <Link href="/rao" class="inline-flex items-center gap-2 text-sm font-bold text-emerald-600 dark:text-emerald-400 group-hover:gap-3 transition-all">
                         Consulter l'annuaire <span>→</span>
