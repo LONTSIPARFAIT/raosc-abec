@@ -50,8 +50,8 @@ defineProps<{
                                     <Building2 v-else class="h-12 w-12 text-[#008751]" />
                                 </div>
                                 
-                                <h1 class="text-2xl font-bold text-zinc-900 dark:text-white mb-2 italic">{{ organization.name }}</h1>
-                                <div class="flex items-center text-[#008751] text-[10px] font-bold uppercase tracking-widest">
+                                <h1 class="text-2xl font-extrabold text-zinc-900 dark:text-white mb-2 tracking-tight">{{ organization.name }}</h1>
+                                <div class="flex items-center text-[#008751] text-[10px] font-bold tracking-[0.1em]">
                                     <CheckCircle2 class="w-4 h-4 mr-1.5" />
                                     ONG Vérifiée
                                 </div>
@@ -97,10 +97,10 @@ defineProps<{
                                 </Badge>
                             </div>
                             
-                            <h2 class="text-2xl sm:text-4xl font-bold text-zinc-900 dark:text-white mb-8 italic">À propos de <span class="text-[#008751]">l'ONG</span></h2>
+                            <h2 class="text-2xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white mb-8 tracking-tight">À propos de <span class="text-[#008751]">l'ONG</span></h2>
                             
                             <div class="space-y-6">
-                                <p class="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white italic border-l-4 border-[#FFCB05] pl-6 py-2">
+                                <p class="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white border-l-3 border-[#FFCB05] pl-6 py-2 leading-relaxed tracking-tight">
                                     {{ organization.short_description }}
                                 </p>
                                 <div class="text-zinc-600 dark:text-zinc-400 text-base leading-relaxed font-medium mt-6" v-if="organization.description" v-html="organization.description.replace(/\n/g, '<br>')"></div>
