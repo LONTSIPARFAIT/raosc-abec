@@ -52,31 +52,31 @@ defineProps<{
 
         <div class="pt-8 pb-6 px-6 flex flex-col flex-grow">
             <div class="mb-4">
-                <h3 class="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-[#008751] transition-colors line-clamp-1 italic">
+                <h3 class="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-[#008751] transition-colors line-clamp-1 tracking-tight">
                     {{ org.name }}
                 </h3>
-                <div class="flex items-center text-[10px] font-bold text-zinc-400 mt-1 gap-1.5 uppercase tracking-widest">
-                    <MapPin class="h-3 w-3 text-[#008751]" />
+                <div class="flex items-center text-[11px] font-semibold text-zinc-400 mt-1.5 gap-1.5 tracking-tight">
+                    <MapPin class="h-3.5 w-3.5 text-[#008751]" />
                     <span>{{ org.city || 'Siège' }}{{ org.country ? `, ${org.country}` : '' }}</span>
                 </div>
             </div>
             
-            <p class="text-xs text-zinc-500 font-medium italic line-clamp-2 flex-grow mb-6 border-l-2 border-[#FFCB05] pl-3 py-0.5">
+            <p class="text-[13px] text-zinc-500 font-medium line-clamp-2 flex-grow mb-6 border-l-3 border-[#FFCB05]/40 pl-4 py-0.5 leading-relaxed tracking-tight">
                 {{ org.short_description || 'Aucune description disponible pour le moment.' }}
             </p>
             
-            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-zinc-50 dark:border-zinc-800">
+            <div class="flex flex-wrap gap-2 pt-5 border-t border-zinc-50 dark:border-zinc-800">
                 <template v-if="org.categories && org.categories.length > 0">
                     <span 
                         v-for="cat in org.categories.slice(0, 2)" 
                         :key="cat.id"
-                        class="px-2 py-0.5 bg-zinc-50 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 border border-zinc-100 dark:border-zinc-700 rounded text-[9px] font-bold uppercase tracking-wider"
+                        class="px-3 py-1.5 bg-[#008751]/5 text-[#008751] border border-[#008751]/10 rounded-xl text-[10px] font-bold tracking-tight"
                     >
                         {{ cat.name }}
                     </span>
                 </template>
-                <div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ArrowRight class="h-4 w-4 text-[#008751]" />
+                <div class="ml-auto opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1">
+                    <ArrowRight class="h-4.5 w-4.5 text-[#008751]" />
                 </div>
             </div>
         </div>

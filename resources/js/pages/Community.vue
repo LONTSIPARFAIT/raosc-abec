@@ -21,15 +21,15 @@ defineProps<{
 
                 <div class="mx-auto max-w-7xl relative z-10 text-center">
                     <div class="mb-8 flex justify-center">
-                        <div class="flex items-center gap-3 rounded-full bg-white/5 px-4 py-2 border border-white/10 backdrop-blur-xl">
+                        <div class="flex items-center gap-3 rounded-full bg-white/5 px-5 py-2.5 border border-white/10 backdrop-blur-xl">
                             <Sparkles class="h-4 w-4 text-[#FFCB05]" />
-                            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white">Espace de Synergie</span>
+                            <span class="text-[11px] font-bold tracking-[0.1em] text-white">Espace de Synergie</span>
                         </div>
                     </div>
-                    <h1 class="text-4xl sm:text-7xl font-black text-white uppercase italic tracking-tighter leading-none mb-8">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-none mb-8">
                         L'Union fait notre <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#008751] via-[#FFCB05] to-[#008751] bg-[length:200%_auto] animate-gradient">Force</span>
                     </h1>
-                    <p class="text-lg sm:text-2xl text-zinc-400 max-w-2xl mx-auto font-medium mb-12">
+                    <p class="text-lg sm:text-2xl text-zinc-400 max-w-2xl mx-auto font-medium mb-12 tracking-tight leading-relaxed">
                         Rejoignez le mouvement, partagez vos défis et bâtissez des partenariats durables avec la communauté RAOSC.
                     </p>
                     <div class="flex flex-wrap justify-center gap-6">
@@ -49,31 +49,31 @@ defineProps<{
             <div class="mx-auto max-w-7xl px-6 lg:px-8 -mt-20 relative z-20">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10">
                     <div class="group bg-white dark:bg-zinc-900 p-10 rounded-[3rem] border border-zinc-200 dark:border-zinc-800 shadow-2xl transition-all hover:-translate-y-2">
-                        <div class="h-16 w-16 rounded-2xl bg-[#008751]/10 flex items-center justify-center text-[#008751] mb-8 group-hover:scale-110 transition-transform">
+                        <div class="h-16 w-16 rounded-[2rem] bg-[#008751]/10 flex items-center justify-center text-[#008751] mb-8 group-hover:scale-110 transition-transform shadow-inner">
                             <Users class="h-8 w-8" />
                         </div>
-                        <h3 class="text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter mb-4">Forums Thématiques</h3>
-                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-zinc-100 dark:border-zinc-800 pl-4 py-1">
+                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight mb-4">Forums Thématiques</h3>
+                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-[#008751]/20 pl-4 py-1">
                             Discutez de santé, d'éducation, d'environnement et d'entrepreneuriat social avec vos pairs.
                         </p>
                     </div>
                     
                     <div class="group bg-white dark:bg-zinc-900 p-10 rounded-[3rem] border border-zinc-200 dark:border-zinc-800 shadow-2xl transition-all hover:-translate-y-2">
-                        <div class="h-16 w-16 rounded-2xl bg-[#FFCB05]/10 flex items-center justify-center text-[#FFCB05] mb-8 group-hover:scale-110 transition-transform">
+                        <div class="h-16 w-16 rounded-[2rem] bg-[#FFCB05]/10 flex items-center justify-center text-[#FFCB05] mb-8 group-hover:scale-110 transition-transform shadow-inner">
                             <MessageSquare class="h-8 w-8" />
                         </div>
-                        <h3 class="text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter mb-4">Collaboration Directe</h3>
-                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-zinc-100 dark:border-zinc-800 pl-4 py-1">
+                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight mb-4">Collaboration Directe</h3>
+                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-[#FFCB05]/20 pl-4 py-1">
                             Identifiez des partenaires potentiels et initiez des projets conjoints en quelques clics.
                         </p>
                     </div>
 
                     <div class="group bg-white dark:bg-zinc-900 p-10 rounded-[3rem] border border-zinc-200 dark:border-zinc-800 shadow-2xl transition-all hover:-translate-y-2">
-                        <div class="h-16 w-16 rounded-2xl bg-[#E4002B]/10 flex items-center justify-center text-[#E4002B] mb-8 group-hover:scale-110 transition-transform">
+                        <div class="h-16 w-16 rounded-[2rem] bg-[#E4002B]/10 flex items-center justify-center text-[#E4002B] mb-8 group-hover:scale-110 transition-transform shadow-inner">
                             <Share2 class="h-8 w-8" />
                         </div>
-                        <h3 class="text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter mb-4">Base Documentaire</h3>
-                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-zinc-100 dark:border-zinc-800 pl-4 py-1">
+                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight mb-4">Base Documentaire</h3>
+                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-[#E4002B]/20 pl-4 py-1">
                             Accédez à des guides, modèles et tutoriels partagés par les membres pour booster votre ONG.
                         </p>
                     </div>
@@ -84,30 +84,30 @@ defineProps<{
                     <div class="relative z-10 lg:flex items-center gap-16">
                         <div class="lg:w-1/2">
                             <div class="mb-6">
-                                <span class="bg-[#FFCB05] text-black px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">En Développement</span>
+                                <span class="bg-[#FFCB05] text-black px-4 py-1.5 rounded-xl text-[10px] font-bold tracking-wider">En Développement</span>
                             </div>
-                            <h2 class="text-3xl sm:text-5xl font-black uppercase italic tracking-tighter mb-6 leading-none">Un Réseau Évolutif à <span class="text-[#008751]">Votre Écoute</span></h2>
+                            <h2 class="text-3xl sm:text-5xl font-bold tracking-tight mb-6 leading-none">Un Réseau Évolutif à <span class="text-[#008751]">Votre Écoute</span></h2>
                             <p class="text-zinc-400 text-base sm:text-lg font-medium italic mb-10 border-l-2 border-zinc-800 pl-8">Nous concevons un espace où chaque voix compte. D'ici peu, vous pourrez profiter d'une application mobile dédiée pour rester connecté partout.</p>
-                            <button class="w-full sm:w-auto bg-[#008751] hover:bg-[#006b40] text-white font-black px-10 py-5 rounded-full text-[10px] uppercase tracking-[0.3em] transition-all hover:scale-105 shadow-2xl shadow-[#008751]/20">
+                            <button class="w-full sm:w-auto bg-[#008751] hover:bg-[#006b40] text-white font-bold px-10 py-5 rounded-2xl text-xs transition-all hover:scale-105 shadow-2xl shadow-[#008751]/20 hover:-translate-y-0.5">
                                 Rejoindre la liste d'attente
                             </button>
                         </div>
                         <div class="lg:w-1/2 mt-12 lg:mt-0 grid grid-cols-2 gap-4">
-                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3">
+                             <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3 shadow-inner">
                                 <span class="text-2xl font-black text-[#008751]">50+</span>
-                                <span class="text-[8px] font-black uppercase tracking-widest text-zinc-500 text-center px-4">Groupes de travail</span>
+                                <span class="text-[9px] font-bold text-zinc-500 text-center px-4 tracking-tight">Groupes de travail</span>
                             </div>
-                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3">
+                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3 shadow-inner">
                                 <span class="text-2xl font-black text-[#FFCB05]">10k+</span>
-                                <span class="text-[8px] font-black uppercase tracking-widest text-zinc-500 text-center px-4">Ressources partagées</span>
+                                <span class="text-[9px] font-bold text-zinc-500 text-center px-4 tracking-tight">Ressources partagées</span>
                             </div>
-                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3">
+                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3 shadow-inner">
                                 <span class="text-2xl font-black text-white">24/7</span>
-                                <span class="text-[8px] font-black uppercase tracking-widest text-zinc-500 text-center px-4">Support bénévole</span>
+                                <span class="text-[9px] font-bold text-zinc-500 text-center px-4 tracking-tight">Support bénévole</span>
                             </div>
-                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3">
+                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3 shadow-inner">
                                 <span class="text-2xl font-black text-[#E4002B]">15</span>
-                                <span class="text-[8px] font-black uppercase tracking-widest text-zinc-500 text-center px-4">Pays africains</span>
+                                <span class="text-[9px] font-bold text-zinc-500 text-center px-4 tracking-tight">Pays africains</span>
                             </div>
                         </div>
                     </div>

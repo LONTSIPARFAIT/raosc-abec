@@ -73,11 +73,11 @@ onUnmounted(() => {
                     v-show="currentIndex === index" 
                     class="space-y-6"
                 >
-                    <span class="inline-block text-[#FFCB05] font-bold uppercase tracking-[0.3em] text-[10px] sm:text-xs">Initiative ONG ABEC</span>
-                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight">
+                    <span class="inline-block text-[#FFCB05] font-bold tracking-[0.2em] text-[10px] sm:text-xs">Initiative ONG ABEC</span>
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.15] tracking-tight">
                         {{ slide.title }}
                     </h1>
-                    <p class="text-zinc-300 text-sm sm:text-xl font-medium max-w-2xl leading-relaxed italic border-l-2 border-[#008751] pl-6">
+                    <p class="text-zinc-300 text-base sm:text-lg font-medium max-w-2xl leading-relaxed italic border-l-3 border-[#008751] pl-6 py-1">
                         {{ slide.description }}
                     </p>
                 </div>

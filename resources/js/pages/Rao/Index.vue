@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Filter, MapPin, Search, Building2, Globe, Map } from 'lucide-vue-next';
+import { Filter, Search, Globe, Map } from 'lucide-vue-next';
+import { ref, watch } from 'vue';
+import OrganizationCard from '@/components/OrganizationCard.vue';
+import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 
@@ -48,11 +47,12 @@ watch([searchQuery, selectedCategory, selectedCity, selectedCountry], () => {
 
         <!-- Header Section -->
         <div class="bg-zinc-950 px-6 py-16 sm:py-24 text-center">
-            <div class="mx-auto max-w-4xl">
-                <h1 class="text-3xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="text-[#008751] font-bold tracking-[0.2em] text-[10px] mb-4 block">Notre Réseau</span>
+                <h1 class="text-3xl sm:text-6xl font-extrabold text-white mb-6 tracking-tight">
                     Annuaire des <span class="text-[#008751]">Organisations</span>
                 </h1>
-                <p class="text-zinc-400 text-sm sm:text-base max-w-2xl mx-auto">
+                <p class="text-zinc-400 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed border-l-3 border-[#FFCB05] pl-6 py-1 inline-block text-left">
                     Recherchez et filtrez les organisations de la société civile par domaine, ville ou pays.
                 </p>
             </div>
@@ -111,7 +111,10 @@ watch([searchQuery, selectedCategory, selectedCity, selectedCountry], () => {
                         </div>
                     </div>
                     
-                    <div v-if="searchQuery || selectedCategory || selectedCity || selectedCountry" class="mt-4 flex justify-end">
+                    <div v-if="searchQuery || selectedCategory || selectedCity || selectedCountry" class="mt-4 flex items-center justify-between">
+                        <span class="text-[11px] font-bold text-[#008751] bg-[#008751]/5 px-3.5 py-1.5 rounded-lg border border-[#008751]/10 tracking-tight">
+                            {{ organizations.total }} résultats trouvés
+                        </span>
                         <button @click="resetFilters" class="text-xs font-semibold text-zinc-500 hover:text-[#008751] transition-colors">
                             Réinitialiser les filtres
                         </button>
@@ -129,49 +132,11 @@ watch([searchQuery, selectedCategory, selectedCity, selectedCountry], () => {
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <Link 
+                <OrganizationCard 
                     v-for="org in organizations.data" 
                     :key="org.id" 
-                    :href="isPublic ? `/rao/orga/${org.slug}` : `/dashboard/rao/orga/${org.slug}`"
-                    class="group"
-                >
-                    <Card class="h-full border-zinc-200 dark:border-zinc-800 hover:border-[#008751]/50 transition-all rounded-3xl overflow-hidden shadow-sm hover:shadow-lg">
-                        <div class="h-32 bg-zinc-100 dark:bg-zinc-800 relative">
-                            <img v-if="org.cover_image" :src="org.cover_image" class="w-full h-full object-cover" />
-                            <div v-else class="w-full h-full bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-900"></div>
-                            
-                            <!-- Logo -->
-                            <div class="absolute -bottom-6 left-6 h-16 w-16 rounded-2xl bg-white dark:bg-zinc-900 p-1 shadow-lg ring-1 ring-black/5">
-                                <div class="h-full w-full rounded-xl bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center overflow-hidden">
-                                     <img v-if="org.logo" :src="org.logo" class="w-full h-full object-cover" />
-                                     <Building2 v-else class="h-8 w-8 text-[#008751]" />
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <CardHeader class="pt-10 pb-2 px-6">
-                            <CardTitle class="text-lg font-bold group-hover:text-[#008751] transition-colors line-clamp-1 italic">
-                                {{ org.name }}
-                            </CardTitle>
-                            <div class="flex items-center text-[10px] font-bold text-zinc-500 mt-1 gap-1 uppercase tracking-wider">
-                                <MapPin class="h-3 w-3 text-[#008751]" />
-                                <span>{{ org.city }}, {{ org.country }}</span>
-                            </div>
-                        </CardHeader>
-                        
-                        <CardContent class="px-6 pb-6 mt-2">
-                            <p class="text-zinc-600 dark:text-zinc-400 text-xs leading-relaxed line-clamp-2 mb-4 font-medium italic border-l-2 border-[#FFCB05] pl-3">
-                                {{ org.short_description }}
-                            </p>
-                            
-                            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-zinc-100 dark:border-zinc-800">
-                                <Badge v-for="cat in org.categories" :key="cat.id" variant="outline" class="text-[9px] font-bold uppercase py-0.5 px-2">
-                                    {{ cat.name }}
-                                </Badge>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </Link>
+                    :org="org" 
+                />
             </div>
 
             <!-- Pagination -->

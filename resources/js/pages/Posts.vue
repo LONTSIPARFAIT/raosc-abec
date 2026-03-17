@@ -45,14 +45,14 @@ const placeholderPosts = [
 
                 <div class="mx-auto max-w-7xl relative z-10 text-center">
                     <div class="mb-8 flex justify-center">
-                        <div class="flex items-center gap-3 rounded-full bg-white/5 px-4 py-2 border border-white/10 backdrop-blur-xl">
-                            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white">Journal du Réseau</span>
+                        <div class="flex items-center gap-3 rounded-full bg-white/5 px-5 py-2.5 border border-white/10 backdrop-blur-xl">
+                            <span class="text-[11px] font-bold tracking-[0.1em] text-white">Journal du Réseau</span>
                         </div>
                     </div>
-                    <h1 class="text-4xl sm:text-7xl font-black text-white uppercase italic tracking-tighter leading-none mb-6">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-none mb-6">
                         Dernières <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#FFCB05] to-[#E4002B]">Actualités</span>
                     </h1>
-                    <p class="text-lg text-zinc-400 max-w-2xl mx-auto font-medium">
+                    <p class="text-lg text-zinc-400 max-w-2xl mx-auto font-medium tracking-tight">
                         Suivez les moments forts, les projets et les opportunités au sein du réseau RAOSC.
                     </p>
                 </div>
@@ -65,23 +65,23 @@ const placeholderPosts = [
                         <div class="h-48 bg-zinc-100 dark:bg-zinc-800 relative overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-100 dark:from-zinc-800 dark:to-zinc-900 group-hover:scale-110 transition-transform duration-700"></div>
                             <div class="absolute top-6 left-6">
-                                <span :class="['px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm', post.color]">
+                                <span :class="['px-4 py-1.5 rounded-xl text-[10px] font-bold tracking-wider shadow-sm', post.color]">
                                     {{ post.category }}
                                 </span>
                             </div>
                         </div>
                         <div class="p-8 sm:p-10">
-                            <div class="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-4">
+                            <div class="flex items-center gap-3 text-[11px] font-semibold text-zinc-400 mb-4 tracking-tight">
                                 <Calendar class="h-3.5 w-3.5" />
                                 {{ post.date }}
                             </div>
-                            <h2 class="text-2xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter leading-tight mb-4 group-hover:text-[#008751] transition-colors">
+                            <h2 class="text-2xl font-bold text-zinc-900 dark:text-white tracking-tight leading-tight mb-4 group-hover:text-[#008751] transition-colors">
                                 {{ post.title }}
                             </h2>
-                            <p class="text-sm text-zinc-500 font-medium italic mb-8 line-clamp-2 border-l-2 border-zinc-100 dark:border-zinc-800 pl-4">
+                            <p class="text-sm text-zinc-500 font-medium italic mb-8 line-clamp-2 border-l-2 border-[#008751]/20 pl-4">
                                 {{ post.desc }}
                             </p>
-                            <button class="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#008751] hover:gap-4 transition-all group-hover:translate-x-1">
+                            <button class="flex items-center gap-2 text-[11px] font-bold text-[#008751] hover:gap-4 transition-all group-hover:translate-x-1">
                                 Lire l'article <ArrowRight class="h-3.5 w-3.5" />
                             </button>
                         </div>
@@ -91,12 +91,12 @@ const placeholderPosts = [
                 <!-- Empty State / Soon Banner -->
                 <div class="mt-20 py-20 text-center bg-zinc-950 rounded-[3rem] border border-zinc-800 shadow-3xl relative overflow-hidden">
                     <div class="relative z-10">
-                        <div class="mx-auto h-20 w-20 bg-white/5 rounded-3xl flex items-center justify-center text-zinc-500 mb-8 border border-white/10">
+                        <div class="mx-auto h-20 w-20 bg-white/5 rounded-[2rem] flex items-center justify-center text-zinc-500 mb-8 border border-white/10 shadow-inner">
                             <Newspaper class="h-10 w-10" />
                         </div>
-                        <h2 class="text-2xl font-black text-white uppercase italic tracking-tighter mb-4">Plus d'articles en préparation</h2>
+                        <h2 class="text-2xl font-bold text-white tracking-tight mb-4">Plus d'articles en préparation</h2>
                         <p class="text-zinc-500 max-w-md mx-auto font-medium italic mb-10">Nous finalisons la rédaction de nouveaux dossiers et portraits d'organisations engagées.</p>
-                        <button class="bg-white/5 hover:bg-white/10 text-white font-black px-8 py-4 rounded-full text-[10px] uppercase tracking-widest border border-white/10 transition-all">
+                        <button class="bg-[#008751] hover:bg-[#006b40] text-white font-bold px-10 py-4 rounded-2xl text-xs transition-all shadow-lg shadow-[#008751]/10 hover:-translate-y-0.5">
                             S'abonner à la newsletter
                         </button>
                     </div>

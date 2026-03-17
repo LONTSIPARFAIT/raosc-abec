@@ -25,7 +25,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook } from 'lucide-vue-ne
                         </span>
                     </div>
                 </Link>
-                <p class="text-sm leading-relaxed max-w-md mb-10 font-medium italic border-l-2 border-zinc-800 pl-6">
+                <p class="text-sm leading-relaxed max-w-md mb-10 font-medium text-zinc-500 italic border-l-2 border-[#008751]/30 pl-6">
                     Bâtir une société civile africaine forte, connectée et capable d'influencer le changement social à travers l'innovation technologique et la collaboration stratégique.
                 </p>
                 <div class="flex gap-4">
@@ -43,8 +43,8 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook } from 'lucide-vue-ne
 
             <!-- Links Column 1 -->
             <div class="md:col-span-4 lg:col-span-2">
-                <h3 class="text-white font-black mb-8 uppercase tracking-[0.2em] text-[10px]">Navigation</h3>
-                <ul class="space-y-4 text-xs font-black uppercase tracking-widest italic">
+                <h3 class="text-white font-bold mb-8 tracking-tight text-sm">Navigation</h3>
+                <ul class="space-y-4 text-sm font-medium">
                     <li><Link href="/" class="hover:text-[#008751] transition-colors" prefetch>Accueil</Link></li>
                     <li><Link href="/rao" class="hover:text-[#008751] transition-colors" prefetch>Annuaire OSC</Link></li>
                     <li><Link href="/posts" class="hover:text-[#008751] transition-colors" prefetch>Actualités</Link></li>
@@ -54,8 +54,8 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook } from 'lucide-vue-ne
 
             <!-- Links Column 2 -->
             <div class="md:col-span-4 lg:col-span-2">
-                <h3 class="text-white font-black mb-8 uppercase tracking-[0.2em] text-[10px]">L'Organisation</h3>
-                <ul class="space-y-4 text-xs font-black uppercase tracking-widest italic">
+                <h3 class="text-white font-bold mb-8 tracking-tight text-sm">L'Organisation</h3>
+                <ul class="space-y-4 text-sm font-medium">
                     <li><Link href="/about" class="hover:text-[#008751] transition-colors" prefetch>Charte éthique</Link></li>
                     <li><Link href="/about" class="hover:text-[#008751] transition-colors" prefetch>Nos Valeurs</Link></li>
                     <li><Link href="/contact" class="hover:text-[#008751] transition-colors" prefetch>Contact</Link></li>
@@ -65,7 +65,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook } from 'lucide-vue-ne
 
             <!-- Contact Column -->
             <div class="md:col-span-4 lg:col-span-3">
-                <h3 class="text-white font-black mb-8 uppercase tracking-[0.2em] text-[10px]">Siège Global</h3>
+                <h3 class="text-white font-bold mb-8 tracking-tight text-sm">Siège Global</h3>
                 <ul class="space-y-6">
                     <li class="flex items-start gap-4">
                         <div class="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center text-[#FFCB05] shrink-0">
@@ -91,13 +91,13 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook } from 'lucide-vue-ne
 
         <!-- Bottom Footer -->
         <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-            <p class="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-500">
-                PROPUlsé PAR 
-                <a href="#" class="text-[#008751] hover:text-[#006b40] font-black ml-1 transition-all hover:underline underline-offset-4 decoration-[#008751]">
-                    L'ONG ABEC
-                </a>. &copy; {{ new Date().getFullYear() }} TOUS DROITS RÉSERVÉS .
+            <p class="text-[10px] font-medium text-zinc-500 tracking-tight">
+                Propulsé par 
+                <a href="#" class="text-[#008751] hover:text-[#006b40] font-bold ml-1 transition-all hover:underline underline-offset-4 decoration-[#008751]">
+                    l'ONG ABEC
+                </a>. &copy; {{ new Date().getFullYear() }} Tous droits réservés.
             </p>
-            <div class="flex gap-8 text-[9px] font-black uppercase tracking-[0.3em] text-zinc-600">
+            <div class="flex gap-8 text-[10px] font-medium text-zinc-600 tracking-tight">
                 <Link href="/privacy" class="hover:text-white transition-colors" prefetch>Confidentialité</Link>
                 <Link href="/terms" class="hover:text-white transition-colors" prefetch>Conditions</Link>
                 <Link href="/cookies" class="hover:text-white transition-colors" prefetch>Cookies</Link>

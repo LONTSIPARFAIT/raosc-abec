@@ -1,10 +1,20 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { Menu, X, ArrowRight } from 'lucide-vue-next';
+import { Link, router } from '@inertiajs/vue3';
+import { Menu, X, ArrowRight, Search } from 'lucide-vue-next';
 import { ref } from 'vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 import UserInfo from '@/components/UserInfo.vue';
 import { dashboard, login, register } from '@/routes';
+
+const searchQuery = ref('');
+const isSearchOpen = ref(false);
+
+const handleSearch = () => {
+    if (searchQuery.value.trim()) {
+        router.get('/rao', { search: searchQuery.value });
+        isSearchOpen.value = false;
+    }
+};
 
 defineProps<{
     user: any;
@@ -25,7 +35,7 @@ const navLinks = [
 
 <template>
 <!-- Fixed Header -->
-<header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-zinc-100 dark:border-zinc-800">
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-100 dark:border-zinc-800 transition-all">
     <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8" aria-label="Global">
         <!-- Logo -->
         <div class="flex lg:flex-1">
@@ -57,11 +67,31 @@ const navLinks = [
                 v-for="link in navLinks" 
                 :key="link.name" 
                 :href="link.href" 
-                class="text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-[#008751] transition-colors uppercase tracking-wider" 
+                class="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-[#008751] transition-colors tracking-tight" 
                 prefetch
             >
                 {{ link.name }}
             </Link>
+            
+            <div class="h-4 w-px bg-zinc-200 dark:bg-zinc-800"></div>
+
+            <!-- Search Field -->
+            <div class="relative flex items-center">
+                <button @click="isSearchOpen = !isSearchOpen" class="p-2 text-zinc-500 hover:text-[#008751] transition-colors">
+                    <Search class="h-4 w-4" />
+                </button>
+                <transition name="expand">
+                    <input 
+                        v-if="isSearchOpen"
+                        v-model="searchQuery"
+                        @keyup.enter="handleSearch"
+                        type="text" 
+                        placeholder="Rechercher une OSC..." 
+                        class="absolute right-10 w-48 bg-zinc-100 dark:bg-zinc-900 border-none rounded-full px-4 py-1.5 text-xs focus:ring-1 focus:ring-[#008751] transition-all"
+                        autoFocus
+                    />
+                </transition>
+            </div>
         </div>
         
         <!-- Actions -->
@@ -81,13 +111,13 @@ const navLinks = [
                 </Link>
             </template>
             <template v-else>
-                <Link :href="login()" class="text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white uppercase tracking-widest" prefetch>
+                <Link :href="login()" class="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" prefetch>
                     Connexion
                 </Link>
                 <Link
                     v-if="canRegister"
                     :href="register()"
-                    class="rounded-lg bg-[#008751] px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-[#006b40] transition-all"
+                    class="rounded-xl bg-[#008751] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#008751]/10 hover:bg-[#006b40] hover:-translate-y-0.5 transition-all"
                     prefetch
                 >
                     S'inscrire
@@ -103,20 +133,31 @@ const navLinks = [
                 v-for="link in navLinks" 
                 :key="link.name" 
                 :href="link.href" 
-                class="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-widest"
+                class="text-base font-medium text-zinc-900 dark:text-white tracking-tight"
                 @click="isMenuOpen = false"
             >
                 {{ link.name }}
             </Link>
             <hr class="border-zinc-100 dark:border-zinc-800"/>
             <template v-if="user">
-                <Link :href="dashboard()" class="text-sm font-bold text-[#008751] uppercase tracking-widest">Tableau de bord</Link>
+                <Link :href="dashboard()" class="text-base font-bold text-[#008751]">Tableau de bord</Link>
             </template>
             <template v-else>
-                <Link :href="login()" class="text-sm font-bold text-zinc-600 dark:text-zinc-400 uppercase tracking-widest">Connexion</Link>
-                <Link :href="register()" class="text-sm font-bold text-[#008751] uppercase tracking-widest">S'inscrire</Link>
+                <Link :href="login()" class="text-base font-medium text-zinc-600 dark:text-zinc-400">Connexion</Link>
+                <Link :href="register()" class="text-base font-bold text-[#008751]">S'inscrire</Link>
             </template>
         </div>
     </div>
 </header>
 </template>
+
+<style scoped>
+.expand-enter-active, .expand-leave-active {
+    transition: all 0.3s ease-out;
+}
+.expand-enter-from, .expand-leave-to {
+    opacity: 0;
+    width: 0;
+    transform: translateX(20px);
+}
+</style>

@@ -15,15 +15,15 @@ defineProps<{
         <main>
             <!-- Header Section -->
             <div class="bg-zinc-950 py-24 sm:py-32 px-6">
-                <div class="mx-auto max-w-7xl text-center">
-                    <span class="text-[#008751] font-bold tracking-[0.2em] uppercase text-[10px] mb-4 block">Notre Organisation</span>
-                    <h1 class="text-4xl sm:text-6xl font-bold text-white mb-6 tracking-tight">
-                        À Propos de <span class="text-[#FFCB05]">RAOSC</span>
-                    </h1>
-                    <p class="text-zinc-400 text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed">
-                        Le Réseau Africain des Organisations de la Société Civile est une initiative portée par l'ONG ABEC pour fédérer les acteurs du développement.
-                    </p>
-                </div>
+                    <div class="mx-auto max-w-7xl text-center">
+                        <span class="text-[#008751] font-bold tracking-[0.2em] uppercase text-[10px] mb-4 block">Notre Organisation</span>
+                        <h1 class="text-4xl sm:text-6xl font-extrabold text-white mb-6 tracking-tight">
+                            À Propos de <span class="text-[#FFCB05]">RAOSC</span>
+                        </h1>
+                        <p class="text-zinc-400 text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed font-medium">
+                            Le Réseau Africain des Organisations de la Société Civile est une initiative portée par l'ONG ABEC pour fédérer les acteurs du développement.
+                        </p>
+                    </div>
             </div>
 
             <!-- Content Section -->
@@ -66,21 +66,21 @@ defineProps<{
                             <div class="h-14 w-14 bg-white dark:bg-zinc-800 rounded-2xl flex items-center justify-center mx-auto shadow-sm text-[#008751]">
                                 <ShieldCheck class="h-7 w-7" />
                             </div>
-                            <h3 class="font-bold text-zinc-900 dark:text-white uppercase tracking-widest text-xs">Transparence</h3>
+                            <h3 class="font-bold text-zinc-900 dark:text-white tracking-tight text-sm">Transparence</h3>
                             <p class="text-sm text-zinc-500 max-w-xs mx-auto">L'intégrité au cœur de chaque interaction au sein du réseau.</p>
                         </div>
                         <div class="space-y-4">
                             <div class="h-14 w-14 bg-white dark:bg-zinc-800 rounded-2xl flex items-center justify-center mx-auto shadow-sm text-[#FFCB05]">
                                 <Heart class="h-7 w-7" />
                             </div>
-                            <h3 class="font-bold text-zinc-900 dark:text-white uppercase tracking-widest text-xs">Solidarité</h3>
+                            <h3 class="font-bold text-zinc-900 dark:text-white tracking-tight text-sm">Solidarité</h3>
                             <p class="text-sm text-zinc-500 max-w-xs mx-auto">L'entraide mutuelle pour un progrès collectif durable.</p>
                         </div>
                         <div class="space-y-4">
                             <div class="h-14 w-14 bg-white dark:bg-zinc-800 rounded-2xl flex items-center justify-center mx-auto shadow-sm text-[#E4002B]">
                                 <Award class="h-7 w-7" />
                             </div>
-                            <h3 class="font-bold text-zinc-900 dark:text-white uppercase tracking-widest text-xs">Excellence</h3>
+                            <h3 class="font-bold text-zinc-900 dark:text-white tracking-tight text-sm">Excellence</h3>
                             <p class="text-sm text-zinc-500 max-w-xs mx-auto">La recherche permanente de la qualité dans l'action sociale.</p>
                         </div>
                     </div>

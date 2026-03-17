@@ -164,10 +164,10 @@ const getStatusLabel = (status: string) => {
                                 <div>
                                     <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-1">{{ userOrganization.name }}</h3>
                                     <div class="flex flex-wrap items-center gap-3">
-                                        <span :class="['text-[10px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider', getStatusClass(userOrganization.status)]">
+                                        <span :class="['text-[10px] font-bold px-2.5 py-1 rounded-lg tracking-tight transition-all', getStatusClass(userOrganization.status)]">
                                             {{ getStatusLabel(userOrganization.status) }}
                                         </span>
-                                        <span class="text-xs text-zinc-400 flex items-center gap-1 bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-lg">
+                                        <span class="text-[11px] font-medium text-zinc-400 flex items-center gap-1 bg-zinc-100 dark:bg-zinc-800 px-2.5 py-1.5 rounded-lg border border-zinc-200/50 dark:border-zinc-700/50 tracking-tight">
                                             <Globe class="w-3.5 h-3.5" />
                                             {{ userOrganization.city }}, {{ userOrganization.country }}
                                         </span>
@@ -176,12 +176,12 @@ const getStatusLabel = (status: string) => {
 
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 bg-zinc-50 dark:bg-zinc-800/30 rounded-2xl border border-zinc-100 dark:border-zinc-800">
                                     <div class="space-y-1">
-                                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">N° Enregistrement</p>
-                                        <p class="text-sm font-bold text-zinc-700 dark:text-zinc-300">{{ userOrganization.registration_number || 'Non renseigné' }}</p>
+                                        <p class="text-[11px] font-bold text-zinc-400 tracking-tight">N° Enregistrement</p>
+                                        <p class="text-sm font-semibold text-zinc-900 dark:text-white">{{ userOrganization.registration_number || 'Non renseigné' }}</p>
                                     </div>
                                     <div class="space-y-1">
-                                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Date de création</p>
-                                        <p class="text-sm font-bold text-zinc-700 dark:text-zinc-300">{{ userOrganization.founded_date || 'Inconnue' }}</p>
+                                        <p class="text-[11px] font-bold text-zinc-400 tracking-tight">Date de création</p>
+                                        <p class="text-sm font-semibold text-zinc-900 dark:text-white">{{ userOrganization.founded_date || 'Inconnue' }}</p>
                                     </div>
                                 </div>
 
