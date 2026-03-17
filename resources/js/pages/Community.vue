@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import PublicHeader from '@/components/PublicHeader.vue';
-import PublicFooter from '@/components/PublicFooter.vue';
-import { Users, MessageSquare, Share2 } from 'lucide-vue-next';
+import PublicLayout from '@/layouts/PublicLayout.vue';
+import { Users, MessageSquare, Share2, Sparkles } from 'lucide-vue-next';
 
 defineProps<{
     user?: any;
@@ -10,56 +9,122 @@ defineProps<{
 </script>
 
 <template>
-    <Head title="Communauté - RAOSC" />
-    <div class="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans selection:bg-emerald-500/30 overflow-x-hidden">
-        <PublicHeader :user="$page.props.auth.user" />
+    <PublicLayout>
+        <Head title="Communauté - RAOSC" />
 
-        <main class="flex-grow pt-32 pb-24">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center">
-                <h1 class="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white sm:text-6xl mb-8">
-                    Espace <span class="text-emerald-600">Communauté</span>
-                </h1>
-                <p class="text-xl leading-8 text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto mb-16">
-                    Rejoignez les discussions, partagez vos expériences et collaborez avec d'autres organisations engagées.
-                </p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow">
-                        <div class="h-12 w-12 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 mb-6">
-                            <Users class="h-6 w-6" />
+        <main class="relative bg-zinc-50 dark:bg-zinc-950 pb-24 min-h-screen">
+            <!-- Header Section -->
+            <div class="bg-zinc-950 py-24 sm:py-40 px-6 overflow-hidden relative">
+                <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl">
+                    <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#008751] via-[#FFCB05] to-[#E4002B] opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+                </div>
+
+                <div class="mx-auto max-w-7xl relative z-10 text-center">
+                    <div class="mb-8 flex justify-center">
+                        <div class="flex items-center gap-3 rounded-full bg-white/5 px-4 py-2 border border-white/10 backdrop-blur-xl">
+                            <Sparkles class="h-4 w-4 text-[#FFCB05]" />
+                            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white">Espace de Synergie</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Forums de Discussion</h3>
-                        <p class="text-zinc-500 text-sm">Échangez sur des thématiques variées avec des experts et des bénévoles.</p>
                     </div>
-                    <div class="bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow">
-                        <div class="h-12 w-12 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 mb-6">
-                            <MessageSquare class="h-6 w-6" />
+                    <h1 class="text-4xl sm:text-7xl font-black text-white uppercase italic tracking-tighter leading-none mb-8">
+                        L'Union fait notre <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#008751] via-[#FFCB05] to-[#008751] bg-[length:200%_auto] animate-gradient">Force</span>
+                    </h1>
+                    <p class="text-lg sm:text-2xl text-zinc-400 max-w-2xl mx-auto font-medium mb-12">
+                        Rejoignez le mouvement, partagez vos défis et bâtissez des partenariats durables avec la communauté RAOSC.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-6">
+                        <div class="flex -space-x-3">
+                            <div v-for="i in 5" :key="i" class="h-12 w-12 rounded-full border-2 border-zinc-950 bg-zinc-800 flex items-center justify-center overflow-hidden">
+                                <img :src="`https://i.pravatar.cc/150?u=${i}`" alt="Avatar" class="h-full w-full object-cover" />
+                            </div>
+                            <div class="h-12 w-12 rounded-full border-2 border-zinc-950 bg-zinc-900 flex items-center justify-center text-[10px] font-black text-zinc-400">
+                                +500
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Messagerie Directe</h3>
-                        <p class="text-zinc-500 text-sm">Communiquez en temps réel avec les responsables d'autres associations.</p>
                     </div>
-                    <div class="bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow">
-                        <div class="h-12 w-12 rounded-2xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 mb-6">
-                            <Share2 class="h-6 w-6" />
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 -mt-20 relative z-20">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10">
+                    <div class="group bg-white dark:bg-zinc-900 p-10 rounded-[3rem] border border-zinc-200 dark:border-zinc-800 shadow-2xl transition-all hover:-translate-y-2">
+                        <div class="h-16 w-16 rounded-2xl bg-[#008751]/10 flex items-center justify-center text-[#008751] mb-8 group-hover:scale-110 transition-transform">
+                            <Users class="h-8 w-8" />
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Partage de Ressources</h3>
-                        <p class="text-zinc-500 text-sm">Publiez et consultez des documents utiles pour la gestion de vos projets.</p>
+                        <h3 class="text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter mb-4">Forums Thématiques</h3>
+                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-zinc-100 dark:border-zinc-800 pl-4 py-1">
+                            Discutez de santé, d'éducation, d'environnement et d'entrepreneuriat social avec vos pairs.
+                        </p>
+                    </div>
+                    
+                    <div class="group bg-white dark:bg-zinc-900 p-10 rounded-[3rem] border border-zinc-200 dark:border-zinc-800 shadow-2xl transition-all hover:-translate-y-2">
+                        <div class="h-16 w-16 rounded-2xl bg-[#FFCB05]/10 flex items-center justify-center text-[#FFCB05] mb-8 group-hover:scale-110 transition-transform">
+                            <MessageSquare class="h-8 w-8" />
+                        </div>
+                        <h3 class="text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter mb-4">Collaboration Directe</h3>
+                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-zinc-100 dark:border-zinc-800 pl-4 py-1">
+                            Identifiez des partenaires potentiels et initiez des projets conjoints en quelques clics.
+                        </p>
+                    </div>
+
+                    <div class="group bg-white dark:bg-zinc-900 p-10 rounded-[3rem] border border-zinc-200 dark:border-zinc-800 shadow-2xl transition-all hover:-translate-y-2">
+                        <div class="h-16 w-16 rounded-2xl bg-[#E4002B]/10 flex items-center justify-center text-[#E4002B] mb-8 group-hover:scale-110 transition-transform">
+                            <Share2 class="h-8 w-8" />
+                        </div>
+                        <h3 class="text-xl font-black text-zinc-900 dark:text-white uppercase italic tracking-tighter mb-4">Base Documentaire</h3>
+                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-zinc-100 dark:border-zinc-800 pl-4 py-1">
+                            Accédez à des guides, modèles et tutoriels partagés par les membres pour booster votre ONG.
+                        </p>
                     </div>
                 </div>
 
-                <div class="mt-20 p-12 bg-zinc-900 rounded-[3rem] text-white overflow-hidden relative">
-                    <div class="relative z-10">
-                        <h2 class="text-3xl font-bold mb-6">Bientôt disponible pour tous</h2>
-                        <p class="text-zinc-400 mb-8 max-w-xl mx-auto italic">Nous finalisons les derniers détails techniques pour vous offrir une expérience communautaire exceptionnelle.</p>
-                        <button class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 px-10 rounded-full transition-all">
-                            Me notifier de l'ouverture
-                        </button>
+                <!-- Coming Soon Feature -->
+                <div class="mt-24 bg-gradient-to-br from-[#310808] to-black p-10 sm:p-20 rounded-[4rem] text-white relative overflow-hidden shadow-3xl">
+                    <div class="relative z-10 lg:flex items-center gap-16">
+                        <div class="lg:w-1/2">
+                            <div class="mb-6">
+                                <span class="bg-[#FFCB05] text-black px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">En Développement</span>
+                            </div>
+                            <h2 class="text-3xl sm:text-5xl font-black uppercase italic tracking-tighter mb-6 leading-none">Un Réseau Évolutif à <span class="text-[#008751]">Votre Écoute</span></h2>
+                            <p class="text-zinc-400 text-base sm:text-lg font-medium italic mb-10 border-l-2 border-zinc-800 pl-8">Nous concevons un espace où chaque voix compte. D'ici peu, vous pourrez profiter d'une application mobile dédiée pour rester connecté partout.</p>
+                            <button class="w-full sm:w-auto bg-[#008751] hover:bg-[#006b40] text-white font-black px-10 py-5 rounded-full text-[10px] uppercase tracking-[0.3em] transition-all hover:scale-105 shadow-2xl shadow-[#008751]/20">
+                                Rejoindre la liste d'attente
+                            </button>
+                        </div>
+                        <div class="lg:w-1/2 mt-12 lg:mt-0 grid grid-cols-2 gap-4">
+                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3">
+                                <span class="text-2xl font-black text-[#008751]">50+</span>
+                                <span class="text-[8px] font-black uppercase tracking-widest text-zinc-500 text-center px-4">Groupes de travail</span>
+                            </div>
+                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3">
+                                <span class="text-2xl font-black text-[#FFCB05]">10k+</span>
+                                <span class="text-[8px] font-black uppercase tracking-widest text-zinc-500 text-center px-4">Ressources partagées</span>
+                            </div>
+                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3">
+                                <span class="text-2xl font-black text-white">24/7</span>
+                                <span class="text-[8px] font-black uppercase tracking-widest text-zinc-500 text-center px-4">Support bénévole</span>
+                            </div>
+                            <div class="h-40 bg-white/5 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center gap-3">
+                                <span class="text-2xl font-black text-[#E4002B]">15</span>
+                                <span class="text-[8px] font-black uppercase tracking-widest text-zinc-500 text-center px-4">Pays africains</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-emerald-600/20 rounded-full blur-3xl"></div>
                 </div>
             </div>
         </main>
-
-        <PublicFooter />
-    </div>
+    </PublicLayout>
 </template>
+
+<style scoped>
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.animate-gradient {
+    background-size: 200% auto;
+    animation: gradient 8s linear infinite;
+}
+</style>

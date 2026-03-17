@@ -24,6 +24,7 @@ class OrganizationResource extends JsonResource
             'cover_image' => $this->cover_image,
             'short_description' => $this->short_description,
             'description' => $this->description,
+            'registration_number' => $this->registration_number,
             'founded_date' => $this->founded_date,
             'country' => $this->country,
             'city' => $this->city,

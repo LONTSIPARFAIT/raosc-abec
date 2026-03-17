@@ -80,13 +80,7 @@
 }
 
 @layer utilities {
-    body,
-    html {
-        --font-sans:
-            'Poppins', ui-sans-serif, system-ui, sans-serif,
-            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-            'Noto Color Emoji';
-    }
+    /* Utilities should generally use the theme variables */
 }
 
 :root {
@@ -124,6 +118,12 @@
     --sidebar-border: hsl(0 0% 91%);
     --sidebar-ring: hsl(217.2 91.2% 59.8%);
     --sidebar: hsl(0 0% 98%);
+
+    /* RAOSC Brand Colors - Base (Hex) */
+    --raosc-green: #008751;
+    --raosc-yellow: #FFCB05;
+    --raosc-red: #E4002B;
+    --raosc-brown: #310808;
 }
 
 .dark {
@@ -160,20 +160,20 @@
     --sidebar-border: hsl(0 0% 15.9%);
     --sidebar-ring: hsl(217.2 91.2% 59.8%);
     --sidebar: hsl(240 5.9% 10%);
-
-    /* RAOSC Logo Colors - Accurate Hex codes */
-    --raosc-green: #008751;
-    --raosc-yellow: #FFCB05;
-    --raosc-red: #E4002B;
-    --raosc-brown: #310808;
-    --raosc-black: #000000;
 }
 
 @layer base {
+    html, body {
+        font-family: 'Poppins', ui-sans-serif, sans-serif !important;
+    }
+
     * {
         @apply border-border outline-ring/50;
+        font-family: 'Poppins', ui-sans-serif, sans-serif !important;
     }
-    body {
-        @apply bg-background text-foreground;
+
+    /* Enforce for headings clearly */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Poppins', ui-sans-serif, sans-serif !important;
     }
 }

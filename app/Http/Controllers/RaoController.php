@@ -22,15 +22,24 @@ class RaoController extends Controller
         $query = Organization::with('categories')
             ->where('status', 'approved');
 
-        // Filtre par texte (nom ou pays)
-        if ($request->has('search')) {
+        // Filtre par texte (nom)
+        if ($request->filled('search')) {
             $search = $request->get('search');
-            $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('country', 'like', "%{$search}%");
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        // Filtre par Pays
+        if ($request->filled('country')) {
+            $query->where('country', $request->get('country'));
+        }
+
+        // Filtre par Ville
+        if ($request->filled('city')) {
+            $query->where('city', $request->get('city'));
         }
 
         // Filtre par catégorie
-        if ($request->has('category')) {
+        if ($request->filled('category')) {
             $query->whereHas('categories', function ($q) use ($request) {
                 $q->where('slug', $request->get('category'));
             });
@@ -40,17 +49,17 @@ class RaoController extends Controller
         $categories = OrganizationCategory::all();
 
         return Inertia::render('Rao/Index', [
-            // Utilisation des Resources pour formater la réponse
             'organizations' => OrganizationResource::collection($organizations),
             'categories' => OrganizationCategoryResource::collection($categories),
-            'filters' => $request->only(['search', 'category'])
+            'filters' => $request->only(['search', 'category', 'city', 'country']),
+            'isPublic' => ! $request->is('dashboard*') && ! $request->is('settings*')
         ]);
     }
 
     /**
      * Affiche le profil détaillé public d'une organisation.
      */
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         $organization = Organization::with(['categories', 'members.user'])
             ->where('slug', $slug)
@@ -58,9 +67,8 @@ class RaoController extends Controller
             ->firstOrFail();
 
         return Inertia::render('Rao/Show', [
-            // On retourne ici une simple instanciation de notre ressource
             'organization' => new OrganizationResource($organization),
-
+            'isPublic' => ! $request->is('dashboard*') && ! $request->is('settings*')
         ]);
     }
 
@@ -91,6 +99,8 @@ class RaoController extends Controller
             'country' => 'required|string|max:100',
             'city' => 'required|string|max:100',
             'address' => 'nullable|string|max:255',
+            'registration_number' => 'nullable|string|max:255',
+            'founded_date' => 'nullable|date',
             'categories' => 'required|array',
             'categories.*' => 'exists:organization_categories,id',
         ]);
