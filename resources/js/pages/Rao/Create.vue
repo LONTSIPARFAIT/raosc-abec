@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { Building2, Info, ArrowRight, CheckCircle2, MapPin, Mail, Phone } from 'lucide-vue-next';
+import { Building2, Info, ArrowRight, CheckCircle2 } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -52,14 +52,14 @@ const toggleCategory = (id: number) => {
 
                 <div class="mx-auto max-w-4xl relative z-10 text-center">
                     <div class="mb-8 flex justify-center">
-                        <div class="flex items-center gap-3 rounded-full bg-white/5 px-4 py-2 border border-white/10 backdrop-blur-xl">
-                            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white">Adhésion</span>
+                        <div class="flex items-center gap-3 rounded-full bg-white/10 px-4 py-2 border border-white/20 backdrop-blur-xl">
+                            <span class="text-[10px] font-bold tracking-[0.2em] text-[#FFCB05]">Adhésion Réseau</span>
                         </div>
                     </div>
-                    <h1 class="text-4xl sm:text-7xl font-black text-white uppercase italic tracking-tighter leading-none mb-6">
+                    <h1 class="text-4xl sm:text-7xl font-extrabold text-white tracking-tight leading-none mb-6">
                         Inscrire votre <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#008751] to-[#FFCB05]">Organisation</span>
                     </h1>
-                    <p class="text-lg text-zinc-400 max-w-2xl mx-auto font-medium">
+                    <p class="text-lg text-zinc-400 max-w-2xl mx-auto font-medium leading-relaxed">
                         Rejoignez le Réseau Africain pour amplifier votre impact et accéder à des partenariats stratégiques.
                     </p>
                 </div>

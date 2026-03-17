@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { 
-    MapPin, Building2, Calendar, Mail, Phone, Globe, 
-    Share2, ArrowLeft, CheckCircle2, Users, ExternalLink,
-    ShieldCheck, Heart
+    MapPin, Building2, Calendar, Mail, CheckCircle2, Users, 
+    Heart, ArrowLeft
 } from 'lucide-vue-next';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
 import PublicLayout from '@/layouts/PublicLayout.vue';
+import { defineProps } from 'vue';
 
 defineProps<{
     organization: any;
