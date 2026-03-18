@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import PublicLayout from '@/layouts/PublicLayout.vue';
 import { Target, Eye, ShieldCheck, Heart, Award } from 'lucide-vue-next';
+import PublicLayout from '@/layouts/PublicLayout.vue';
 
 defineProps<{
     user?: any;
@@ -16,7 +16,7 @@ defineProps<{
             <!-- Header Section -->
             <div class="bg-zinc-950 py-24 sm:py-32 px-6">
                     <div class="mx-auto max-w-7xl text-center">
-                        <span class="text-[#008751] font-bold tracking-[0.2em] uppercase text-[10px] mb-4 block">Notre Organisation</span>
+                        <span class="text-[#008751] font-bold tracking-[0.2em] text-[10px] mb-4 block">Notre Organisation</span>
                         <h1 class="text-4xl sm:text-6xl font-extrabold text-white mb-6 tracking-tight">
                             À Propos de <span class="text-[#FFCB05]">RAOSC</span>
                         </h1>

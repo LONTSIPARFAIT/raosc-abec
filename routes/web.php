@@ -26,6 +26,11 @@ Route::prefix('rao')->name('rao.')->group(function () {
     });
 });
 
+// Admin Routes
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::post('/organizations/{organization}/status', [\App\Http\Controllers\Admin\OrganizationManagementController::class, 'updateStatus'])->name('organizations.status');
+});
+
 // Autres pages publiques
 Route::get('/posts', function() { return inertia('Posts'); })->name('posts');
 Route::get('/about', function() { return inertia('About'); })->name('about');

@@ -31,6 +31,7 @@ class Organization extends Model
         'status',
         'approved_at',
         'is_featured',
+        'gallery',
     ];
 
     protected $casts = [
@@ -40,6 +41,7 @@ class Organization extends Model
         'social_links' => 'array',
         'approved_at' => 'datetime',
         'is_featured' => 'boolean',
+        'gallery' => 'array',
     ];
 
     /**

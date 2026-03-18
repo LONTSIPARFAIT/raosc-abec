@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, router } from '@inertiajs/vue3';
-import { Menu, X, ArrowRight, Search } from 'lucide-vue-next';
+import { Menu, X, Search } from 'lucide-vue-next';
 import { ref } from 'vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 import UserInfo from '@/components/UserInfo.vue';
@@ -42,10 +42,10 @@ const navLinks = [
             <Link href="/" class="flex items-center gap-3 group" prefetch>
                 <img src="/images/Logo_Raosc-removebg-preview.png" alt="RAOSC Logo" class="h-10 w-auto" />
                 <div class="flex flex-col">
-                    <span class="text-xl font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
+                    <span class="text-xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-none">
                         RAOSC
                     </span>
-                    <span class="text-[9px] font-bold text-[#008751] tracking-widest uppercase mt-0.5">
+                    <span class="text-[9px] font-bold text-[#008751] tracking-[0.1em] mt-0.5">
                         ONG ABEC
                     </span>
                 </div>

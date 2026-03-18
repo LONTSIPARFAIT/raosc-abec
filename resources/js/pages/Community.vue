@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import PublicLayout from '@/layouts/PublicLayout.vue';
-import { Users, MessageSquare, Share2, Sparkles } from 'lucide-vue-next';
 
 defineProps<{
     user?: any;
@@ -53,7 +52,7 @@ defineProps<{
                             <Users class="h-8 w-8" />
                         </div>
                         <h3 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight mb-4">Forums Thématiques</h3>
-                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-[#008751]/20 pl-4 py-1">
+                        <p class="text-sm text-zinc-500 font-medium border-l-3 border-[#008751]/20 pl-4 py-1 leading-relaxed">
                             Discutez de santé, d'éducation, d'environnement et d'entrepreneuriat social avec vos pairs.
                         </p>
                     </div>
@@ -63,7 +62,7 @@ defineProps<{
                             <MessageSquare class="h-8 w-8" />
                         </div>
                         <h3 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight mb-4">Collaboration Directe</h3>
-                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-[#FFCB05]/20 pl-4 py-1">
+                        <p class="text-sm text-zinc-500 font-medium border-l-3 border-[#FFCB05]/20 pl-4 py-1 leading-relaxed">
                             Identifiez des partenaires potentiels et initiez des projets conjoints en quelques clics.
                         </p>
                     </div>
@@ -73,7 +72,7 @@ defineProps<{
                             <Share2 class="h-8 w-8" />
                         </div>
                         <h3 class="text-xl font-bold text-zinc-900 dark:text-white tracking-tight mb-4">Base Documentaire</h3>
-                        <p class="text-sm text-zinc-500 font-medium italic border-l-2 border-[#E4002B]/20 pl-4 py-1">
+                        <p class="text-sm text-zinc-500 font-medium border-l-3 border-[#E4002B]/20 pl-4 py-1 leading-relaxed">
                             Accédez à des guides, modèles et tutoriels partagés par les membres pour booster votre ONG.
                         </p>
                     </div>
@@ -87,7 +86,7 @@ defineProps<{
                                 <span class="bg-[#FFCB05] text-black px-4 py-1.5 rounded-xl text-[10px] font-bold tracking-wider">En Développement</span>
                             </div>
                             <h2 class="text-3xl sm:text-5xl font-bold tracking-tight mb-6 leading-none">Un Réseau Évolutif à <span class="text-[#008751]">Votre Écoute</span></h2>
-                            <p class="text-zinc-400 text-base sm:text-lg font-medium italic mb-10 border-l-2 border-zinc-800 pl-8">Nous concevons un espace où chaque voix compte. D'ici peu, vous pourrez profiter d'une application mobile dédiée pour rester connecté partout.</p>
+                            <p class="text-zinc-400 text-base sm:text-lg font-medium mb-10 border-l-3 border-zinc-800/50 pl-8 leading-relaxed">Nous concevons un espace où chaque voix compte. D'ici peu, vous pourrez profiter d'une application mobile dédiée pour rester connecté partout.</p>
                             <button class="w-full sm:w-auto bg-[#008751] hover:bg-[#006b40] text-white font-bold px-10 py-5 rounded-2xl text-xs transition-all hover:scale-105 shadow-2xl shadow-[#008751]/20 hover:-translate-y-0.5">
                                 Rejoindre la liste d'attente
                             </button>

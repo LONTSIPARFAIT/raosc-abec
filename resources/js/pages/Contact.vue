@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import PublicLayout from '@/layouts/PublicLayout.vue';
-import { Mail, Phone, MapPin, Send } from 'lucide-vue-next';
 
 defineProps<{
     user?: any;
@@ -64,10 +63,13 @@ defineProps<{
                             </div>
                         </div>
 
-                        <div class="bg-[#310808] p-8 rounded-3xl text-white">
-                            <h3 class="font-bold mb-2">Support Technique</h3>
-                            <p class="text-xs text-zinc-400 mb-6">Besoin d'aide pour l'administration de votre fiche organisation ?</p>
-                            <a href="#" class="text-xs font-bold text-[#FFCB05] tracking-widest hover:underline">Support WhatsApp →</a>
+                        <div class="bg-gradient-to-br from-[#310808] to-black p-8 rounded-3xl text-white shadow-xl">
+                            <h3 class="font-bold mb-2 tracking-tight">Support Technique</h3>
+                            <p class="text-xs text-zinc-400 mb-6 font-medium">Besoin d'aide pour l'administration de votre fiche organisation ?</p>
+                            <a href="#" class="text-xs font-bold text-[#FFCB05] tracking-tight hover:underline flex items-center gap-2">
+                                Support WhatsApp
+                                <ArrowRight class="w-3.5 h-3.5" />
+                            </a>
                         </div>
                     </div>
 

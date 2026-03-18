@@ -32,10 +32,17 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        // Organisations en attente de validation (pour l'admin)
+        $pendingOrgsList = Organization::where('status', 'pending')
+            ->latest()
+            ->take(5)
+            ->get();
+            
         return Inertia::render('Dashboard', [
             'stats' => $stats,
             'userOrganization' => $userOrganization,
             'recentOrgs' => $recentOrgs,
+            'pendingOrgsList' => $pendingOrgsList,
         ]);
     }
 }

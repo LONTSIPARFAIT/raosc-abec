@@ -101,8 +101,8 @@ const featuredCategories = [
                         <div :class="['mx-auto flex h-14 w-14 items-center justify-center rounded-2xl mb-4 transition-transform group-hover:scale-110 shadow-inner', stat.bg]">
                             <component :is="stat.icon" :class="['h-6 w-6', stat.color]" />
                         </div>
-                        <dd class="text-3xl font-bold text-zinc-900 dark:text-white tracking-tighter">{{ stat.value }}</dd>
-                        <dt class="text-[11px] font-bold text-zinc-400 mt-1 uppercase tracking-[0.1em]">{{ stat.name }}</dt>
+                        <dd class="text-3xl font-extrabold text-zinc-900 dark:text-white mb-1">{{ stat.value }}</dd>
+                        <dt class="text-[11px] font-bold text-zinc-400 tracking-tight">{{ stat.name }}</dt>
                     </div>
                 </div>
             </div>
@@ -112,8 +112,8 @@ const featuredCategories = [
         <div class="py-24 sm:py-32 bg-zinc-50 dark:bg-zinc-900/30">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-20">
-                    <h2 class="text-[#008751] font-bold text-xs uppercase tracking-[0.2em] mb-4">Pourquoi rejoindre le réseau ?</h2>
-                    <h3 class="text-3xl sm:text-5xl font-bold text-zinc-900 dark:text-white tracking-tight mb-6">
+                    <h2 class="text-[#008751] font-bold text-[10px] tracking-[0.2em] mb-4">Pourquoi rejoindre le réseau ?</h2>
+                    <h3 class="text-3xl sm:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight mb-6 leading-none">
                         Des outils pour transformer votre <span class="text-[#FFCB05]">engagement</span>
                     </h3>
                     <p class="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg">
@@ -138,7 +138,7 @@ const featuredCategories = [
                             <h4 class="text-2xl font-bold text-zinc-900 dark:text-white tracking-tight">Parcourir par <span class="text-[#008751]">Catégorie</span></h4>
                             <p class="text-[13px] font-medium text-zinc-500 mt-1">Trouvez les organisations qui correspondent à vos intérêts.</p>
                         </div>
-                        <Link href="/rao" class="text-xs font-bold text-[#008751] hover:text-[#006b40] transition-colors bg-[#008751]/5 px-4 py-2 rounded-xl">Voir toutes les catégories</Link>
+                        <Link href="/rao" class="text-[10px] font-bold text-[#008751] hover:text-[#006b40] transition-colors bg-[#008751]/10 px-6 py-2.5 rounded-xl border border-[#008751]/10">Voir toutes les catégories</Link>
                     </div>
                     
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">

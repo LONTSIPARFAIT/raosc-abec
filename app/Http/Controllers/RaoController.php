@@ -50,7 +50,7 @@ class RaoController extends Controller
 
         return Inertia::render('Rao/Index', [
             'organizations' => OrganizationResource::collection($organizations),
-            'categories' => OrganizationCategoryResource::collection($categories),
+            'categories' => OrganizationCategoryResource::collection($categories)->resolve(),
             'filters' => $request->only(['search', 'category', 'city', 'country']),
             'isPublic' => ! $request->is('dashboard*') && ! $request->is('settings*')
         ]);
@@ -80,7 +80,7 @@ class RaoController extends Controller
         $categories = OrganizationCategory::all();
 
         return Inertia::render('Rao/Create', [
-            'categories' => OrganizationCategoryResource::collection($categories)
+            'categories' => OrganizationCategoryResource::collection($categories)->resolve()
         ]);
     }
 

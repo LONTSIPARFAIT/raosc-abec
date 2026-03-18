@@ -11,6 +11,8 @@ export type User = {
 
 export type Auth = {
     user: User;
+    notifications?: any[];
+    unread_notifications_count?: number;
 };
 
 export type TwoFactorConfigContent = {

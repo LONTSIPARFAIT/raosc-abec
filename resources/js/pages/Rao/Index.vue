@@ -18,14 +18,21 @@ const searchQuery = ref(props.filters.search || '');
 const selectedCategory = ref(props.filters.category || '');
 const selectedCity = ref(props.filters.city || '');
 const selectedCountry = ref(props.filters.country || '');
+const isLoading = ref(false);
 
 const handleSearch = () => {
+    isLoading.value = true;
     router.get(props.isPublic ? '/rao' : '/dashboard/rao', {
         search: searchQuery.value,
         category: selectedCategory.value,
         city: selectedCity.value,
         country: selectedCountry.value
-    }, { preserveState: true, replace: true });
+    }, { 
+        preserveState: true, 
+        replace: true,
+        only: ['organizations', 'filters'],
+        onFinish: () => { isLoading.value = false; }
+    });
 };
 
 const resetFilters = () => {
@@ -36,8 +43,12 @@ const resetFilters = () => {
     handleSearch();
 };
 
+let timeout: any = null;
 watch([searchQuery, selectedCategory, selectedCity, selectedCountry], () => {
-    handleSearch();
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => {
+        handleSearch();
+    }, 400);
 });
 </script>
 

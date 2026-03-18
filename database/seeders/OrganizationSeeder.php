@@ -35,9 +35,15 @@ class OrganizationSeeder extends Seeder
                 'country' => 'Kenya',
                 'email' => 'contact@awf-example.org',
                 'website' => 'https://www.awf.org',
+                'registration_number' => 'AWF/2024/005/KE',
                 'founded_date' => '1961-01-01',
                 'logo' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=300&h=300&fit=crop&q=80',
                 'cover_image' => 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1600&h=500&fit=crop&q=80',
+                'gallery' => [
+                    'https://images.unsplash.com/photo-1523810192022-5a0fb9aa7bc8?q=80&w=2067',
+                    'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2113',
+                    'https://images.unsplash.com/photo-1520110300438-e6d246c24508?q=80&w=2070'
+                ],
                 'category_slugs' => ['environnement-ecologie']
             ],
             [
@@ -48,9 +54,15 @@ class OrganizationSeeder extends Seeder
                 'country' => 'Nigeria',
                 'email' => 'hello@techforafrica-example.com',
                 'website' => 'https://example-techforafrica.com',
+                'registration_number' => 'TFA/NGO/2026/012',
                 'founded_date' => '2015-05-12',
                 'logo' => 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=300&h=300&fit=crop&q=80',
                 'cover_image' => 'https://images.unsplash.com/photo-1531297122539-d31db6fb442b?w=1600&h=500&fit=crop&q=80',
+                'gallery' => [
+                    'https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069',
+                    'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2132',
+                    'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?q=80&w=2070'
+                ],
                 'category_slugs' => ['education-formation', 'entrepreneuriat-tech', 'jeunesse-sports']
             ],
             [
@@ -61,9 +73,15 @@ class OrganizationSeeder extends Seeder
                 'country' => 'Senegal',
                 'email' => 'info@sante-panafricaine-org.test',
                 'website' => 'https://example-sante-panafricaine.org',
+                'registration_number' => 'FSP/SN/2008/77',
                 'founded_date' => '2008-09-21',
                 'logo' => 'https://images.unsplash.com/photo-1550831107-1553da8c8464?w=300&h=300&fit=crop&q=80',
                 'cover_image' => 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1600&h=500&fit=crop&q=80',
+                'gallery' => [
+                    'https://images.unsplash.com/photo-1550831107-1553da8c8464?q=80&w=2070',
+                    'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053',
+                    'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=2089'
+                ],
                 'category_slugs' => ['sante-publique']
             ],
             [
@@ -74,6 +92,7 @@ class OrganizationSeeder extends Seeder
                 'country' => 'Côte d\'Ivoire',
                 'email' => 'contact@agrinov-ci.example',
                 'website' => 'https://example-agrinov.ci',
+                'registration_number' => 'AGRI/CI/2019/002',
                 'founded_date' => '2019-02-10',
                 'logo' => 'https://images.unsplash.com/photo-1592982537447-6f29fbde8147?w=300&h=300&fit=crop&q=80',
                 'cover_image' => 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1600&h=500&fit=crop&q=80',
@@ -87,6 +106,7 @@ class OrganizationSeeder extends Seeder
                 'country' => 'Rwanda',
                 'email' => 'voix@femmes-africaines.example',
                 'website' => 'https://example-vfa.org',
+                'registration_number' => 'VFA/RW/2011/45',
                 'founded_date' => '2011-03-08',
                 'logo' => 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=300&h=300&fit=crop&q=80',
                 'cover_image' => 'https://images.unsplash.com/photo-1589304049870-07cd45e20ee4?w=1600&h=500&fit=crop&q=80',
@@ -99,24 +119,30 @@ class OrganizationSeeder extends Seeder
             unset($data['category_slugs']);
 
             $data['user_id'] = $user->id;
-            $data['slug'] = Str::slug($data['name']);
-            $data['status'] = 'approved';
-            $data['approved_at'] = now();
+            $slug = Str::slug($data['name']);
             
-            $organization = Organization::create($data);
+            $organization = Organization::updateOrCreate(
+                ['slug' => $slug],
+                array_merge($data, [
+                    'status' => 'approved',
+                    'approved_at' => now(),
+                ])
+            );
 
-            // Associer aux catégories
+            // Sync categories (to avoid duplicates if re-running)
             $catsToAttach = $categories->whereIn('slug', $categorySlugs)->pluck('id')->toArray();
             if (!empty($catsToAttach)) {
-                $organization->categories()->attach($catsToAttach);
+                $organization->categories()->sync($catsToAttach);
             }
 
-            // Mettre l'utilisateur en tant que membre/admin de l'orga
-            $organization->members()->create([
-                'user_id' => $user->id,
-                'role' => 'admin',
-                'job_title' => 'Direction'
-            ]);
+            // Mettre l'utilisateur en tant que membre/admin de l'orga s'il n'y est pas déjà
+            if (!$organization->members()->where('user_id', $user->id)->exists()) {
+                $organization->members()->create([
+                    'user_id' => $user->id,
+                    'role' => 'admin',
+                    'job_title' => 'Direction'
+                ]);
+            }
         }
     }
 }

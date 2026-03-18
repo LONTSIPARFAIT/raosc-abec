@@ -25,7 +25,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook } from 'lucide-vue-ne
                         </span>
                     </div>
                 </Link>
-                <p class="text-sm leading-relaxed max-w-md mb-10 font-medium text-zinc-500 italic border-l-2 border-[#008751]/30 pl-6">
+                <p class="text-sm leading-relaxed max-w-md mb-10 font-medium text-zinc-500 tracking-tight border-l-3 border-[#008751]/30 pl-6 py-1">
                     Bâtir une société civile africaine forte, connectée et capable d'influencer le changement social à travers l'innovation technologique et la collaboration stratégique.
                 </p>
                 <div class="flex gap-4">
@@ -71,19 +71,19 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook } from 'lucide-vue-ne
                         <div class="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center text-[#FFCB05] shrink-0">
                             <MapPin class="h-4 w-4" />
                         </div>
-                        <span class="text-xs font-medium leading-relaxed italic">Quartier Haie Vive, Cotonou, <br/>République du Bénin</span>
+                        <span class="text-xs font-semibold leading-relaxed tracking-tight">Quartier Haie Vive, Cotonou, <br/>République du Bénin</span>
                     </li>
                     <li class="flex items-center gap-4">
                         <div class="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center text-[#008751] shrink-0">
                             <Mail class="h-4 w-4" />
                         </div>
-                        <span class="text-xs font-medium italic">contact@raosc.org</span>
+                        <span class="text-xs font-semibold tracking-tight">contact@raosc.org</span>
                     </li>
                     <li class="flex items-center gap-4">
                         <div class="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center text-[#E4002B] shrink-0">
                             <Phone class="h-4 w-4" />
                         </div>
-                        <span class="text-xs font-medium italic">+229 97 00 00 00</span>
+                        <span class="text-xs font-semibold tracking-tight">+229 97 00 00 00</span>
                     </li>
                 </ul>
             </div>

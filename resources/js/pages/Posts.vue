@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import PublicLayout from '@/layouts/PublicLayout.vue';
 import { Newspaper, Calendar, ArrowRight } from 'lucide-vue-next';
+import PublicLayout from '@/layouts/PublicLayout.vue';
 
 defineProps<{
     user?: any;
@@ -78,7 +78,7 @@ const placeholderPosts = [
                             <h2 class="text-2xl font-bold text-zinc-900 dark:text-white tracking-tight leading-tight mb-4 group-hover:text-[#008751] transition-colors">
                                 {{ post.title }}
                             </h2>
-                            <p class="text-sm text-zinc-500 font-medium italic mb-8 line-clamp-2 border-l-2 border-[#008751]/20 pl-4">
+                            <p class="text-sm text-zinc-500 font-medium mb-8 line-clamp-2 border-l-3 border-[#008751]/20 pl-4 leading-relaxed">
                                 {{ post.desc }}
                             </p>
                             <button class="flex items-center gap-2 text-[11px] font-bold text-[#008751] hover:gap-4 transition-all group-hover:translate-x-1">
@@ -95,7 +95,7 @@ const placeholderPosts = [
                             <Newspaper class="h-10 w-10" />
                         </div>
                         <h2 class="text-2xl font-bold text-white tracking-tight mb-4">Plus d'articles en préparation</h2>
-                        <p class="text-zinc-500 max-w-md mx-auto font-medium italic mb-10">Nous finalisons la rédaction de nouveaux dossiers et portraits d'organisations engagées.</p>
+                        <p class="text-zinc-500 max-w-md mx-auto font-medium mb-10 leading-relaxed">Nous finalisons la rédaction de nouveaux dossiers et portraits d'organisations engagées.</p>
                         <button class="bg-[#008751] hover:bg-[#006b40] text-white font-bold px-10 py-4 rounded-2xl text-xs transition-all shadow-lg shadow-[#008751]/10 hover:-translate-y-0.5">
                             S'abonner à la newsletter
                         </button>
