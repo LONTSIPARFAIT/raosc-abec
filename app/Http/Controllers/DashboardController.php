@@ -38,11 +38,41 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
             
+        // Data for Charts
+        $categoriesStats = \App\Models\OrganizationCategory::withCount(['organizations' => function($query) {
+            $query->where('status', 'approved');
+        }])->get();
+
+        $chartData = [
+            'categories' => [
+                'labels' => $categoriesStats->pluck('name'),
+                'datasets' => [
+                    [
+                        'label' => 'OSC par catégorie',
+                        'data' => $categoriesStats->pluck('organizations_count'),
+                        'backgroundColor' => ['#008751', '#FFCB05', '#310808', '#004225', '#7F6B00', '#F9FAFB'],
+                    ]
+                ]
+            ],
+            'registrations' => [
+                'labels' => ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
+                'datasets' => [
+                    [
+                        'label' => 'Inscriptions',
+                        'data' => [12, 19, 3, 5, 2, 3], // Dummy for now
+                        'borderColor' => '#008751',
+                        'tension' => 0.4,
+                    ]
+                ]
+            ]
+        ];
+
         return Inertia::render('Dashboard', [
             'stats' => $stats,
             'userOrganization' => $userOrganization,
             'recentOrgs' => $recentOrgs,
             'pendingOrgsList' => $pendingOrgsList,
+            'chartData' => $chartData
         ]);
     }
 }

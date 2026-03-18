@@ -13,6 +13,7 @@ import {
     Users
 } from 'lucide-vue-next';
 import AdminApprovalCard from '@/components/AdminApprovalCard.vue';
+import StatsChart from '@/components/StatsChart.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
@@ -40,6 +41,10 @@ defineProps<{
     userOrganization: Organization | null;
     recentOrgs: Organization[];
     pendingOrgsList: Organization[];
+    chartData: {
+        categories: any;
+        registrations: any;
+    };
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -181,18 +186,37 @@ const getStatusLabel = (status: string) => {
                         </div>
                     </div>
 
-                    <!-- Admin: Validation Area -->
-                    <div v-if="$page.props.auth.user.role === 'admin'" class="bg-amber-50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/10 rounded-3xl p-8 shadow-sm">
-                        <div class="flex items-center justify-between mb-8">
-                            <h2 class="text-xl font-bold text-amber-900 dark:text-amber-400">Demandes d'inscription</h2>
-                            <span class="text-xs font-bold text-amber-600 bg-amber-100 dark:bg-amber-500/10 px-3 py-1 rounded-full">{{ pendingOrgsList.length }} en attente</span>
+                    <!-- Admin: Analytics & Validation -->
+                    <div v-if="$page.props.auth.user.role === 'admin'" class="space-y-6">
+                        <!-- Charts Section -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
+                                <h3 class="text-sm font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-widest">Répartition par secteur</h3>
+                                <div class="h-64">
+                                    <StatsChart type="pie" :data="chartData.categories" />
+                                </div>
+                            </div>
+                            <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
+                                <h3 class="text-sm font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-widest">Tendances d'inscription</h3>
+                                <div class="h-64">
+                                    <StatsChart type="line" :data="chartData.registrations" />
+                                </div>
+                            </div>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <AdminApprovalCard v-for="org in pendingOrgsList" :key="org.id" :organization="org" />
-                        </div>
-                        <div v-if="pendingOrgsList.length === 0" class="text-center py-12">
-                            <CheckCircle2 class="w-12 h-12 text-amber-200 mx-auto mb-4" />
-                            <p class="text-sm text-zinc-500">Toutes les demandes ont été traitées.</p>
+
+                        <!-- Validation Area -->
+                        <div class="bg-amber-50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/10 rounded-3xl p-8 shadow-sm">
+                            <div class="flex items-center justify-between mb-8">
+                                <h2 class="text-xl font-bold text-amber-900 dark:text-amber-400">Demandes d'inscription</h2>
+                                <span class="text-xs font-bold text-amber-600 bg-amber-100 dark:bg-amber-500/10 px-3 py-1 rounded-full">{{ pendingOrgsList.length }} en attente</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <AdminApprovalCard v-for="org in pendingOrgsList" :key="org.id" :organization="org" />
+                            </div>
+                            <div v-if="pendingOrgsList.length === 0" class="text-center py-12">
+                                <CheckCircle2 class="w-12 h-12 text-amber-200 mx-auto mb-4" />
+                                <p class="text-sm text-zinc-500">Toutes les demandes ont été traitées.</p>
+                            </div>
                         </div>
                     </div>
 
