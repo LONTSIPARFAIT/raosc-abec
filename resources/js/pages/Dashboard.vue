@@ -167,22 +167,28 @@ const getStatusLabel = (status: string) => {
                 <!-- Left Column -->
                 <div class="lg:col-span-8 flex flex-col gap-6">
                     <!-- Notifications Section (for both but different content maybe) -->
-                    <div v-if="$page.props.auth.notifications && $page.props.auth.notifications.length > 0" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
-                        <h2 class="text-xl font-bold text-zinc-900 dark:text-white mb-6 flex items-center gap-2">
-                            <Bell class="w-5 h-5 text-red-500" />
-                            Notifications
-                        </h2>
-                        <div class="space-y-4">
-                            <div v-for="notif in $page.props.auth.notifications" :key="notif.id" class="p-4 bg-zinc-50 dark:bg-zinc-800/20 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex items-start gap-4">
-                                <div class="h-8 w-8 rounded-full bg-[#008751]/10 flex items-center justify-center text-[#008751] shrink-0">
+                    <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                                <Bell class="w-5 h-5 text-red-500" />
+                                Notifications
+                            </h2>
+                            <Link href="/dashboard/notifications" class="text-[10px] font-bold text-[#008751] hover:underline uppercase tracking-widest">Voir tout</Link>
+                        </div>
+                        <div v-if="$page.props.auth.notifications && $page.props.auth.notifications.length > 0" class="space-y-4">
+                            <div v-for="notif in $page.props.auth.notifications.slice(0, 3)" :key="notif.id" class="p-4 bg-zinc-50 dark:bg-zinc-800/20 rounded-2xl border border-zinc-100 dark:border-zinc-800 flex items-start gap-4" :class="{ 'bg-emerald-50/50 dark:bg-emerald-900/10': !notif.read_at }">
+                                <div class="h-8 w-8 rounded-full flex items-center justify-center shrink-0" :class="!notif.read_at ? 'bg-[#008751]/10 text-[#008751]' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500'">
                                     <Check class="w-4 h-4" />
                                 </div>
-                                <div>
-                                    <p class="text-sm font-medium text-zinc-900 dark:text-white">{{ notif.data.message }}</p>
-                                    <p v-if="notif.data.reason" class="text-xs text-red-500 mt-1">Motif: {{ notif.data.reason }}</p>
+                                <div class="flex-grow min-w-0">
+                                    <p class="text-sm font-medium text-zinc-900 dark:text-white" :class="!notif.read_at ? 'text-[#008751]' : ''">{{ notif.data.message }}</p>
+                                    <p v-if="notif.data.reason" class="text-xs text-red-500 mt-1 truncate">Motif: {{ notif.data.reason }}</p>
                                     <p class="text-[10px] text-zinc-400 mt-1 uppercase tracking-widest font-bold">{{ new Date(notif.created_at).toLocaleDateString() }}</p>
                                 </div>
                             </div>
+                        </div>
+                        <div v-else class="text-center py-6 text-zinc-500">
+                            <p class="text-sm">Vous n'avez pas de notifications récentes.</p>
                         </div>
                     </div>
 

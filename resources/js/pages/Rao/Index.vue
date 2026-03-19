@@ -29,6 +29,7 @@ const handleSearch = () => {
         country: selectedCountry.value
     }, { 
         preserveState: true, 
+        preserveScroll: true,
         replace: true,
         only: ['organizations', 'filters'],
         onFinish: () => { isLoading.value = false; }

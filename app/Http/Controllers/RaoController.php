@@ -94,6 +94,7 @@ class RaoController extends Controller
             'name' => 'required|string|max:255',
             'short_description' => 'required|string|max:500',
             'description' => 'nullable|string',
+            'website' => 'nullable|url|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
             'country' => 'required|string|max:100',

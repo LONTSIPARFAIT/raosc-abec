@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { Building2, Info, ArrowRight, CheckCircle2 } from 'lucide-vue-next';
+import CountryPhoneInput from '@/components/CountryPhoneInput.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -15,6 +16,7 @@ const form = useForm({
     name: '',
     short_description: '',
     description: '',
+    website: '',
     email: '',
     phone: '',
     country: '',
@@ -104,8 +106,14 @@ const toggleCategory = (id: number) => {
 
                                     <div class="group">
                                         <label class="block text-[10px] font-bold text-zinc-400 mb-3 ml-2 tracking-tight">Résumé de mission <span class="text-[#E4002B]">*</span></label>
-                                        <textarea v-model="form.short_description" required rows="3" placeholder="Décrivez en quelques mots l'essence de votre engagement..." class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl px-6 py-4 focus:ring-2 focus:ring-[#008751]/20 focus:border-[#008751] outline-none transition-all dark:text-white font-medium resize-none"></textarea>
+                                        <textarea v-model="form.short_description" required rows="2" placeholder="Décrivez en quelques mots l'essence de votre engagement..." class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl px-6 py-4 focus:ring-2 focus:ring-[#008751]/20 focus:border-[#008751] outline-none transition-all dark:text-white font-medium resize-none"></textarea>
                                         <div v-if="form.errors.short_description" class="text-[#E4002B] text-[10px] font-bold mt-2 ml-2 tracking-tight">{{ form.errors.short_description }}</div>
+                                    </div>
+
+                                    <div class="group">
+                                        <label class="block text-[10px] font-bold text-zinc-400 mb-3 ml-2 tracking-tight">Description détaillée</label>
+                                        <textarea v-model="form.description" rows="4" placeholder="Objectifs, historique, réalisations majeures..." class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl px-6 py-4 focus:ring-2 focus:ring-[#008751]/20 focus:border-[#008751] outline-none transition-all dark:text-white font-medium resize-y"></textarea>
+                                        <div v-if="form.errors.description" class="text-[#E4002B] text-[10px] font-bold mt-2 ml-2 tracking-tight">{{ form.errors.description }}</div>
                                     </div>
 
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -139,7 +147,13 @@ const toggleCategory = (id: number) => {
                                     
                                     <div class="group">
                                         <label class="block text-[10px] font-bold text-zinc-400 mb-3 ml-2 tracking-tight">Téléphone</label>
-                                        <input v-model="form.phone" type="text" placeholder="+229 ..." class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-[#008751]/20 focus:border-[#008751] outline-none transition-all dark:text-white font-medium" />
+                                        <CountryPhoneInput v-model="form.phone" />
+                                    </div>
+
+                                    <div class="group">
+                                        <label class="block text-[10px] font-bold text-zinc-400 mb-3 ml-2 tracking-tight">Site Web</label>
+                                        <input v-model="form.website" type="url" placeholder="https://www.mon-ong.org" class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-[#008751]/20 focus:border-[#008751] outline-none transition-all dark:text-white font-medium" />
+                                        <div v-if="form.errors.website" class="text-[#E4002B] text-[10px] font-bold mt-2 ml-2 tracking-tight">{{ form.errors.website }}</div>
                                     </div>
 
                                     <div class="group">

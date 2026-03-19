@@ -2,7 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { 
     MapPin, Building2, Calendar, Mail, CheckCircle2, Users, 
-    ArrowLeft, ShieldCheck, Image as ImageIcon, ChevronLeft, ChevronRight
+    ArrowLeft, ShieldCheck, Image as ImageIcon, ChevronLeft, ChevronRight, Globe
 } from 'lucide-vue-next';
 import { ref } from 'vue';
 import { Badge } from '@/components/ui/badge';
@@ -88,6 +88,15 @@ const prevGallery = () => {
                                             <dt class="text-[10px] font-bold text-zinc-400 tracking-tight">Email</dt>
                                             <dd class="text-sm font-semibold text-zinc-900 dark:text-white tracking-tight truncate">
                                                 <a :href="`mailto:${organization.email}`" class="hover:text-[#008751]">{{ organization.email }}</a>
+                                            </dd>
+                                        </div>
+                                    </div>
+                                    <div v-if="organization.website" class="flex gap-4">
+                                        <Globe class="h-5 w-5 text-zinc-400 shrink-0" />
+                                        <div>
+                                            <dt class="text-[10px] font-bold text-zinc-400 tracking-tight">Site Web</dt>
+                                            <dd class="text-sm font-semibold text-zinc-900 dark:text-white tracking-tight truncate">
+                                                <a :href="organization.website" target="_blank" rel="noopener noreferrer" class="hover:text-[#008751] text-blue-500 overflow-hidden text-ellipsis block max-w-[200px]">{{ organization.website.replace(/^https?:\/\//, '') }}</a>
                                             </dd>
                                         </div>
                                     </div>

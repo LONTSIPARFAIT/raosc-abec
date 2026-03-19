@@ -43,6 +43,20 @@ class DashboardController extends Controller
             $query->where('status', 'approved');
         }])->get();
 
+        // Real data for registrations (last 6 months)
+        $monthsLabels = collect();
+        $registrationsData = collect();
+
+        for ($i = 5; $i >= 0; $i--) {
+            $date = \Carbon\Carbon::now()->subMonths($i);
+            $monthsLabels->push($date->translatedFormat('M'));
+            // count all requested registrations for this month (or approved, depending on need - we will use all creations)
+            $count = Organization::whereYear('created_at', $date->year)
+                ->whereMonth('created_at', $date->month)
+                ->count();
+            $registrationsData->push($count);
+        }
+
         $chartData = [
             'categories' => [
                 'labels' => $categoriesStats->pluck('name'),
@@ -55,11 +69,11 @@ class DashboardController extends Controller
                 ]
             ],
             'registrations' => [
-                'labels' => ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
+                'labels' => $monthsLabels->toArray(),
                 'datasets' => [
                     [
                         'label' => 'Inscriptions',
-                        'data' => [12, 19, 3, 5, 2, 3], // Dummy for now
+                        'data' => $registrationsData->toArray(),
                         'borderColor' => '#008751',
                         'tension' => 0.4,
                     ]
