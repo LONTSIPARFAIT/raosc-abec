@@ -37,6 +37,7 @@ Route::prefix('rao')->name('rao.')->group(function () {
 // Admin Routes
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::post('/organizations/{organization}/status', [\App\Http\Controllers\Admin\OrganizationManagementController::class, 'updateStatus'])->name('organizations.status');
+    Route::get('/coming-soon', function() { return inertia('Admin/ComingSoon'); })->name('coming-soon');
 });
 
 // Autres pages publiques

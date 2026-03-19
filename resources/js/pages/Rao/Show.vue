@@ -17,11 +17,7 @@ const props = defineProps<{
 }>();
 
 const galleryIndex = ref(0);
-const gallery = props.organization.gallery || [
-    'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070',
-    'https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=2062',
-    'https://images.unsplash.com/photo-1489923507024-75496458a23c?q=80&w=2070'
-];
+const gallery: string[] = props.organization.gallery || [];
 
 const nextGallery = () => {
     galleryIndex.value = (galleryIndex.value + 1) % gallery.length;
@@ -37,9 +33,9 @@ const prevGallery = () => {
         <Head :title="organization.name + ' - RAOSC'" />
 
         <main class="bg-zinc-50 dark:bg-zinc-950 min-h-screen pb-24">
-            <!-- Header Image -->
             <div class="relative h-[25rem] sm:h-[35rem] w-full overflow-hidden bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
-                <img :src="organization.cover_image || 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069'" class="w-full h-full object-cover opacity-70 scale-105" />
+                <img v-if="organization.cover_image" :src="organization.cover_image" class="w-full h-full object-cover opacity-70 scale-105" />
+                <div v-else class="w-full h-full bg-gradient-to-r from-raosc-green/80 to-zinc-900"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 
                 <div class="absolute top-8 left-6 sm:left-12 z-20">
@@ -192,7 +188,7 @@ const prevGallery = () => {
                         </div>
 
                         <!-- Gallery Section -->
-                        <div class="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-xl overflow-hidden">
+                        <div v-if="gallery && gallery.length > 0" class="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-xl overflow-hidden">
                             <div class="p-8 sm:p-12 border-b border-zinc-50 dark:border-zinc-800">
                                 <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-2 flex items-center gap-3">
                                     <ImageIcon class="w-6 h-6 text-raosc-green" />

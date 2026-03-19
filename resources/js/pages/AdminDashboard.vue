@@ -210,30 +210,30 @@ const getStatusLabel = (status: string) => {
 
                         <!-- Actions Rapides Administrateur -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                            <button class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
+                            <Link href="/admin/coming-soon" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
                                 <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
                                     <Users class="w-5 h-5" />
                                 </div>
                                 <span class="text-xs font-bold text-zinc-900 dark:text-white text-center">Gérer les utilisateurs</span>
-                            </button>
-                            <button class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
+                            </Link>
+                            <Link href="/admin/coming-soon" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
                                 <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
                                     <FileText class="w-5 h-5" />
                                 </div>
                                 <span class="text-xs font-bold text-zinc-900 dark:text-white text-center">Gérer les catégories</span>
-                            </button>
-                            <button class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
+                            </Link>
+                            <Link href="/admin/coming-soon" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
                                 <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
                                     <Download class="w-5 h-5" />
                                 </div>
                                 <span class="text-xs font-bold text-zinc-900 dark:text-white text-center">Exporter l'annuaire</span>
-                            </button>
-                            <button class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
+                            </Link>
+                            <Link href="/admin/coming-soon" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
                                 <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
                                     <Settings class="w-5 h-5" />
                                 </div>
                                 <span class="text-xs font-bold text-zinc-900 dark:text-white text-center">Paramètres du site</span>
-                            </button>
+                            </Link>
                         </div>
 
                         <!-- Validation Area -->
