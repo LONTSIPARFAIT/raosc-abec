@@ -13,10 +13,9 @@ defineProps<{
 
         <main class="relative bg-zinc-50 dark:bg-zinc-950 pb-24 min-h-screen">
             <!-- Header Section -->
-            <div class="bg-zinc-950 py-24 sm:py-40 px-6 overflow-hidden relative">
-                <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl">
-                    <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#008751] via-[#FFCB05] to-[#E4002B] opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
-                </div>
+            <div class="relative bg-zinc-950 py-32 sm:py-48 px-6 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070" class="absolute inset-0 w-full h-full object-cover opacity-30 scale-105" />
+                <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
 
                 <div class="mx-auto max-w-7xl relative z-10 text-center">
                     <div class="mb-8 flex justify-center">

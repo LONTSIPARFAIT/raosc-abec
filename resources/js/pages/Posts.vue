@@ -38,22 +38,21 @@ const placeholderPosts = [
 
         <main class="relative bg-zinc-50 dark:bg-zinc-950 pb-24">
             <!-- Header Section -->
-            <div class="bg-zinc-950 py-24 sm:py-32 px-6 overflow-hidden relative">
-                <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl">
-                    <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#E4002B] to-[#FFCB05] opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
-                </div>
+            <div class="relative bg-zinc-950 py-32 sm:py-48 px-6 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1491336477066-31156b5e4f35?q=80&w=2070" class="absolute inset-0 w-full h-full object-cover opacity-30 scale-105" />
+                <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
 
                 <div class="mx-auto max-w-7xl relative z-10 text-center">
                     <div class="mb-8 flex justify-center">
                         <div class="flex items-center gap-3 rounded-full bg-white/5 px-5 py-2.5 border border-white/10 backdrop-blur-xl">
-                            <span class="text-[11px] font-bold tracking-[0.1em] text-white">Journal du Réseau</span>
+                            <span class="text-[11px] font-bold tracking-[0.1em] text-white uppercase italic">Journal du Réseau RAOSC</span>
                         </div>
                     </div>
-                    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-none mb-6">
+                    <h1 class="text-4xl sm:text-7xl font-extrabold text-white tracking-tight leading-none mb-8">
                         Dernières <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#FFCB05] to-[#E4002B]">Actualités</span>
                     </h1>
-                    <p class="text-lg text-zinc-400 max-w-2xl mx-auto font-medium tracking-tight">
-                        Suivez les moments forts, les projets et les opportunités au sein du réseau RAOSC.
+                    <p class="text-lg sm:text-2xl text-zinc-400 max-w-3xl mx-auto font-medium tracking-tight leading-relaxed">
+                        Suivez les moments forts, les projets et les opportunités au sein du réseau panafricain.
                     </p>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import { Menu, X, Search } from 'lucide-vue-next';
 import { ref } from 'vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 import UserInfo from '@/components/UserInfo.vue';
+import NotificationBell from '@/components/NotificationBell.vue';
 import { dashboard, login, register } from '@/routes';
 
 const searchQuery = ref('');
@@ -99,15 +100,16 @@ const navLinks = [
             <ThemeToggle />
             
             <template v-if="user">
+                <NotificationBell />
                 <Link
                     :href="dashboard()"
                     class="flex items-center gap-2 text-sm font-semibold text-zinc-900 dark:text-white hover:text-[#008751] transition-colors"
                     prefetch
                 >
                     <span class="bg-zinc-100 dark:bg-zinc-800 p-1.5 rounded-full">
-                        <UserInfo :user="user" :show-email="false" class="h-6 w-6" />
+                        <UserInfo :user="user" :show-email="false" :compact="true" class="h-6 w-6" />
                     </span>
-                    <span>Mon Espace</span>
+                    <span>Dashboard</span>
                 </Link>
             </template>
             <template v-else>

@@ -14,14 +14,17 @@ defineProps<{
 
         <main>
             <!-- Header Section -->
-            <div class="bg-zinc-950 py-24 sm:py-32 px-6">
-                    <div class="mx-auto max-w-7xl text-center">
-                        <span class="text-[#008751] font-bold tracking-[0.2em] text-[10px] mb-4 block">Notre Organisation</span>
-                        <h1 class="text-4xl sm:text-6xl font-extrabold text-white mb-6 tracking-tight">
-                            À Propos de <span class="text-[#FFCB05]">RAOSC</span>
+            <div class="relative bg-zinc-950 py-32 sm:py-48 px-6 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084" class="absolute inset-0 w-full h-full object-cover opacity-20 scale-105" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+                    
+                    <div class="relative mx-auto max-w-7xl text-center">
+                        <span class="text-[#008751] font-bold tracking-[0.2em] text-[10px] mb-4 block uppercase">Notre Vision Panafricaine</span>
+                        <h1 class="text-4xl sm:text-7xl font-extrabold text-white mb-8 tracking-tight leading-none">
+                            Fédérer pour <span class="text-[#FFCB05]">Mieux Servir</span>
                         </h1>
-                        <p class="text-zinc-400 text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed font-medium">
-                            Le Réseau Africain des Organisations de la Société Civile est une initiative portée par l'ONG ABEC pour fédérer les acteurs du développement.
+                        <p class="text-zinc-400 text-lg sm:text-2xl max-w-4xl mx-auto leading-relaxed font-medium">
+                            Le Réseau Africain des Organisations de la Société Civile (RAOSC) est le pilier opérationnel de l'ONG **ABEC**, dédié à la cartographie et à la synergie des acteurs du changement en Afrique.
                         </p>
                     </div>
             </div>
@@ -31,13 +34,13 @@ defineProps<{
                 <div class="mx-auto max-w-7xl">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                         <div>
-                            <h2 class="text-3xl font-bold text-zinc-900 dark:text-white mb-8">Notre Engagement</h2>
-                            <div class="space-y-6 text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+                            <h2 class="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white mb-8 tracking-tight">Une mission, un <span class="text-[#008751]">réseau</span></h2>
+                            <div class="space-y-6 text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed font-medium">
                                 <p>
-                                    Né d'une volonté de professionnaliser les actions de terrain, le RAOSC offre un pont numérique entre les organisations et leurs bénéficiaires.
+                                    Le **RAOSC** a été fondé sur le constat que de nombreuses actions sociales en Afrique manquent de visibilité et de coordination. Porté par l'**ABEC**, ce réseau numérique permet de structurer les efforts locaux pour un impact global.
                                 </p>
                                 <p>
-                                    Nous croyons en la force du numérique pour amplifier l'impact social. En rejoignant notre réseau, chaque organisation gagne en visibilité et en outils de gestion.
+                                    Nous offrons aux organisations à but non lucratif une plateforme vitrine pour exposer leurs projets, leurs succès et leurs besoins, tout en garantissant aux donateurs et partenaires une transparence totale grâce à notre processus de validation rigoureux.
                                 </p>
                             </div>
                         </div>

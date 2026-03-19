@@ -57,14 +57,17 @@ watch([searchQuery, selectedCategory, selectedCity, selectedCountry], () => {
         <Head title="Annuaire des Organisations - RAOSC" />
 
         <!-- Header Section -->
-        <div class="bg-zinc-950 px-6 py-16 sm:py-24 text-center">
-            <div class="text-center max-w-3xl mx-auto">
-                <span class="text-[#008751] font-bold tracking-[0.2em] text-[10px] mb-4 block">Notre Réseau</span>
-                <h1 class="text-3xl sm:text-6xl font-extrabold text-white mb-6 tracking-tight">
-                    Annuaire des <span class="text-[#008751]">Organisations</span>
+        <div class="relative bg-zinc-950 py-32 sm:py-48 px-6 text-center overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2113" class="absolute inset-0 w-full h-full object-cover opacity-20 scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+
+            <div class="relative text-center max-w-4xl mx-auto">
+                <span class="text-[#008751] font-bold tracking-[0.2em] text-[10px] mb-4 block uppercase leading-none">Annuaire des OSC Africaines</span>
+                <h1 class="text-4xl sm:text-7xl font-extrabold text-white mb-8 tracking-tight leading-none">
+                    Le Réseau du <span class="text-[#008751]">Changement</span>
                 </h1>
-                <p class="text-zinc-400 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed border-l-3 border-[#FFCB05] pl-6 py-1 inline-block text-left">
-                    Recherchez et filtrez les organisations de la société civile par domaine, ville ou pays.
+                <p class="text-zinc-400 text-lg sm:text-2xl max-w-4xl mx-auto leading-relaxed font-medium tracking-tight">
+                    Explorez l'annuaire interactif du RAOSC pour identifier, filtrer et collaborer avec les organisations de la société civile agissant sur le terrain.
                 </p>
             </div>
         </div>

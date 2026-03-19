@@ -38,9 +38,8 @@ const prevGallery = () => {
 
         <main class="bg-zinc-50 dark:bg-zinc-950 min-h-screen pb-24">
             <!-- Header Image -->
-            <div class="relative h-[20rem] sm:h-[30rem] w-full overflow-hidden bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
-                <img v-if="organization.cover_image" :src="organization.cover_image" class="w-full h-full object-cover opacity-60" />
-                <div v-else class="w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-950"></div>
+            <div class="relative h-[25rem] sm:h-[35rem] w-full overflow-hidden bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
+                <img :src="organization.cover_image || 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069'" class="w-full h-full object-cover opacity-70 scale-105" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 
                 <div class="absolute top-8 left-6 sm:left-12 z-20">
