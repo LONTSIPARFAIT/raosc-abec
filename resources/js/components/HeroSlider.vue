@@ -73,11 +73,11 @@ onUnmounted(() => {
                     v-show="currentIndex === index" 
                     class="space-y-6"
                 >
-                    <span class="inline-block text-[#FFCB05] font-bold tracking-[0.2em] text-[10px] sm:text-xs">Initiative ONG ABEC</span>
+                    <span class="inline-block text-raosc-yellow font-bold tracking-[0.2em] text-[10px] sm:text-xs">Initiative ONG ABEC</span>
                     <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.15] tracking-tight">
                         {{ slide.title }}
                     </h1>
-                    <p class="text-zinc-300 text-base sm:text-lg font-medium max-w-2xl leading-relaxed italic border-l-3 border-[#008751] pl-6 py-1">
+                    <p class="text-zinc-300 text-base sm:text-lg font-medium max-w-2xl leading-relaxed italic border-l-3 border-raosc-green pl-6 py-1">
                         {{ slide.description }}
                     </p>
                 </div>
@@ -86,7 +86,7 @@ onUnmounted(() => {
             <div class="mt-10 sm:mt-12 flex flex-wrap gap-4 items-center">
                 <Link
                     href="/rao"
-                    class="rounded-full bg-[#008751] px-8 py-3.5 text-xs font-bold text-white shadow-lg shadow-[#008751]/20 hover:bg-[#006b40] transition-all hover:-translate-y-0.5"
+                    class="rounded-full bg-raosc-green px-8 py-3.5 text-xs font-bold text-white shadow-lg shadow-raosc-green/20 hover:bg-[#006b40] transition-all hover:-translate-y-0.5"
                     prefetch
                 >
                     Explorer l'annuaire
@@ -94,7 +94,7 @@ onUnmounted(() => {
                 <Link
                     v-if="!user"
                     :href="register()"
-                    class="flex items-center gap-2 text-white text-xs font-bold hover:text-[#FFCB05] transition-colors group"
+                    class="flex items-center gap-2 text-white text-xs font-bold hover:text-raosc-yellow transition-colors group"
                     prefetch
                 >
                     Nous Rejoindre
@@ -152,3 +152,4 @@ onUnmounted(() => {
   transform: translateY(-20px);
 }
 </style>
+

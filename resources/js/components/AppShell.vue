@@ -22,3 +22,4 @@ const isOpen = usePage().props.sidebarOpen;
         <slot />
     </SidebarProvider>
 </template>
+

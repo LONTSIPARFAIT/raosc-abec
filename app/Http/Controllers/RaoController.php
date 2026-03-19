@@ -125,5 +125,65 @@ class RaoController extends Controller
         return redirect()->route('rao.index')
         ->with('success', 'Votre organisation a été soumise avec succès. Elle est en cours d\'examen.');
     }
+
+    /**
+     * Affiche le formulaire d'édition
+     */
+    public function edit(Organization $organization)
+    {
+        // On s'assure que seul l'admin/fondateur peut modifier
+        abort_if(! $organization->members()->where('user_id', auth()->id())->exists(), 403);
+
+        $categories = OrganizationCategory::all();
+
+        return Inertia::render('Rao/Edit', [
+            'organization' => new OrganizationResource($organization->load('categories')),
+            'categories' => OrganizationCategoryResource::collection($categories)->resolve()
+        ]);
+    }
+
+    /**
+     * Affiche la liste des organisations de l'utilisateur connecté
+     */
+    public function myOrganizations(Request $request)
+    {
+        $organizations = Organization::whereHas('members', function($q) {
+            $q->where('user_id', auth()->id());
+        })->orWhere('user_id', auth()->id())->get();
+
+        return Inertia::render('Rao/MyOrganizations', [
+            'organizations' => OrganizationResource::collection($organizations)->resolve()
+        ]);
+    }
+
+    /**
+     * Met à jour l'organisation
+     */
+    public function update(Request $request, Organization $organization)
+    {
+        abort_if(! $organization->members()->where('user_id', auth()->id())->exists(), 403);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'short_description' => 'required|string|max:500',
+            'description' => 'nullable|string',
+            'website' => 'nullable|url|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'country' => 'required|string|max:100',
+            'city' => 'required|string|max:100',
+            'address' => 'nullable|string|max:255',
+            'registration_number' => 'nullable|string|max:255',
+            'founded_date' => 'nullable|date',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:organization_categories,id',
+        ]);
+
+        $organization->update($validated);
+        $organization->categories()->sync($validated['categories']);
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Organisation mise à jour avec succès.');
+    }
 }
 

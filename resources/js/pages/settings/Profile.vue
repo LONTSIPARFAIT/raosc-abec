@@ -129,3 +129,4 @@ const user = computed(() => page.props.auth.user);
         </SettingsLayout>
     </AppLayout>
 </template>
+

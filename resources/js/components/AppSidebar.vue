@@ -10,7 +10,8 @@ import {
     Globe, 
     Building2, 
     Newspaper,
-    Settings2
+    Settings2,
+    PlusCircle
 } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -30,37 +31,29 @@ import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Accueil',
+        title: 'Retour à l\'Accueil',
         href: '/',
         icon: Home,
     },
     {
-        title: 'Dashboard',
+        title: 'Tableau de bord',
         href: dashboard(),
         icon: LayoutGrid,
     },
-];
-
-const raoNavItems: NavItem[] = [
+    {
+        title: 'Ma Structure',
+        href: dashboard(), // En attendant une route dédiée à l'édition, on la met sur le dashboard où ils peuvent la gérer
+        icon: Building2,
+    },
     {
         title: 'Annuaire OSC',
         href: '/rao',
         icon: Globe,
     },
     {
-        title: 'Ma Structure',
+        title: 'Inscrire une OSC',
         href: '/rao/join',
-        icon: Building2,
-    },
-    {
-        title: 'Communauté',
-        href: '/community',
-        icon: Users,
-    },
-    {
-        title: 'Actualités',
-        href: '/posts',
-        icon: Newspaper,
+        icon: PlusCircle,
     },
 ];
 
@@ -72,7 +65,7 @@ const personalNavItems: NavItem[] = [
     },
     {
         title: 'Notifications',
-        href: '/notifications',
+        href: '/dashboard/notifications',
         icon: Bell,
     },
 ];
@@ -107,7 +100,6 @@ const footerNavItems: NavItem[] = [
 
         <SidebarContent>
             <NavMain title="Navigation" :items="mainNavItems" />
-            <NavMain title="Réseau" :items="raoNavItems" />
             <NavMain title="Personnel" :items="personalNavItems" />
         </SidebarContent>
 
@@ -118,3 +110,4 @@ const footerNavItems: NavItem[] = [
     </Sidebar>
     <slot />
 </template>
+

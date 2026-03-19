@@ -9,26 +9,29 @@ import PublicLayout from '@/layouts/PublicLayout.vue';
 
 const props = defineProps<{
     categories: any[];
+    organization: any;
     isPublic?: boolean;
 }>();
 
+const org = props.organization.data || props.organization;
+
 const form = useForm({
-    name: '',
-    short_description: '',
-    description: '',
-    website: '',
-    email: '',
-    phone: '',
-    country: '',
-    city: '',
-    address: '',
-    registration_number: '',
-    founded_date: '',
-    categories: [] as number[],
+    name: org.name || '',
+    short_description: org.short_description || '',
+    description: org.description || '',
+    website: org.website || '',
+    email: org.email || '',
+    phone: org.phone || '',
+    country: org.country || '',
+    city: org.city || '',
+    address: org.address || '',
+    registration_number: org.registration_number || '',
+    founded_date: org.founded_date || '',
+    categories: (org.categories || []).map((c: any) => c.id),
 });
 
 const submit = () => {
-    form.post('/rao/join');
+    form.put(`/rao/orga/${org.slug}`);
 };
 
 const toggleCategory = (id: number) => {
@@ -43,7 +46,7 @@ const toggleCategory = (id: number) => {
 
 <template>
     <component :is="isPublic ? PublicLayout : AppLayout">
-        <Head title="Enregistrer une organisation - RAOSC" />
+        <Head title="Éditer votre organisation - RAOSC" />
 
         <div class="bg-zinc-50 dark:bg-zinc-950 min-h-screen pb-24">
             <!-- Header Section -->
@@ -59,7 +62,7 @@ const toggleCategory = (id: number) => {
                         </div>
                     </div>
                     <h1 class="text-4xl sm:text-7xl font-extrabold text-white tracking-tight leading-none mb-6">
-                        Inscrire votre <span class="bg-clip-text text-transparent bg-gradient-to-r from-raosc-green to-raosc-yellow">Organisation</span>
+                        Modifier votre <span class="bg-clip-text text-transparent bg-gradient-to-r from-raosc-green to-raosc-yellow">Organisation</span>
                     </h1>
                     <p class="text-lg text-zinc-400 max-w-2xl mx-auto font-medium leading-relaxed">
                         Rejoignez le Réseau Africain pour amplifier votre impact et accéder à des partenariats stratégiques.
@@ -181,8 +184,8 @@ const toggleCategory = (id: number) => {
                                     </Button>
                                 </Link>
                                 <Button type="submit" :disabled="form.processing" class="order-1 sm:order-2 w-full sm:w-auto bg-raosc-green hover:bg-[#006b40] text-white rounded-full py-7 px-12 font-bold text-[11px] shadow-2xl shadow-raosc-green/20 transform hover:-translate-y-1 transition-all">
-                                    <span v-if="form.processing" class="flex items-center gap-2 font-medium">Traitement en cours...</span>
-                                    <span v-else class="flex items-center gap-2">Soumettre mon Dossier <ArrowRight class="w-4 h-4 ml-2" /></span>
+                                    <span v-if="form.processing" class="flex items-center gap-2 font-medium">Enregistrement...</span>
+                                    <span v-else class="flex items-center gap-2">Enregistrer les modifications <ArrowRight class="w-4 h-4 ml-2" /></span>
                                 </Button>
                             </div>
                         </form>

@@ -26,3 +26,4 @@ const { isMobile, state, toggleSidebar } = useSidebar()
     <span class="sr-only">Toggle sidebar</span>
   </Button>
 </template>
+

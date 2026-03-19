@@ -46,9 +46,9 @@ withDefaults(
 );
 
 const stats = [
-    { id: 1, name: 'Organisations', value: '150+', icon: Users, color: 'text-[#008751]', bg: 'bg-[#008751]/10' },
-    { id: 2, name: 'Projets Active', value: '450+', icon: Globe, color: 'text-[#FFCB05]', bg: 'bg-[#FFCB05]/10' },
-    { id: 3, name: 'Bénévoles', value: '2.5k', icon: Heart, color: 'text-[#E4002B]', bg: 'bg-[#E4002B]/10' },
+    { id: 1, name: 'Organisations', value: '150+', icon: Users, color: 'text-raosc-green', bg: 'bg-raosc-green/10' },
+    { id: 2, name: 'Projets Active', value: '450+', icon: Globe, color: 'text-raosc-yellow', bg: 'bg-raosc-yellow/10' },
+    { id: 3, name: 'Bénévoles', value: '2.5k', icon: Heart, color: 'text-raosc-red', bg: 'bg-raosc-red/10' },
     { id: 4, name: 'Villes', value: '24', icon: ShieldCheck, color: 'text-zinc-400', bg: 'bg-zinc-100 dark:bg-zinc-800' },
 ];
 
@@ -57,22 +57,22 @@ const features = [
         name: 'Visibilité Accrue',
         description: 'Amplifiez votre voix et vos actions auprès des bailleurs et du grand public à travers notre annuaire.',
         icon: Zap,
-        color: 'text-[#008751]',
-        bg: 'bg-[#008751]/10'
+        color: 'text-raosc-green',
+        bg: 'bg-raosc-green/10'
     },
     {
         name: 'Synergie Locale',
         description: 'Identifiez des partenaires stratégiques nationaux et régionaux pour des projets à fort impact social.',
         icon: MessageSquare,
-        color: 'text-[#FFCB05]',
-        bg: 'bg-[#FFCB05]/10'
+        color: 'text-raosc-yellow',
+        bg: 'bg-raosc-yellow/10'
     },
     {
         name: 'Excellence Opérationnelle',
         description: 'Accédez à des ressources et outils de gestion modernes pour professionnaliser votre structure.',
         icon: Trophy,
-        color: 'text-[#E4002B]',
-        bg: 'bg-[#E4002B]/10'
+        color: 'text-raosc-red',
+        bg: 'bg-raosc-red/10'
     }
 ];
 
@@ -112,9 +112,9 @@ const featuredCategories = [
         <div class="py-24 sm:py-32 bg-zinc-50 dark:bg-zinc-900/30">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-20">
-                    <h2 class="text-[#008751] font-bold text-[10px] tracking-[0.2em] mb-4">Pourquoi rejoindre le réseau ?</h2>
+                    <h2 class="text-raosc-green font-bold text-[10px] tracking-[0.2em] mb-4">Pourquoi rejoindre le réseau ?</h2>
                     <h3 class="text-3xl sm:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight mb-6 leading-none">
-                        Des outils pour transformer votre <span class="text-[#FFCB05]">engagement</span>
+                        Des outils pour transformer votre <span class="text-raosc-yellow">engagement</span>
                     </h3>
                     <p class="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg">
                         Le RAOSC offre un écosystème complet pour aider les associations africaines à gagner en crédibilité et en efficacité.
@@ -135,10 +135,10 @@ const featuredCategories = [
                 <div class="bg-white dark:bg-zinc-900/50 rounded-[3rem] p-8 sm:p-16 border border-zinc-200 dark:border-zinc-800 shadow-xl shadow-zinc-200/50 dark:shadow-none">
                     <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12 text-center md:text-left">
                         <div>
-                            <h4 class="text-2xl font-bold text-zinc-900 dark:text-white tracking-tight">Parcourir par <span class="text-[#008751]">Catégorie</span></h4>
+                            <h4 class="text-2xl font-bold text-zinc-900 dark:text-white tracking-tight">Parcourir par <span class="text-raosc-green">Catégorie</span></h4>
                             <p class="text-[13px] font-medium text-zinc-500 mt-1">Trouvez les organisations qui correspondent à vos intérêts.</p>
                         </div>
-                        <Link href="/rao" class="text-[10px] font-bold text-[#008751] hover:text-[#006b40] transition-colors bg-[#008751]/10 px-6 py-2.5 rounded-xl border border-[#008751]/10">Voir toutes les catégories</Link>
+                        <Link href="/rao" class="text-[10px] font-bold text-raosc-green hover:text-[#006b40] transition-colors bg-raosc-green/10 px-6 py-2.5 rounded-xl border border-raosc-green/10">Voir toutes les catégories</Link>
                     </div>
                     
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -146,11 +146,11 @@ const featuredCategories = [
                             v-for="cat in featuredCategories" 
                             :key="cat.name" 
                             :href="`/rao?category=${cat.name.toLowerCase()}`"
-                            class="group flex flex-col items-center p-6 bg-zinc-50 dark:bg-zinc-950 rounded-3xl border border-zinc-100 dark:border-zinc-800 hover:border-[#008751]/30 transition-all hover:bg-white dark:hover:bg-zinc-900 hover:shadow-2xl hover:shadow-[#008751]/10"
+                            class="group flex flex-col items-center p-6 bg-zinc-50 dark:bg-zinc-950 rounded-3xl border border-zinc-100 dark:border-zinc-800 hover:border-raosc-green/30 transition-all hover:bg-white dark:hover:bg-zinc-900 hover:shadow-2xl hover:shadow-raosc-green/10"
                         >
                             <span class="text-3xl mb-4 group-hover:scale-125 transition-transform duration-500">{{ cat.icon }}</span>
                             <span class="text-xs font-bold text-zinc-900 dark:text-white tracking-tight">{{ cat.name }}</span>
-                            <span class="text-[9px] font-bold text-[#008751] mt-2 bg-[#008751]/10 px-2.5 py-1 rounded-lg border border-[#008751]/10">{{ cat.count }}</span>
+                            <span class="text-[9px] font-bold text-raosc-green mt-2 bg-raosc-green/10 px-2.5 py-1 rounded-lg border border-raosc-green/10">{{ cat.count }}</span>
                         </Link>
                     </div>
                 </div>
@@ -162,10 +162,10 @@ const featuredCategories = [
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
                     <div class="max-w-2xl">
-                        <h2 class="text-3xl font-bold text-zinc-900 dark:text-white mb-4 tracking-tight">Organisations à la <span class="text-[#008751]">Une</span></h2>
-                        <p class="text-zinc-500 text-sm font-medium border-l-3 border-[#FFCB05] pl-5 py-1">Découvrez les membres actifs qui œuvrent quotidiennement pour le changement.</p>
+                        <h2 class="text-3xl font-bold text-zinc-900 dark:text-white mb-4 tracking-tight">Organisations à la <span class="text-raosc-green">Une</span></h2>
+                        <p class="text-zinc-500 text-sm font-medium border-l-3 border-raosc-yellow pl-5 py-1">Découvrez les membres actifs qui œuvrent quotidiennement pour le changement.</p>
                     </div>
-                    <Link href="/rao" class="text-xs font-bold text-[#008751] hover:text-[#006b40] flex items-center gap-2 bg-[#008751]/5 px-5 py-2.5 rounded-xl transition-all hover:-translate-y-0.5">
+                    <Link href="/rao" class="text-xs font-bold text-raosc-green hover:text-[#006b40] flex items-center gap-2 bg-raosc-green/5 px-5 py-2.5 rounded-xl transition-all hover:-translate-y-0.5">
                         Voir tout l'annuaire
                         <ArrowRight class="w-4 h-4" />
                     </Link>
@@ -191,10 +191,10 @@ const featuredCategories = [
         <div class="bg-zinc-950 py-24 sm:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="bg-[#310808] rounded-[3rem] p-12 sm:p-20 text-center relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-[#008751] opacity-10 rounded-full blur-[80px]"></div>
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-raosc-green opacity-10 rounded-full blur-[80px]"></div>
                     <div class="relative z-10">
                         <h2 class="text-3xl sm:text-5xl font-bold text-white mb-8 max-w-3xl mx-auto">
-                            Rejoignez la plus grande coalition d'ONG en <span class="text-[#FFCB05]">Afrique</span>
+                            Rejoignez la plus grande coalition d'ONG en <span class="text-raosc-yellow">Afrique</span>
                         </h2>
                         <p class="text-zinc-400 text-sm sm:text-lg max-w-2xl mx-auto mb-12">
                             Inscrivez votre organisation gratuitement et devenez un acteur clé du réseau RAOSC.
@@ -203,7 +203,7 @@ const featuredCategories = [
                             <Link 
                                 v-if="!$page.props.auth.user"
                                 :href="register()" 
-                                class="bg-[#008751] text-white px-10 py-4.5 rounded-2xl font-bold text-sm hover:bg-[#006b40] transition-all shadow-xl shadow-[#008751]/20 hover:-translate-y-1"
+                                class="bg-raosc-green text-white px-10 py-4.5 rounded-2xl font-bold text-sm hover:bg-[#006b40] transition-all shadow-xl shadow-raosc-green/20 hover:-translate-y-1"
                                 prefetch
                             >
                                 S'inscrire maintenant
@@ -219,3 +219,4 @@ const featuredCategories = [
         </div>
     </PublicLayout>
 </template>
+

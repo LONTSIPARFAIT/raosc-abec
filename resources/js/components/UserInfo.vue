@@ -49,3 +49,4 @@ const showAvatar = computed(
         <span class="text-xs font-bold text-zinc-700 dark:text-zinc-300">{{ initials }}</span>
     </div>
 </template>
+

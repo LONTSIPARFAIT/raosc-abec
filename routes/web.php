@@ -24,10 +24,12 @@ Route::prefix('rao')->name('rao.')->group(function () {
     Route::get('/', [\App\Http\Controllers\RaoController::class, 'index'])->name('index');
     Route::get('/orga/{slug}', [\App\Http\Controllers\RaoController::class, 'show'])->name('show');
     
-    // Espace de création (protégé)
+    // Espace de création et édition (protégé)
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/join', [\App\Http\Controllers\RaoController::class, 'create'])->name('create');
         Route::post('/join', [\App\Http\Controllers\RaoController::class, 'store'])->name('store');
+        Route::get('/orga/{organization:slug}/edit', [\App\Http\Controllers\RaoController::class, 'edit'])->name('edit');
+        Route::put('/orga/{organization:slug}', [\App\Http\Controllers\RaoController::class, 'update'])->name('update');
     });
 });
 

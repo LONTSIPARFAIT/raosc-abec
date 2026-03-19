@@ -29,3 +29,4 @@ const patternId = `pattern-${useId()}`;
         ></rect>
     </svg>
 </template>
+

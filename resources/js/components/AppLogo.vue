@@ -12,3 +12,4 @@
         <span class="truncate leading-none text-[10px] text-zinc-500 font-medium">ONG ABEC</span>
     </div>
 </template>
+

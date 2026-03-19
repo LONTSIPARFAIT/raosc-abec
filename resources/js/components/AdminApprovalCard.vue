@@ -29,10 +29,10 @@ const updateStatus = (status: string) => {
 </script>
 
 <template>
-    <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 flex flex-col gap-4 shadow-sm hover:border-[#008751]/30 transition-all">
+    <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 flex flex-col gap-4 shadow-sm hover:border-raosc-green/30 transition-all">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="h-10 w-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center font-bold text-[#008751]">
+                <div class="h-10 w-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center font-bold text-raosc-green">
                     {{ organization.name.charAt(0) }}
                 </div>
                 <div>
@@ -76,3 +76,4 @@ const updateStatus = (status: string) => {
         </div>
     </div>
 </template>
+

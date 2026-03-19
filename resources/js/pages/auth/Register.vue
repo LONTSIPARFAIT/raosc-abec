@@ -105,3 +105,4 @@ import { store } from '@/routes/register';
         </Form>
     </AuthBase>
 </template>
+

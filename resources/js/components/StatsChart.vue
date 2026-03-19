@@ -59,3 +59,4 @@ const chartOptions = computed(() => ({
     <Pie v-else-if="type === 'pie'" :data="data" :options="chartOptions" />
   </div>
 </template>
+

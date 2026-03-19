@@ -61,11 +61,11 @@ const prevGallery = () => {
                                 <!-- Logo -->
                                 <div class="h-32 w-32 rounded-3xl bg-white dark:bg-zinc-800 shadow-lg ring-4 ring-white dark:ring-zinc-950 overflow-hidden mb-6 flex items-center justify-center border border-zinc-100 dark:border-zinc-800">
                                     <img v-if="organization.logo" :src="organization.logo" class="h-full w-full object-cover" />
-                                    <Building2 v-else class="h-12 w-12 text-[#008751]" />
+                                    <Building2 v-else class="h-12 w-12 text-raosc-green" />
                                 </div>
                                 
                                 <h1 class="text-2xl font-extrabold text-zinc-900 dark:text-white mb-2 tracking-tight">{{ organization.name }}</h1>
-                                <div class="flex items-center text-[#008751] text-[10px] font-bold tracking-[0.1em]">
+                                <div class="flex items-center text-raosc-green text-[10px] font-bold tracking-[0.1em]">
                                     <CheckCircle2 class="w-4 h-4 mr-1.5" />
                                     ONG Vérifiée
                                 </div>
@@ -87,7 +87,7 @@ const prevGallery = () => {
                                         <div>
                                             <dt class="text-[10px] font-bold text-zinc-400 tracking-tight">Email</dt>
                                             <dd class="text-sm font-semibold text-zinc-900 dark:text-white tracking-tight truncate">
-                                                <a :href="`mailto:${organization.email}`" class="hover:text-[#008751]">{{ organization.email }}</a>
+                                                <a :href="`mailto:${organization.email}`" class="hover:text-raosc-green">{{ organization.email }}</a>
                                             </dd>
                                         </div>
                                     </div>
@@ -96,14 +96,14 @@ const prevGallery = () => {
                                         <div>
                                             <dt class="text-[10px] font-bold text-zinc-400 tracking-tight">Site Web</dt>
                                             <dd class="text-sm font-semibold text-zinc-900 dark:text-white tracking-tight truncate">
-                                                <a :href="organization.website" target="_blank" rel="noopener noreferrer" class="hover:text-[#008751] text-blue-500 overflow-hidden text-ellipsis block max-w-[200px]">{{ organization.website.replace(/^https?:\/\//, '') }}</a>
+                                                <a :href="organization.website" target="_blank" rel="noopener noreferrer" class="hover:text-raosc-green text-blue-500 overflow-hidden text-ellipsis block max-w-[200px]">{{ organization.website.replace(/^https?:\/\//, '') }}</a>
                                             </dd>
                                         </div>
                                     </div>
                                 </dl>
                                 
                                 <div class="mt-8 pt-8 border-t border-zinc-100 dark:border-zinc-800">
-                                    <Button class="w-full bg-[#008751] hover:bg-[#006b40] text-white rounded-2xl py-7 font-bold text-xs shadow-lg shadow-[#008751]/20 transition-all hover:-translate-y-0.5">
+                                    <Button class="w-full bg-raosc-green hover:bg-[#006b40] text-white rounded-2xl py-7 font-bold text-xs shadow-lg shadow-raosc-green/20 transition-all hover:-translate-y-0.5">
                                         Prendre Contact
                                     </Button>
                                 </div>
@@ -115,15 +115,15 @@ const prevGallery = () => {
                     <div class="lg:col-span-8 flex flex-col gap-8">
                         <div class="bg-white dark:bg-zinc-900 p-8 sm:p-12 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-xl">
                             <div class="flex flex-wrap gap-2 mb-8">
-                                <Badge v-for="cat in organization.categories" :key="cat.id" variant="outline" class="text-[9px] font-bold py-1.5 px-3.5 rounded-lg border-[#008751]/10 bg-[#008751]/5 text-[#008751]">
+                                <Badge v-for="cat in organization.categories" :key="cat.id" variant="outline" class="text-[9px] font-bold py-1.5 px-3.5 rounded-lg border-raosc-green/10 bg-raosc-green/5 text-raosc-green">
                                     {{ cat.name }}
                                 </Badge>
                             </div>
                             
-                            <h2 class="text-2xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white mb-8 tracking-tight">À propos de <span class="text-[#008751]">l'organisation</span></h2>
+                            <h2 class="text-2xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white mb-8 tracking-tight">À propos de <span class="text-raosc-green">l'organisation</span></h2>
                             
                             <div class="space-y-6">
-                                <p class="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white border-l-3 border-[#FFCB05] pl-6 py-2 leading-relaxed tracking-tight">
+                                <p class="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white border-l-3 border-raosc-yellow pl-6 py-2 leading-relaxed tracking-tight">
                                     {{ organization.short_description }}
                                 </p>
                                 <div class="text-zinc-600 dark:text-zinc-400 text-base leading-relaxed font-medium mt-6" v-if="organization.description" v-html="organization.description.replace(/\n/g, '<br>')"></div>
@@ -131,10 +131,10 @@ const prevGallery = () => {
 
                             <!-- Fiche Technique -->
                             <div class="mt-16 bg-zinc-50 dark:bg-zinc-800/50 rounded-[2rem] p-8 border border-zinc-100 dark:border-zinc-800">
-                                <h3 class="text-lg font-bold text-zinc-900 dark:text-white mb-8 italic tracking-tight underline decoration-[#FFCB05] decoration-2 underline-offset-8">Fiche Technique</h3>
+                                <h3 class="text-lg font-bold text-zinc-900 dark:text-white mb-8 italic tracking-tight underline decoration-raosc-yellow decoration-2 underline-offset-8">Fiche Technique</h3>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                     <div class="flex items-center gap-4">
-                                        <div class="h-10 w-10 rounded-xl bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center text-[#E4002B]">
+                                        <div class="h-10 w-10 rounded-xl bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center text-raosc-red">
                                             <Calendar class="w-5 h-5" />
                                         </div>
                                         <div>
@@ -143,7 +143,7 @@ const prevGallery = () => {
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-4">
-                                        <div class="h-10 w-10 rounded-xl bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center text-[#FFCB05]">
+                                        <div class="h-10 w-10 rounded-xl bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center text-raosc-yellow">
                                             <ShieldCheck class="w-5 h-5" />
                                         </div>
                                         <div>
@@ -156,17 +156,17 @@ const prevGallery = () => {
 
                             <div v-if="organization.members && organization.members.length > 0" class="mt-16 pt-12 border-t border-zinc-100 dark:border-zinc-800">
                                 <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-8 flex items-center gap-3">
-                                    <Users class="w-6 h-6 text-[#008751]" />
+                                    <Users class="w-6 h-6 text-raosc-green" />
                                     Équipe de Direction
                                 </h3>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div v-for="member in organization.members" :key="member.id" class="flex items-center gap-4 bg-zinc-50 dark:bg-zinc-800/50 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-800">
-                                        <div class="h-12 w-12 rounded-xl bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center font-bold text-[#008751]">
+                                        <div class="h-12 w-12 rounded-xl bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center font-bold text-raosc-green">
                                             {{ member.user ? member.user.name.charAt(0) : '?' }}
                                         </div>
                                         <div>
                                             <p class="text-sm font-extrabold text-zinc-900 dark:text-white tracking-tight">{{ member.user ? member.user.name : 'Membre' }}</p>
-                                            <p class="text-[9px] font-bold text-[#FFCB05] tracking-tight">{{ member.job_title || 'Responsable' }}</p>
+                                            <p class="text-[9px] font-bold text-raosc-yellow tracking-tight">{{ member.job_title || 'Responsable' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -177,7 +177,7 @@ const prevGallery = () => {
                         <div class="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-xl overflow-hidden">
                             <div class="p-8 sm:p-12 border-b border-zinc-50 dark:border-zinc-800">
                                 <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-2 flex items-center gap-3">
-                                    <ImageIcon class="w-6 h-6 text-[#008751]" />
+                                    <ImageIcon class="w-6 h-6 text-raosc-green" />
                                     Médiathèque
                                 </h3>
                                 <p class="text-sm text-zinc-500 font-medium italic">Immersion dans les actions de l'organisation sur le terrain.</p>
@@ -216,7 +216,7 @@ const prevGallery = () => {
                                     :key="idx"
                                     @click="galleryIndex = idx"
                                     class="h-16 w-24 shrink-0 rounded-xl overflow-hidden border-2 transition-all active:scale-90"
-                                    :class="galleryIndex === idx ? 'border-[#008751] scale-105 shadow-lg' : 'border-transparent opacity-50 grayscale'"
+                                    :class="galleryIndex === idx ? 'border-raosc-green scale-105 shadow-lg' : 'border-transparent opacity-50 grayscale'"
                                 >
                                     <img :src="img" class="h-full w-full object-cover" />
                                 </button>
@@ -229,3 +229,4 @@ const prevGallery = () => {
         </main>
     </component>
 </template>
+

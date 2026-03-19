@@ -110,7 +110,7 @@ onMounted(() => {
 
 <template>
     <div class="relative country-phone-input w-full">
-        <div class="flex items-stretch bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-visible focus-within:ring-2 focus-within:ring-[#008751]/20 focus-within:border-[#008751] transition-all relative">
+        <div class="flex items-stretch bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-visible focus-within:ring-2 focus-within:ring-raosc-green/20 focus-within:border-raosc-green transition-all relative">
             
             <button 
                 type="button" 
@@ -131,7 +131,7 @@ onMounted(() => {
                         v-model="searchQuery" 
                         type="text" 
                         placeholder="Chercher un pays..." 
-                        class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-xs outline-none focus:ring-1 focus:ring-[#008751] dark:text-white font-medium"
+                        class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-xs outline-none focus:ring-1 focus:ring-raosc-green dark:text-white font-medium"
                         @click.stop
                     >
                 </div>
@@ -161,3 +161,4 @@ onMounted(() => {
         </div>
     </div>
 </template>
+

@@ -27,7 +27,7 @@ const formatDate = (dateString: string) => {
 
 <template>
   <DropdownMenu>
-    <DropdownMenuTrigger class="relative p-2 text-zinc-500 hover:text-[#008751] transition-colors focus:outline-none">
+    <DropdownMenuTrigger class="relative p-2 text-zinc-500 hover:text-raosc-green transition-colors focus:outline-none">
       <Bell class="h-5 w-5" />
       <span v-if="unreadCount > 0" class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white border-2 border-white dark:border-zinc-950">
         {{ unreadCount }}
@@ -41,7 +41,7 @@ const formatDate = (dateString: string) => {
           <p class="text-xs font-semibold text-zinc-900 dark:text-zinc-100">{{ notif.data.message }}</p>
           <div class="flex justify-between w-full items-center mt-1">
              <span class="text-[10px] text-zinc-400 font-medium">{{ formatDate(notif.created_at) }}</span>
-             <span v-if="!notif.read_at" class="h-1.5 w-1.5 rounded-full bg-[#008751]"></span>
+             <span v-if="!notif.read_at" class="h-1.5 w-1.5 rounded-full bg-raosc-green"></span>
           </div>
         </DropdownMenuItem>
       </div>
@@ -51,10 +51,11 @@ const formatDate = (dateString: string) => {
       </div>
       <DropdownMenuSeparator />
       <DropdownMenuItem as-child>
-        <Link href="/notifications" class="w-full text-center text-xs font-bold text-[#008751] py-2 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
+        <Link href="/notifications" class="w-full text-center text-xs font-bold text-raosc-green py-2 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
           Voir tout
         </Link>
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 </template>
+

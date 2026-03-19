@@ -5,10 +5,15 @@ import {
     Building2, 
     Check,
     CheckCircle2, 
+    ChevronRight,
+    Clock, 
     Globe, 
     PlusCircle, 
-    Search
+    Search,
+    Users
 } from 'lucide-vue-next';
+import AdminApprovalCard from '@/components/AdminApprovalCard.vue';
+import StatsChart from '@/components/StatsChart.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
@@ -69,7 +74,7 @@ const getStatusLabel = (status: string) => {
 </script>
 
 <template>
-    <Head title="Tableau de Bord" />
+    <Head title="Tableau de Bord Administrateur" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-8 p-6 lg:p-10 bg-zinc-50/50 dark:bg-zinc-950">
@@ -86,23 +91,49 @@ const getStatusLabel = (status: string) => {
                         class="flex items-center gap-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-2 rounded-xl text-sm font-bold hover:bg-zinc-50 transition-all"
                     >
                         <Search class="w-4 h-4 text-zinc-400" />
-                        Annuaire
-                    </Link>
-                    <Link 
-                        v-if="!userOrganization"
-                        href="/rao/join" 
-                        class="flex items-center gap-2 bg-raosc-green text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-[#006b40] transition-all shadow-lg shadow-raosc-green/10"
-                    >
-                        <PlusCircle class="w-4 h-4" />
-                        Inscrire mon ONG
+                        Gérer Annuaire
                     </Link>
                 </div>
             </div>
 
             <!-- Stats Grid -->
+            <div v-if="$page.props.auth.user.role === 'admin'" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <!-- Admin specific stats or same stats -->
+                <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="h-12 w-12 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center text-raosc-green">
+                            <Building2 class="w-6 h-6" />
+                        </div>
+                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-lg uppercase tracking-wider">Actif</span>
+                    </div>
+                    <div class="text-3xl font-black text-zinc-900 dark:text-white">{{ stats.total_orgs }}</div>
+                    <div class="text-xs font-bold text-zinc-400 uppercase tracking-widest mt-1">Total OSC Approuvées</div>
+                </div>
 
+                <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="h-12 w-12 rounded-xl bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center text-amber-500">
+                            <Clock class="w-6 h-6" />
+                        </div>
+                        <span class="text-[10px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-500/10 px-2 py-1 rounded-lg uppercase tracking-wider">Alerte</span>
+                    </div>
+                    <div class="text-3xl font-black text-zinc-900 dark:text-white">{{ stats.pending_orgs }}</div>
+                    <div class="text-xs font-bold text-zinc-400 uppercase tracking-widest mt-1">Demandes en attente</div>
+                </div>
 
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="h-12 w-12 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-500">
+                            <Users class="w-6 h-6" />
+                        </div>
+                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 dark:bg-blue-500/10 px-2 py-1 rounded-lg uppercase tracking-wider">Total</span>
+                    </div>
+                    <div class="text-3xl font-black text-zinc-900 dark:text-white">{{ stats.total_users }}</div>
+                    <div class="text-xs font-bold text-zinc-400 uppercase tracking-widest mt-1">Utilisateurs inscrits</div>
+                </div>
+            </div>
+
+            <div v-else class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 <!-- User standard stats... -->
                 <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
                     <div class="flex items-center justify-between mb-4">
@@ -124,9 +155,9 @@ const getStatusLabel = (status: string) => {
                 </div>
             </div>
 
-            <div class="flex flex-col gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <!-- Left Column -->
-                <div class="flex flex-col lg:flex-row gap-6">
+                <div class="lg:col-span-8 flex flex-col gap-6">
                     <!-- Notifications Section (for both but different content maybe) -->
                     <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
                         <div class="flex items-center justify-between mb-6">
@@ -153,8 +184,42 @@ const getStatusLabel = (status: string) => {
                         </div>
                     </div>
 
+                    <!-- Admin: Analytics & Validation -->
+                    <div class="space-y-6">
+                        <!-- Charts Section -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
+                                <h3 class="text-sm font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-widest">Répartition par secteur</h3>
+                                <div class="h-64">
+                                    <StatsChart type="pie" :data="chartData.categories" />
+                                </div>
+                            </div>
+                            <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
+                                <h3 class="text-sm font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-widest">Tendances d'inscription</h3>
+                                <div class="h-64">
+                                    <StatsChart type="line" :data="chartData.registrations" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Validation Area -->
+                        <div class="bg-amber-50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/10 rounded-3xl p-8 shadow-sm">
+                            <div class="flex items-center justify-between mb-8">
+                                <h2 class="text-xl font-bold text-amber-900 dark:text-amber-400">Demandes d'inscription</h2>
+                                <span class="text-xs font-bold text-amber-600 bg-amber-100 dark:bg-amber-500/10 px-3 py-1 rounded-full">{{ pendingOrgsList.length }} en attente</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <AdminApprovalCard v-for="org in pendingOrgsList" :key="org.id" :organization="org" />
+                            </div>
+                            <div v-if="pendingOrgsList.length === 0" class="text-center py-12">
+                                <CheckCircle2 class="w-12 h-12 text-amber-200 mx-auto mb-4" />
+                                <p class="text-sm text-zinc-500">Toutes les demandes ont été traitées.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- User: My Structure -->
-                    <div class="flex-grow bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
+                    <div v-if="$page.props.auth.user.role !== 'admin'" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
                         <div class="flex items-center justify-between mb-8">
                             <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Ma Structure</h2>
                             <Link v-if="userOrganization" :href="`/rao/orga/${userOrganization.slug}`" class="text-xs font-bold text-raosc-green hover:underline">Voir mon profil public</Link>
@@ -206,7 +271,30 @@ const getStatusLabel = (status: string) => {
                     </div>
                 </div>
 
-
+                <!-- Right Column (Activity/Announcements) -->
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
+                        <h3 class="text-lg font-bold text-zinc-900 dark:text-white mb-6 flex items-center gap-2">
+                            <Globe class="w-5 h-5 text-raosc-green" />
+                            Derniers inscrits
+                        </h3>
+                        <div class="space-y-6">
+                            <div v-for="org in recentOrgs" :key="org.id" class="flex items-center gap-4 group cursor-pointer">
+                                <div class="h-10 w-10 rounded-lg bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center font-bold text-raosc-green group-hover:bg-raosc-green group-hover:text-white transition-all">
+                                    {{ org.name.charAt(0) }}
+                                </div>
+                                <div class="flex-grow min-w-0">
+                                    <h4 class="text-sm font-bold text-zinc-900 dark:text-white truncate">{{ org.name }}</h4>
+                                    <p class="text-[10px] text-zinc-500 uppercase tracking-widest">{{ org.city }}, {{ org.country }}</p>
+                                </div>
+                                <Link :href="`/rao/orga/${org.slug}`" class="text-zinc-300 group-hover:text-raosc-green transition-all">
+                                    <ChevronRight class="w-4 h-4" />
+                                </Link>
+                            </div>
+                        </div>
+                        <Link href="/rao" class="block text-center mt-8 pt-6 border-t border-zinc-50 dark:border-zinc-800 text-[10px] font-bold text-zinc-500 hover:text-raosc-green transition-all uppercase tracking-widest">Voir tout l'annuaire</Link>
+                    </div>
+                </div>
             </div>
         </div>
     </AppLayout>

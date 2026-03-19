@@ -36,3 +36,4 @@ defineProps<Props>();
         </BreadcrumbList>
     </Breadcrumb>
 </template>
+

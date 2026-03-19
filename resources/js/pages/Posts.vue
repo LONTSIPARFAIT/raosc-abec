@@ -13,21 +13,21 @@ const placeholderPosts = [
         date: "16 Mars 2026",
         category: "Annonce",
         desc: "Une nouvelle interface numérique pour faciliter la collaboration entre les acteurs de la société civile en Afrique.",
-        color: "bg-[#008751]/10 text-[#008751]"
+        color: "bg-raosc-green/10 text-raosc-green"
     },
     {
         title: "Séminaire sur la transformation digitale des OSC",
         date: "12 Mars 2026",
         category: "Formation",
         desc: "Comment les outils modernes peuvent aider les petites associations à gérer leurs projets et membres efficacement.",
-        color: "bg-[#FFCB05]/10 text-[#FFCB05]"
+        color: "bg-raosc-yellow/10 text-raosc-yellow"
     },
     {
         title: "Appel à projets : Innovation Sociale 2026",
         date: "05 Mars 2026",
         category: "Opportunité",
         desc: "L'ONG ABEC annonce un fonds de soutien pour les initiatives technologiques à fort impact communautaire.",
-        color: "bg-[#E4002B]/10 text-[#E4002B]"
+        color: "bg-raosc-red/10 text-raosc-red"
     }
 ];
 </script>
@@ -49,7 +49,7 @@ const placeholderPosts = [
                         </div>
                     </div>
                     <h1 class="text-4xl sm:text-7xl font-extrabold text-white tracking-tight leading-none mb-8">
-                        Dernières <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#FFCB05] to-[#E4002B]">Actualités</span>
+                        Dernières <span class="bg-clip-text text-transparent bg-gradient-to-r from-raosc-yellow to-raosc-red">Actualités</span>
                     </h1>
                     <p class="text-lg sm:text-2xl text-zinc-400 max-w-3xl mx-auto font-medium tracking-tight leading-relaxed">
                         Suivez les moments forts, les projets et les opportunités au sein du réseau panafricain.
@@ -74,13 +74,13 @@ const placeholderPosts = [
                                 <Calendar class="h-3.5 w-3.5" />
                                 {{ post.date }}
                             </div>
-                            <h2 class="text-2xl font-bold text-zinc-900 dark:text-white tracking-tight leading-tight mb-4 group-hover:text-[#008751] transition-colors">
+                            <h2 class="text-2xl font-bold text-zinc-900 dark:text-white tracking-tight leading-tight mb-4 group-hover:text-raosc-green transition-colors">
                                 {{ post.title }}
                             </h2>
-                            <p class="text-sm text-zinc-500 font-medium mb-8 line-clamp-2 border-l-3 border-[#008751]/20 pl-4 leading-relaxed">
+                            <p class="text-sm text-zinc-500 font-medium mb-8 line-clamp-2 border-l-3 border-raosc-green/20 pl-4 leading-relaxed">
                                 {{ post.desc }}
                             </p>
-                            <button class="flex items-center gap-2 text-[11px] font-bold text-[#008751] hover:gap-4 transition-all group-hover:translate-x-1">
+                            <button class="flex items-center gap-2 text-[11px] font-bold text-raosc-green hover:gap-4 transition-all group-hover:translate-x-1">
                                 Lire l'article <ArrowRight class="h-3.5 w-3.5" />
                             </button>
                         </div>
@@ -95,13 +95,14 @@ const placeholderPosts = [
                         </div>
                         <h2 class="text-2xl font-bold text-white tracking-tight mb-4">Plus d'articles en préparation</h2>
                         <p class="text-zinc-500 max-w-md mx-auto font-medium mb-10 leading-relaxed">Nous finalisons la rédaction de nouveaux dossiers et portraits d'organisations engagées.</p>
-                        <button class="bg-[#008751] hover:bg-[#006b40] text-white font-bold px-10 py-4 rounded-2xl text-xs transition-all shadow-lg shadow-[#008751]/10 hover:-translate-y-0.5">
+                        <button class="bg-raosc-green hover:bg-[#006b40] text-white font-bold px-10 py-4 rounded-2xl text-xs transition-all shadow-lg shadow-raosc-green/10 hover:-translate-y-0.5">
                             S'abonner à la newsletter
                         </button>
                     </div>
-                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-[#008751] opacity-10 rounded-full blur-[80px]"></div>
+                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-raosc-green opacity-10 rounded-full blur-[80px]"></div>
                 </div>
             </div>
         </main>
     </PublicLayout>
 </template>
+

@@ -81,6 +81,16 @@ class DashboardController extends Controller
             ]
         ];
 
+        if ($user->role === 'admin') {
+            return Inertia::render('AdminDashboard', [
+                'stats' => $stats,
+                'userOrganization' => $userOrganization,
+                'recentOrgs' => $recentOrgs,
+                'pendingOrgsList' => $pendingOrgsList,
+                'chartData' => $chartData
+            ]);
+        }
+
         return Inertia::render('Dashboard', [
             'stats' => $stats,
             'userOrganization' => $userOrganization,

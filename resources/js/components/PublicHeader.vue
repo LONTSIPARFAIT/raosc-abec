@@ -46,7 +46,7 @@ const navLinks = [
                     <span class="text-xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-none">
                         RAOSC
                     </span>
-                    <span class="text-[9px] font-bold text-[#008751] tracking-[0.1em] mt-0.5">
+                    <span class="text-[9px] font-bold text-raosc-green tracking-[0.1em] mt-0.5">
                         ONG ABEC
                     </span>
                 </div>
@@ -68,7 +68,7 @@ const navLinks = [
                 v-for="link in navLinks" 
                 :key="link.name" 
                 :href="link.href" 
-                class="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-[#008751] transition-colors tracking-tight" 
+                class="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-raosc-green transition-colors tracking-tight" 
                 prefetch
             >
                 {{ link.name }}
@@ -78,7 +78,7 @@ const navLinks = [
 
             <!-- Search Field -->
             <div class="relative flex items-center">
-                <button @click="isSearchOpen = !isSearchOpen" class="p-2 text-zinc-500 hover:text-[#008751] transition-colors">
+                <button @click="isSearchOpen = !isSearchOpen" class="p-2 text-zinc-500 hover:text-raosc-green transition-colors">
                     <Search class="h-4 w-4" />
                 </button>
                 <transition name="expand">
@@ -88,7 +88,7 @@ const navLinks = [
                         @keyup.enter="handleSearch"
                         type="text" 
                         placeholder="Rechercher une OSC..." 
-                        class="absolute right-10 w-48 bg-zinc-100 dark:bg-zinc-900 border-none rounded-full px-4 py-1.5 text-xs focus:ring-1 focus:ring-[#008751] transition-all"
+                        class="absolute right-10 w-48 bg-zinc-100 dark:bg-zinc-900 border-none rounded-full px-4 py-1.5 text-xs focus:ring-1 focus:ring-raosc-green transition-all"
                         autoFocus
                     />
                 </transition>
@@ -103,7 +103,7 @@ const navLinks = [
                 <NotificationBell />
                 <Link
                     :href="dashboard()"
-                    class="flex items-center gap-2 text-sm font-semibold text-zinc-900 dark:text-white hover:text-[#008751] transition-colors"
+                    class="flex items-center gap-2 text-sm font-semibold text-zinc-900 dark:text-white hover:text-raosc-green transition-colors"
                     prefetch
                 >
                     <span class="bg-zinc-100 dark:bg-zinc-800 p-1.5 rounded-full">
@@ -119,7 +119,7 @@ const navLinks = [
                 <Link
                     v-if="canRegister"
                     :href="register()"
-                    class="rounded-xl bg-[#008751] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#008751]/10 hover:bg-[#006b40] hover:-translate-y-0.5 transition-all"
+                    class="rounded-xl bg-raosc-green px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-raosc-green/10 hover:bg-[#006b40] hover:-translate-y-0.5 transition-all"
                     prefetch
                 >
                     S'inscrire
@@ -142,11 +142,11 @@ const navLinks = [
             </Link>
             <hr class="border-zinc-100 dark:border-zinc-800"/>
             <template v-if="user">
-                <Link :href="dashboard()" class="text-base font-bold text-[#008751]">Tableau de bord</Link>
+                <Link :href="dashboard()" class="text-base font-bold text-raosc-green">Tableau de bord</Link>
             </template>
             <template v-else>
                 <Link :href="login()" class="text-base font-medium text-zinc-600 dark:text-zinc-400">Connexion</Link>
-                <Link :href="register()" class="text-base font-bold text-[#008751]">S'inscrire</Link>
+                <Link :href="register()" class="text-base font-bold text-raosc-green">S'inscrire</Link>
             </template>
         </div>
     </div>
@@ -163,3 +163,4 @@ const navLinks = [
     transform: translateX(20px);
 }
 </style>
+

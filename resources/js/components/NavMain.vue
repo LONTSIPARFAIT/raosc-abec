@@ -30,7 +30,7 @@ const { isCurrentUrl } = useCurrentUrl();
                     class="h-10 group/item"
                 >
                     <Link :href="item.href" prefetch class="flex items-center gap-3">
-                        <component :is="item.icon" class="h-4.5 w-4.5 text-zinc-500 dark:text-zinc-400 group-hover/item:text-[#008751] transition-colors" />
+                        <component :is="item.icon" class="h-4.5 w-4.5 text-zinc-500 dark:text-zinc-400 group-hover/item:text-raosc-green transition-colors" />
                         <span class="text-sm font-medium tracking-tight">{{ item.title }}</span>
                     </Link>
                 </SidebarMenuButton>
@@ -38,3 +38,4 @@ const { isCurrentUrl } = useCurrentUrl();
         </SidebarMenu>
     </SidebarGroup>
 </template>
+
