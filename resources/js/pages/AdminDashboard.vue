@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { 
-    Bell,
     Building2, 
-    Check,
     CheckCircle2, 
-    ChevronRight,
     Clock, 
-    Globe, 
-    PlusCircle, 
     Search,
-    Users
+    Users,
+    Settings,
+    Download,
+    FileText,
+    ShieldAlert,
+    LayoutDashboard
 } from 'lucide-vue-next';
 import AdminApprovalCard from '@/components/AdminApprovalCard.vue';
 import StatsChart from '@/components/StatsChart.vue';
@@ -189,23 +189,60 @@ const getStatusLabel = (status: string) => {
                         <!-- Charts Section -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
-                                <h3 class="text-sm font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-widest">Répartition par secteur</h3>
+                                <h3 class="text-sm font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-widest flex items-center gap-2">
+                                    <LayoutDashboard class="w-4 h-4 text-zinc-400" />
+                                    Répartition par secteur
+                                </h3>
                                 <div class="h-64">
                                     <StatsChart type="pie" :data="chartData.categories" />
                                 </div>
                             </div>
                             <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
-                                <h3 class="text-sm font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-widest">Tendances d'inscription</h3>
+                                <h3 class="text-sm font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-widest flex items-center gap-2">
+                                    <Clock class="w-4 h-4 text-zinc-400" />
+                                    Tendances d'inscription
+                                </h3>
                                 <div class="h-64">
                                     <StatsChart type="line" :data="chartData.registrations" />
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Actions Rapides Administrateur -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                            <button class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
+                                <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
+                                    <Users class="w-5 h-5" />
+                                </div>
+                                <span class="text-xs font-bold text-zinc-900 dark:text-white text-center">Gérer les utilisateurs</span>
+                            </button>
+                            <button class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
+                                <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
+                                    <FileText class="w-5 h-5" />
+                                </div>
+                                <span class="text-xs font-bold text-zinc-900 dark:text-white text-center">Gérer les catégories</span>
+                            </button>
+                            <button class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
+                                <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
+                                    <Download class="w-5 h-5" />
+                                </div>
+                                <span class="text-xs font-bold text-zinc-900 dark:text-white text-center">Exporter l'annuaire</span>
+                            </button>
+                            <button class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group">
+                                <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
+                                    <Settings class="w-5 h-5" />
+                                </div>
+                                <span class="text-xs font-bold text-zinc-900 dark:text-white text-center">Paramètres du site</span>
+                            </button>
+                        </div>
+
                         <!-- Validation Area -->
-                        <div class="bg-amber-50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/10 rounded-3xl p-8 shadow-sm">
+                        <div class="bg-amber-50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/10 rounded-3xl p-8 shadow-sm mt-6">
                             <div class="flex items-center justify-between mb-8">
-                                <h2 class="text-xl font-bold text-amber-900 dark:text-amber-400">Demandes d'inscription</h2>
+                                <h2 class="text-xl font-bold text-amber-900 dark:text-amber-400 flex items-center gap-2">
+                                    <ShieldAlert class="w-6 h-6" />
+                                    Demandes d'inscription en attente
+                                </h2>
                                 <span class="text-xs font-bold text-amber-600 bg-amber-100 dark:bg-amber-500/10 px-3 py-1 rounded-full">{{ pendingOrgsList.length }} en attente</span>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

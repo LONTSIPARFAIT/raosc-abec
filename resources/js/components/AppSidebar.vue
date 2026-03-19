@@ -11,7 +11,8 @@ import {
     Building2, 
     Newspaper,
     Settings2,
-    PlusCircle
+    PlusCircle,
+    ShieldCheck
 } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -31,7 +32,7 @@ import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Retour à l\'Accueil',
+        title: 'Accueil',
         href: '/',
         icon: Home,
     },
@@ -41,19 +42,32 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Ma Structure',
-        href: dashboard(), // En attendant une route dédiée à l'édition, on la met sur le dashboard où ils peuvent la gérer
+        title: 'Mes Structures',
+        href: '/rao/mes-structures',
         icon: Building2,
-    },
-    {
-        title: 'Annuaire OSC',
-        href: '/rao',
-        icon: Globe,
     },
     {
         title: 'Inscrire une OSC',
         href: '/rao/join',
         icon: PlusCircle,
+    },
+];
+
+const adminNavItems: NavItem[] = [
+    {
+        title: 'Validation OSC',
+        href: dashboard(),
+        icon: ShieldCheck,
+    },
+    {
+        title: 'Gestion Utilisateurs',
+        href: '#',
+        icon: Users,
+    },
+    {
+        title: 'Paramètres du site',
+        href: '#',
+        icon: Settings2,
     },
 ];
 
@@ -100,6 +114,7 @@ const footerNavItems: NavItem[] = [
 
         <SidebarContent>
             <NavMain title="Navigation" :items="mainNavItems" />
+            <NavMain v-if="$page.props.auth.user && $page.props.auth.user.role === 'admin'" title="Administration" :items="adminNavItems" />
             <NavMain title="Personnel" :items="personalNavItems" />
         </SidebarContent>
 

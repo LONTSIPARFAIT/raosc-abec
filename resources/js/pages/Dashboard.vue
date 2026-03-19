@@ -156,8 +156,11 @@ const getStatusLabel = (status: string) => {
                     <!-- User: My Structure -->
                     <div class="flex-grow bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
                         <div class="flex items-center justify-between mb-8">
-                            <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Ma Structure</h2>
-                            <Link v-if="userOrganization" :href="`/rao/orga/${userOrganization.slug}`" class="text-xs font-bold text-raosc-green hover:underline">Voir mon profil public</Link>
+                            <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Aperçu de vos structures</h2>
+                            <div class="flex gap-4 items-center">
+                                <Link v-if="userOrganization" :href="`/rao/orga/${userOrganization.slug}`" class="text-xs font-bold text-raosc-green hover:underline">Voir mon profil public</Link>
+                                <Link href="/rao/mes-structures" class="text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:text-raosc-green transition-colors">Gérer tout</Link>
+                            </div>
                         </div>
 
                         <div v-if="userOrganization" class="flex flex-col md:flex-row gap-8 items-start">
