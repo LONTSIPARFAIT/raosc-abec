@@ -98,7 +98,7 @@ const featuredCategories = [
             <div class="mx-auto max-w-7xl px-6 py-12 sm:py-20">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
                     <div v-for="stat in stats" :key="stat.id" class="text-center group">
-                        <div :class="['mx-auto flex h-14 w-14 items-center justify-center rounded-2xl mb-4 transition-transform group-hover:scale-110 shadow-inner', stat.bg]">
+                        <div :class="['mx-auto flex h-14 w-14 items-center justify-center rounded-2xl mb-4 transition-transform group-hover:scale-110', stat.bg]">
                             <component :is="stat.icon" :class="['h-6 w-6', stat.color]" />
                         </div>
                         <dd class="text-3xl font-extrabold text-zinc-900 dark:text-white mb-1">{{ stat.value }}</dd>
@@ -122,7 +122,7 @@ const featuredCategories = [
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-                    <div v-for="feature in features" :key="feature.name" class="bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all">
+                    <div v-for="feature in features" :key="feature.name" class="bg-white dark:bg-zinc-900 p-8 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all">
                         <div :class="['w-12 h-12 rounded-xl flex items-center justify-center mb-6', feature.bg]">
                             <component :is="feature.icon" :class="['w-6 h-6', feature.color]" />
                         </div>
@@ -132,13 +132,13 @@ const featuredCategories = [
                 </div>
 
                 <!-- Featured Categories Grid -->
-                <div class="bg-white dark:bg-zinc-900/50 rounded-[3rem] p-8 sm:p-16 border border-zinc-200 dark:border-zinc-800 shadow-xl shadow-zinc-200/50 dark:shadow-none">
+                <div class="bg-white dark:bg-zinc-900/50 rounded-2xl p-8 sm:p-12 border border-zinc-200 dark:border-zinc-800 shadow-md">
                     <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12 text-center md:text-left">
                         <div>
                             <h4 class="text-2xl font-bold text-zinc-900 dark:text-white tracking-tight">Parcourir par <span class="text-raosc-green">Catégorie</span></h4>
                             <p class="text-[13px] font-medium text-zinc-500 mt-1">Trouvez les organisations qui correspondent à vos intérêts.</p>
                         </div>
-                        <Link href="/rao" class="text-[10px] font-bold text-raosc-green hover:text-[#006b40] transition-colors bg-raosc-green/10 px-6 py-2.5 rounded-xl border border-raosc-green/10">Voir toutes les catégories</Link>
+                        <Link href="/rao" class="text-[10px] font-bold text-raosc-green hover:text-[#006b40] transition-colors bg-raosc-green/10 px-6 py-2.5 rounded-full border border-raosc-green/10">Voir toutes les catégories</Link>
                     </div>
                     
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -146,11 +146,11 @@ const featuredCategories = [
                             v-for="cat in featuredCategories" 
                             :key="cat.name" 
                             :href="`/rao?category=${cat.name.toLowerCase()}`"
-                            class="group flex flex-col items-center p-6 bg-zinc-50 dark:bg-zinc-950 rounded-3xl border border-zinc-100 dark:border-zinc-800 hover:border-raosc-green/30 transition-all hover:bg-white dark:hover:bg-zinc-900 hover:shadow-2xl hover:shadow-raosc-green/10"
+                            class="group flex flex-col items-center p-6 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-100 dark:border-zinc-800 hover:border-raosc-green/30 transition-all hover:bg-white dark:hover:bg-zinc-900 hover:shadow-lg"
                         >
-                            <span class="text-3xl mb-4 group-hover:scale-125 transition-transform duration-500">{{ cat.icon }}</span>
+                            <span class="text-3xl mb-4 group-hover:scale-110 transition-transform duration-300">{{ cat.icon }}</span>
                             <span class="text-xs font-bold text-zinc-900 dark:text-white tracking-tight">{{ cat.name }}</span>
-                            <span class="text-[9px] font-bold text-raosc-green mt-2 bg-raosc-green/10 px-2.5 py-1 rounded-lg border border-raosc-green/10">{{ cat.count }}</span>
+                            <span class="text-[9px] font-bold text-raosc-green mt-2 bg-raosc-green/10 px-2.5 py-1 rounded-full border border-raosc-green/10">{{ cat.count }}</span>
                         </Link>
                     </div>
                 </div>
@@ -163,9 +163,9 @@ const featuredCategories = [
                 <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
                     <div class="max-w-2xl">
                         <h2 class="text-3xl font-bold text-zinc-900 dark:text-white mb-4 tracking-tight">Organisations à la <span class="text-raosc-green">Une</span></h2>
-                        <p class="text-zinc-500 text-sm font-medium border-l-3 border-raosc-yellow pl-5 py-1">Découvrez les membres actifs qui œuvrent quotidiennement pour le changement.</p>
+                        <p class="text-zinc-500 text-sm font-medium border-l-2 border-raosc-yellow pl-5 py-1">Découvrez les membres actifs qui œuvrent quotidiennement pour le changement.</p>
                     </div>
-                    <Link href="/rao" class="text-xs font-bold text-raosc-green hover:text-[#006b40] flex items-center gap-2 bg-raosc-green/5 px-5 py-2.5 rounded-xl transition-all hover:-translate-y-0.5">
+                    <Link href="/rao" class="text-xs font-bold text-raosc-green hover:text-[#006b40] flex items-center gap-2 bg-raosc-green/5 px-5 py-2.5 rounded-full transition-all hover:-translate-y-0.5">
                         Voir tout l'annuaire
                         <ArrowRight class="w-4 h-4" />
                     </Link>
@@ -179,7 +179,7 @@ const featuredCategories = [
                     />
                 </div>
 
-                <div v-if="!organizations || organizations.length === 0" class="py-24 text-center bg-zinc-50 dark:bg-zinc-900 rounded-[2.5rem] border-2 border-dashed border-zinc-200 dark:border-zinc-800">
+                <div v-if="!organizations || organizations.length === 0" class="py-24 text-center bg-zinc-50 dark:bg-zinc-900 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800">
                     <Building2 class="w-12 h-12 text-zinc-300 mx-auto mb-4" />
                     <h3 class="text-xl font-bold text-zinc-900 dark:text-white">Bientôt disponible</h3>
                     <p class="text-sm text-zinc-500 mt-2">La liste des organisations est en cours de mise à jour.</p>
@@ -190,7 +190,7 @@ const featuredCategories = [
         <!-- CTA -->
         <div class="bg-zinc-950 py-24 sm:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <div class="bg-[#310808] rounded-[3rem] p-12 sm:p-20 text-center relative overflow-hidden">
+                <div class="bg-[#310808] rounded-2xl p-12 sm:p-20 text-center relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-raosc-green opacity-10 rounded-full blur-[80px]"></div>
                     <div class="relative z-10">
                         <h2 class="text-3xl sm:text-5xl font-bold text-white mb-8 max-w-3xl mx-auto">
@@ -203,7 +203,7 @@ const featuredCategories = [
                             <Link 
                                 v-if="!$page.props.auth.user"
                                 :href="register()" 
-                                class="bg-raosc-green text-white px-10 py-4.5 rounded-2xl font-bold text-sm hover:bg-[#006b40] transition-all shadow-xl shadow-raosc-green/20 hover:-translate-y-1"
+                                class="bg-raosc-green text-white px-10 py-4.5 rounded-2xl font-bold text-sm hover:bg-[#006b40] transition-all shadow-lg hover:-translate-y-1"
                                 prefetch
                             >
                                 S'inscrire maintenant
@@ -219,4 +219,3 @@ const featuredCategories = [
         </div>
     </PublicLayout>
 </template>
-
