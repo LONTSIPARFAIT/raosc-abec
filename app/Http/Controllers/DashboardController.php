@@ -31,13 +31,6 @@ class DashboardController extends Controller
             ->latest()
             ->take(5)
             ->get();
-
-        // Organisations en attente de validation (pour l'admin)
-        $pendingOrgsList = Organization::with(['categories', 'members.user'])
-            ->where('status', 'pending')
-            ->latest()
-            ->take(5)
-            ->get();
             
         // Data for Charts
         $categoriesStats = \App\Models\OrganizationCategory::withCount(['organizations' => function($query) {
@@ -87,7 +80,6 @@ class DashboardController extends Controller
                 'stats' => $stats,
                 'userOrganization' => $userOrganization,
                 'recentOrgs' => $recentOrgs,
-                'pendingOrgsList' => $pendingOrgsList,
                 'chartData' => $chartData
             ]);
         }
@@ -96,7 +88,6 @@ class DashboardController extends Controller
             'stats' => $stats,
             'userOrganization' => $userOrganization,
             'recentOrgs' => $recentOrgs,
-            'pendingOrgsList' => $pendingOrgsList,
             'chartData' => $chartData
         ]);
     }

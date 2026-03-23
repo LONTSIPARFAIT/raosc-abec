@@ -78,11 +78,11 @@ watch([searchQuery, selectedCategory, selectedCity, selectedCountry], () => {
             </div>
         </div>
 
-        <!-- Search & Advanced Filters -->
+        <!-- Search & Filters -->
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-12 relative z-20">
             <Card class="shadow-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-2xl">
                 <CardContent class="p-6 sm:p-8">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         <!-- Search Name -->
                         <div class="relative">
                             <Search class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 h-4 w-4" />
@@ -145,13 +145,18 @@ watch([searchQuery, selectedCategory, selectedCity, selectedCountry], () => {
 
         <!-- Results Grid -->
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-            <div v-if="organizations.data.length === 0" class="text-center py-20">
+            <!-- Loading indicator -->
+            <div v-if="isLoading" class="flex justify-center items-center py-20">
+                <div class="h-8 w-8 border-2 border-raosc-green border-t-transparent rounded-full animate-spin"></div>
+            </div>
+
+            <div v-else-if="organizations.data.length === 0" class="text-center py-20">
                 <Building2 class="mx-auto h-12 w-12 text-zinc-300 dark:text-zinc-600 mb-4" />
                 <h3 class="text-xl font-bold text-zinc-900 dark:text-white">Aucun résultat</h3>
                 <p class="text-zinc-500 text-sm mt-1">Ajustez vos critères de recherche.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <OrganizationCard 
                     v-for="org in organizations.data" 
                     :key="org.id" 
@@ -160,7 +165,7 @@ watch([searchQuery, selectedCategory, selectedCity, selectedCountry], () => {
             </div>
 
             <!-- Pagination -->
-            <div v-if="organizations.last_page > 1" class="mt-16 flex justify-center">
+            <div v-if="organizations.last_page > 1" class="mt-12 flex justify-center">
                 <nav class="flex items-center gap-1.5 bg-white dark:bg-zinc-900 p-1.5 rounded-xl border border-zinc-100 dark:border-zinc-800">
                     <Link 
                         v-for="link in organizations.links" 

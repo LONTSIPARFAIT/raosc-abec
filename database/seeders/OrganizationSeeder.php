@@ -16,8 +16,10 @@ class OrganizationSeeder extends Seeder
      */
     public function run(): void
     {
-        // S'assurer qu'il existe au moins un utilisateur pour associer comme créateur
-        $user = User::first() ?: User::factory()->create();
+        $users = User::all();
+        if ($users->isEmpty()) {
+            $users = User::factory(5)->create();
+        }
 
         // Récupérer toutes les catégories
         $categories = OrganizationCategory::all();
@@ -96,6 +98,11 @@ class OrganizationSeeder extends Seeder
                 'founded_date' => '2019-02-10',
                 'logo' => 'https://images.unsplash.com/photo-1592982537447-6f29fbde8147?w=300&h=300&fit=crop&q=80',
                 'cover_image' => 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1600&h=500&fit=crop&q=80',
+                'gallery' => [
+                    'https://images.unsplash.com/photo-1592982537447-6f29fbde8147?q=80&w=2000',
+                    'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=2000',
+                    'https://images.unsplash.com/photo-1581579186913-46aa1d054d76?q=80&w=2000'
+                ],
                 'category_slugs' => ['developpement-agricole', 'environnement-ecologie']
             ],
             [
@@ -110,6 +117,11 @@ class OrganizationSeeder extends Seeder
                 'founded_date' => '2011-03-08',
                 'logo' => 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=300&h=300&fit=crop&q=80',
                 'cover_image' => 'https://images.unsplash.com/photo-1589304049870-07cd45e20ee4?w=1600&h=500&fit=crop&q=80',
+                'gallery' => [
+                    'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=2000',
+                    'https://images.unsplash.com/photo-1589304049870-07cd45e20ee4?q=80&w=2000',
+                    'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=2000'
+                ],
                 'category_slugs' => ['droits-de-l-homme']
             ]
         ];
@@ -118,7 +130,8 @@ class OrganizationSeeder extends Seeder
             $categorySlugs = $data['category_slugs'];
             unset($data['category_slugs']);
 
-            $data['user_id'] = $user->id;
+            $randomUser = $users->random();
+            $data['user_id'] = $randomUser->id;
             $slug = Str::slug($data['name']);
             
             $organization = Organization::updateOrCreate(
@@ -135,13 +148,24 @@ class OrganizationSeeder extends Seeder
                 $organization->categories()->sync($catsToAttach);
             }
 
-            // Mettre l'utilisateur en tant que membre/admin de l'orga s'il n'y est pas déjà
-            if (!$organization->members()->where('user_id', $user->id)->exists()) {
+            // Mettre un utilisateur en tant que membre/admin de l'orga
+            if (!$organization->members()->where('user_id', $randomUser->id)->exists()) {
                 $organization->members()->create([
-                    'user_id' => $user->id,
+                    'user_id' => $randomUser->id,
                     'role' => 'admin',
                     'job_title' => 'Direction'
                 ]);
+            }
+            
+            // Ajouter un ou deux dev users supplémentaires s'ils existent
+            foreach ($users->random(min(2, count($users))) as $extraUser) {
+                if (!$organization->members()->where('user_id', $extraUser->id)->exists()) {
+                    $organization->members()->create([
+                        'user_id' => $extraUser->id,
+                        'role' => 'member',
+                        'job_title' => 'Bénévole'
+                    ]);
+                }
             }
         }
     }

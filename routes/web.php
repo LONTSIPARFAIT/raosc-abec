@@ -36,6 +36,7 @@ Route::prefix('rao')->name('rao.')->group(function () {
 
 // Admin Routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/organizations', [\App\Http\Controllers\Admin\OrganizationManagementController::class, 'index'])->name('organizations.index');
     Route::post('/organizations/{organization}/status', [\App\Http\Controllers\Admin\OrganizationManagementController::class, 'updateStatus'])->name('organizations.status');
     
     Route::get('/users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');

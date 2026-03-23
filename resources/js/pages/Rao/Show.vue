@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { 
-    MapPin, Building2, Calendar, Mail, CheckCircle2, Users, 
+    MapPin, Building2, Calendar, Mail, CheckCircle2, 
     ArrowLeft, ShieldCheck, Image as ImageIcon, ChevronLeft, ChevronRight, Globe, PhoneCall, Navigation
 } from 'lucide-vue-next';
 import { defineProps, ref } from 'vue';
@@ -54,12 +54,12 @@ const prevGallery = () => {
                     
                     <!-- Sidebar (Profile) -->
                     <div class="lg:col-span-4 space-y-6">
-                        <Card class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-sm">
+                        <Card class="bg-transparent dark:bg-zinc-900 border-none overflow-hidden">
                             <div class="p-6 text-center">
                                 <!-- Logo -->
-                                <div class="h-28 w-28 rounded-2xl bg-white dark:bg-zinc-800 shadow-sm ring-4 ring-white dark:ring-zinc-950 overflow-hidden mx-auto mb-5 flex items-center justify-center border border-zinc-100 dark:border-zinc-700">
+                                <div class="h-32 w-32 rounded-3xl bg-white dark:bg-zinc-800 shadow-xl shadow-zinc-200/50 dark:shadow-none ring-8 ring-white dark:ring-zinc-950 overflow-hidden mx-auto mb-6 flex items-center justify-center border-none">
                                     <img v-if="org.logo" :src="org.logo" class="h-full w-full object-cover" />
-                                    <Building2 v-else class="h-10 w-10 text-raosc-green" />
+                                    <Building2 v-else class="h-12 w-12 text-raosc-green" />
                                 </div>
                                 
                                 <h1 class="text-xl font-bold text-zinc-900 dark:text-white mb-2">{{ org.name }}</h1>
@@ -118,8 +118,8 @@ const prevGallery = () => {
                                     </div>
                                 </dl>
                                 
-                                <div class="mt-6 pt-6 border-t border-zinc-100 dark:border-zinc-800">
-                                    <Button class="w-full bg-raosc-green hover:bg-raosc-green/90 text-white rounded-xl text-sm font-semibold py-2.5 shadow-sm">
+                                <div class="mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-800">
+                                    <Button class="w-full bg-raosc-green hover:bg-raosc-green/90 text-white rounded-2xl text-sm font-bold py-3 shadow-lg shadow-raosc-green/20">
                                         Prendre contact
                                     </Button>
                                 </div>
@@ -129,64 +129,62 @@ const prevGallery = () => {
 
                     <!-- Main Content -->
                     <div class="lg:col-span-8 space-y-6">
-                        <div class="bg-white dark:bg-zinc-900 p-6 sm:p-8 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <Badge v-for="cat in org.categories" :key="cat.id" variant="outline" class="text-[10px] font-semibold py-1 px-3 rounded-full border-raosc-green/20 bg-raosc-green/5 text-raosc-green">
+                        <div class="bg-transparent p-0">
+                            <div class="flex flex-wrap gap-2 mb-8">
+                                <Badge v-for="cat in org.categories" :key="cat.id" variant="secondary" class="text-[10px] font-bold py-1.5 px-4 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border-none">
                                     {{ cat.name }}
                                 </Badge>
                             </div>
                             
                             <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white mb-6">À propos de <span class="text-raosc-green">l'organisation</span></h2>
                             
-                            <div class="space-y-5">
-                                <p class="text-lg font-semibold text-zinc-900 dark:text-white border-l-3 border-raosc-yellow pl-5 leading-relaxed">
+                            <div class="space-y-6">
+                                <p class="text-xl font-bold text-zinc-900 dark:text-white leading-relaxed">
                                     {{ org.short_description }}
                                 </p>
-                                <div class="text-zinc-600 dark:text-zinc-400 text-base leading-relaxed" v-if="org.description" v-html="org.description.replace(/\n/g, '<br>')"></div>
+                                <div class="text-zinc-500 dark:text-zinc-400 text-lg leading-relaxed space-y-4" v-if="org.description" v-html="org.description.replace(/\n/g, '<br>')"></div>
                             </div>
 
                             <!-- Technical Sheet -->
-                            <div class="mt-10 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl p-6 border border-zinc-100 dark:border-zinc-700">
-                                <h3 class="text-base font-bold text-zinc-900 dark:text-white mb-5 flex items-center gap-2">
-                                    <span class="w-1 h-5 bg-raosc-yellow rounded-full"></span>
-                                    Fiche technique
+                            <div class="mt-12 bg-zinc-100/40 dark:bg-zinc-800/20 rounded-3xl p-8 border-none">
+                                <h3 class="text-lg font-black text-zinc-900 dark:text-white mb-6 flex items-center gap-2 uppercase tracking-tighter">
+                                    Information Technique
                                 </h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                    <div class="flex items-center gap-3">
-                                        <div class="h-9 w-9 rounded-lg bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center text-raosc-red border border-zinc-200 dark:border-zinc-700">
-                                            <Calendar class="w-4 h-4" />
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                                    <div class="flex items-center gap-4">
+                                        <div class="h-12 w-12 rounded-2xl bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center text-raosc-red border-none">
+                                            <Calendar class="w-5 h-5" />
                                         </div>
                                         <div>
-                                            <p class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Fondation</p>
-                                            <p class="text-sm font-medium text-zinc-900 dark:text-white">{{ org.founded_date ? new Date(org.founded_date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Non spécifiée' }}</p>
+                                            <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Fondation</p>
+                                            <p class="text-base font-bold text-zinc-900 dark:text-white">{{ org.founded_date ? new Date(org.founded_date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Non spécifiée' }}</p>
                                         </div>
                                     </div>
-                                    <div class="flex items-center gap-3">
-                                        <div class="h-9 w-9 rounded-lg bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center text-raosc-yellow border border-zinc-200 dark:border-zinc-700">
-                                            <ShieldCheck class="w-4 h-4" />
+                                    <div class="flex items-center gap-4">
+                                        <div class="h-12 w-12 rounded-2xl bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center text-raosc-yellow border-none">
+                                            <ShieldCheck class="w-5 h-5" />
                                         </div>
                                         <div>
-                                            <p class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">N° d'enregistrement</p>
-                                            <p class="text-sm font-medium text-zinc-900 dark:text-white">{{ org.registration_number || 'Non spécifié' }}</p>
+                                            <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Enregistrement</p>
+                                            <p class="text-base font-bold text-zinc-900 dark:text-white">{{ org.registration_number || 'Non spécifié' }}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Team Section -->
-                            <div v-if="org.members && org.members.length > 0" class="mt-10 pt-8 border-t border-zinc-100 dark:border-zinc-800">
-                                <h3 class="text-lg font-bold text-zinc-900 dark:text-white mb-5 flex items-center gap-2">
-                                    <Users class="h-5 w-5 text-raosc-green" />
-                                    Équipe de direction
+                            <div v-if="org.members && org.members.length > 0" class="mt-12 pt-8 border-none">
+                                <h3 class="text-lg font-black text-zinc-900 dark:text-white mb-6 flex items-center gap-2 uppercase tracking-tighter">
+                                    Notre Équipe
                                 </h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div v-for="member in org.members" :key="member.id" class="flex items-center gap-3 bg-zinc-50 dark:bg-zinc-800/50 p-3 rounded-xl border border-zinc-100 dark:border-zinc-700">
-                                        <div class="h-10 w-10 rounded-lg bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center font-bold text-raosc-green text-sm">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div v-for="member in org.members" :key="member.id" class="flex items-center gap-4 bg-zinc-100/40 dark:bg-zinc-800/20 p-5 rounded-3xl">
+                                        <div class="h-14 w-14 rounded-2xl bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center font-black text-raosc-green text-lg">
                                             {{ member.user ? member.user.name.charAt(0).toUpperCase() : '?' }}
                                         </div>
                                         <div>
-                                            <p class="text-sm font-bold text-zinc-900 dark:text-white">{{ member.user ? member.user.name : 'Membre' }}</p>
-                                            <p class="text-[10px] font-semibold text-raosc-yellow">{{ member.job_title || 'Responsable' }}</p>
+                                            <p class="text-base font-bold text-zinc-900 dark:text-white">{{ member.user ? member.user.name : 'Membre' }}</p>
+                                            <p class="text-xs font-bold text-raosc-yellow uppercase tracking-widest">{{ member.job_title || 'Responsable' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -194,13 +192,13 @@ const prevGallery = () => {
                         </div>
 
                         <!-- Gallery Section -->
-                        <div v-if="gallery && gallery.length > 0" class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
-                            <div class="p-6 sm:p-8 border-b border-zinc-100 dark:border-zinc-800">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <ImageIcon class="h-5 w-5 text-raosc-green" />
-                                    <h3 class="text-lg font-bold text-zinc-900 dark:text-white">Médiathèque</h3>
+                        <div v-if="gallery && gallery.length > 0" class="bg-white dark:bg-zinc-900 rounded-[3rem] overflow-hidden mt-12 shadow-2xl shadow-zinc-200/50 dark:shadow-none">
+                            <div class="p-8 sm:p-10 border-none">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <ImageIcon class="h-6 w-6 text-raosc-green" />
+                                    <h3 class="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tighter">Actions en images</h3>
                                 </div>
-                                <p class="text-xs text-zinc-500">Immersion dans les actions de l'organisation sur le terrain.</p>
+                                <p class="text-sm text-zinc-500 font-medium">Découvrez notre impact sur le terrain à travers ces quelques clichés.</p>
                             </div>
                             
                             <div class="relative group">

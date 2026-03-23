@@ -56,7 +56,7 @@ const mainNavItems: NavItem[] = [
 const adminNavItems: NavItem[] = [
     {
         title: 'Validation OSC',
-        href: dashboard(),
+        href: '/admin/organizations',
         icon: ShieldCheck,
     },
     {

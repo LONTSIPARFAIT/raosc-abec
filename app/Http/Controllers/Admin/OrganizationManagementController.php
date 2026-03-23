@@ -9,6 +9,25 @@ use Illuminate\Http\Request;
 
 class OrganizationManagementController extends Controller
 {
+    public function index()
+    {
+        $pendingOrganizations = Organization::where('status', 'pending')
+            ->with(['categories', 'members.user', 'creator'])
+            ->latest()
+            ->get();
+
+        $recentOrganizations = Organization::whereIn('status', ['approved', 'rejected'])
+            ->with(['categories', 'creator'])
+            ->latest()
+            ->take(10)
+            ->get();
+
+        return inertia('Admin/Organizations', [
+            'pending' => $pendingOrganizations,
+            'recent' => $recentOrganizations
+        ]);
+    }
+
     public function updateStatus(Request $request, Organization $organization)
     {
         $validated = $request->validate([

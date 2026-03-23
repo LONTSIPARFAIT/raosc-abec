@@ -9,7 +9,6 @@ import {
     Settings,
     Download,
     FileText,
-    ShieldAlert,
     LayoutDashboard,
     Bell,
     Check,
@@ -17,7 +16,6 @@ import {
     Globe,
     ChevronRight
 } from 'lucide-vue-next';
-import AdminApprovalCard from '@/components/AdminApprovalCard.vue';
 import StatsChart from '@/components/StatsChart.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
@@ -45,7 +43,6 @@ defineProps<{
     stats: Stats;
     userOrganization: Organization | null;
     recentOrgs: Organization[];
-    pendingOrgsList: Organization[];
     chartData: {
         categories: any;
         registrations: any;
@@ -121,16 +118,16 @@ const getStatusLabel = (status: string) => {
                         <div class="text-xs font-medium text-zinc-400 uppercase tracking-wide mt-1">OSC approuvées</div>
                     </div>
 
-                    <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-sm">
+                    <Link href="/admin/organizations" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-sm hover:border-raosc-green/50 transition-all group">
                         <div class="flex items-center justify-between mb-3">
-                            <div class="h-11 w-11 rounded-xl bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center text-amber-500">
+                            <div class="h-11 w-11 rounded-xl bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-white transition-all">
                                 <Clock class="w-5 h-5" />
                             </div>
-                            <span class="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 px-2 py-1 rounded-full">Alerte</span>
+                            <span class="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 px-2 py-1 rounded-full group-hover:bg-amber-500 group-hover:text-white transition-all">Alerte</span>
                         </div>
                         <div class="text-3xl font-bold text-zinc-900 dark:text-white">{{ stats.pending_orgs }}</div>
                         <div class="text-xs font-medium text-zinc-400 uppercase tracking-wide mt-1">Demandes en attente</div>
-                    </div>
+                    </Link>
 
                     <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 shadow-sm">
                         <div class="flex items-center justify-between mb-3">
@@ -249,24 +246,6 @@ const getStatusLabel = (status: string) => {
                                 </div>
                                 <span class="text-xs font-semibold text-zinc-900 dark:text-white text-center">Paramètres</span>
                             </Link>
-                        </div>
-
-                        <!-- Validation Area -->
-                        <div class="bg-amber-50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/10 rounded-2xl p-6 shadow-sm">
-                            <div class="flex items-center justify-between mb-6">
-                                <div class="flex items-center gap-2">
-                                    <ShieldAlert class="h-5 w-5 text-amber-600 dark:text-amber-400" />
-                                    <h2 class="text-lg font-bold text-amber-900 dark:text-amber-400">Demandes en attente</h2>
-                                </div>
-                                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-500/10 px-2.5 py-1 rounded-full">{{ pendingOrgsList.length }}</span>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <AdminApprovalCard v-for="org in pendingOrgsList" :key="org.id" :organization="org" />
-                            </div>
-                            <div v-if="pendingOrgsList.length === 0" class="text-center py-10">
-                                <CheckCircle2 class="w-12 h-12 text-amber-200 mx-auto mb-3" />
-                                <p class="text-sm text-zinc-500">Toutes les demandes ont été traitées.</p>
-                            </div>
                         </div>
                     </div>
 

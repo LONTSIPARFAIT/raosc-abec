@@ -15,7 +15,9 @@ return new class extends Migration
             Schema::create('organization_organization_category', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('organization_id')->constrained()->onDelete('cascade');
-                $table->foreignId('organization_category_id')->constrained('organization_categories')->onDelete('cascade');
+                $table->foreignId('organization_category_id')
+                    ->constrained('organization_categories', indexName: 'pivot_org_cat_foreign')
+                    ->onDelete('cascade');
                 $table->timestamps();
             });
         }
