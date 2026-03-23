@@ -15,11 +15,10 @@ const props = defineProps<{
     organization: { data: any };
     isPublic?: boolean;
 }>();
-
 const org = props.organization.data;
 
 const galleryIndex = ref(0);
-const gallery: string[] = props.organization.gallery || [];
+const gallery: string[] = org.gallery || [];
 
 const nextGallery = () => {
     galleryIndex.value = (galleryIndex.value + 1) % gallery.length;
