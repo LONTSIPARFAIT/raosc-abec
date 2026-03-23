@@ -12,9 +12,11 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 
 const props = defineProps<{
-    organization: any;
+    organization: { data: any };
     isPublic?: boolean;
 }>();
+
+const org = props.organization.data;
 
 const galleryIndex = ref(0);
 const gallery: string[] = props.organization.gallery || [];
@@ -30,12 +32,12 @@ const prevGallery = () => {
 
 <template>
     <component :is="isPublic ? PublicLayout : AppLayout">
-        <Head :title="organization.name + ' - RAOSC'" />
+        <Head :title="org.name + ' - RAOSC'" />
 
         <main class="bg-zinc-50 dark:bg-zinc-950 min-h-screen pb-24">
             <!-- Cover Image -->
             <div class="relative h-64 sm:h-80 md:h-96 w-full overflow-hidden bg-zinc-900">
-                <img v-if="organization.cover_image" :src="organization.cover_image" class="w-full h-full object-cover opacity-80" />
+                <img v-if="org.cover_image" :src="org.cover_image" class="w-full h-full object-cover opacity-80" />
                 <div v-else class="w-full h-full bg-gradient-to-r from-raosc-green/80 to-zinc-800"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                 
@@ -57,11 +59,11 @@ const prevGallery = () => {
                             <div class="p-6 text-center">
                                 <!-- Logo -->
                                 <div class="h-28 w-28 rounded-2xl bg-white dark:bg-zinc-800 shadow-sm ring-4 ring-white dark:ring-zinc-950 overflow-hidden mx-auto mb-5 flex items-center justify-center border border-zinc-100 dark:border-zinc-700">
-                                    <img v-if="organization.logo" :src="organization.logo" class="h-full w-full object-cover" />
+                                    <img v-if="org.logo" :src="org.logo" class="h-full w-full object-cover" />
                                     <Building2 v-else class="h-10 w-10 text-raosc-green" />
                                 </div>
                                 
-                                <h1 class="text-xl font-bold text-zinc-900 dark:text-white mb-2">{{ organization.name }}</h1>
+                                <h1 class="text-xl font-bold text-zinc-900 dark:text-white mb-2">{{ org.name }}</h1>
                                 <div class="inline-flex items-center gap-1.5 text-raosc-green text-[10px] font-semibold bg-raosc-green/5 px-3 py-1 rounded-full">
                                     <CheckCircle2 class="w-3 h-3" />
                                     ONG vérifiée
@@ -75,7 +77,7 @@ const prevGallery = () => {
                                         <div>
                                             <dt class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Localisation</dt>
                                             <dd class="text-sm font-medium text-zinc-900 dark:text-white">
-                                                {{ organization.city }}, {{ organization.country }}
+                                                {{ org.city }}, {{ org.country }}
                                             </dd>
                                         </div>
                                     </div>
@@ -84,33 +86,33 @@ const prevGallery = () => {
                                         <div>
                                             <dt class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Email</dt>
                                             <dd class="text-sm font-medium text-zinc-900 dark:text-white truncate">
-                                                <a :href="`mailto:${organization.email}`" class="hover:text-raosc-green transition-colors">{{ organization.email }}</a>
+                                                <a :href="`mailto:${org.email}`" class="hover:text-raosc-green transition-colors">{{ org.email }}</a>
                                             </dd>
                                         </div>
                                     </div>
-                                    <div v-if="organization.phone" class="flex gap-3">
+                                    <div v-if="org.phone" class="flex gap-3">
                                         <PhoneCall class="h-4 w-4 text-zinc-400 shrink-0 mt-0.5" />
                                         <div>
                                             <dt class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Téléphone</dt>
                                             <dd class="text-sm font-medium text-zinc-900 dark:text-white">
-                                                <a :href="`tel:${organization.phone}`" class="hover:text-raosc-green transition-colors">{{ organization.phone }}</a>
+                                                <a :href="`tel:${org.phone}`" class="hover:text-raosc-green transition-colors">{{ org.phone }}</a>
                                             </dd>
                                         </div>
                                     </div>
-                                    <div v-if="organization.address" class="flex gap-3">
+                                    <div v-if="org.address" class="flex gap-3">
                                         <Navigation class="h-4 w-4 text-zinc-400 shrink-0 mt-0.5" />
                                         <div>
                                             <dt class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Adresse</dt>
-                                            <dd class="text-sm font-medium text-zinc-900 dark:text-white">{{ organization.address }}</dd>
+                                            <dd class="text-sm font-medium text-zinc-900 dark:text-white">{{ org.address }}</dd>
                                         </div>
                                     </div>
-                                    <div v-if="organization.website" class="flex gap-3">
+                                    <div v-if="org.website" class="flex gap-3">
                                         <Globe class="h-4 w-4 text-zinc-400 shrink-0 mt-0.5" />
                                         <div>
                                             <dt class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Site Web</dt>
                                             <dd class="text-sm font-medium text-zinc-900 dark:text-white truncate">
-                                                <a :href="organization.website" target="_blank" rel="noopener noreferrer" class="hover:text-raosc-green transition-colors">
-                                                    {{ organization.website.replace(/^https?:\/\//, '') }}
+                                                <a :href="org.website" target="_blank" rel="noopener noreferrer" class="hover:text-raosc-green transition-colors">
+                                                    {{ org.website.replace(/^https?:\/\//, '') }}
                                                 </a>
                                             </dd>
                                         </div>
@@ -130,7 +132,7 @@ const prevGallery = () => {
                     <div class="lg:col-span-8 space-y-6">
                         <div class="bg-white dark:bg-zinc-900 p-6 sm:p-8 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
                             <div class="flex flex-wrap gap-2 mb-6">
-                                <Badge v-for="cat in organization.categories" :key="cat.id" variant="outline" class="text-[10px] font-semibold py-1 px-3 rounded-full border-raosc-green/20 bg-raosc-green/5 text-raosc-green">
+                                <Badge v-for="cat in org.categories" :key="cat.id" variant="outline" class="text-[10px] font-semibold py-1 px-3 rounded-full border-raosc-green/20 bg-raosc-green/5 text-raosc-green">
                                     {{ cat.name }}
                                 </Badge>
                             </div>
@@ -139,9 +141,9 @@ const prevGallery = () => {
                             
                             <div class="space-y-5">
                                 <p class="text-lg font-semibold text-zinc-900 dark:text-white border-l-3 border-raosc-yellow pl-5 leading-relaxed">
-                                    {{ organization.short_description }}
+                                    {{ org.short_description }}
                                 </p>
-                                <div class="text-zinc-600 dark:text-zinc-400 text-base leading-relaxed" v-if="organization.description" v-html="organization.description.replace(/\n/g, '<br>')"></div>
+                                <div class="text-zinc-600 dark:text-zinc-400 text-base leading-relaxed" v-if="org.description" v-html="org.description.replace(/\n/g, '<br>')"></div>
                             </div>
 
                             <!-- Technical Sheet -->
@@ -157,7 +159,7 @@ const prevGallery = () => {
                                         </div>
                                         <div>
                                             <p class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Fondation</p>
-                                            <p class="text-sm font-medium text-zinc-900 dark:text-white">{{ organization.founded_date || 'Non spécifiée' }}</p>
+                                            <p class="text-sm font-medium text-zinc-900 dark:text-white">{{ org.founded_date || 'Non spécifiée' }}</p>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-3">
@@ -166,20 +168,20 @@ const prevGallery = () => {
                                         </div>
                                         <div>
                                             <p class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">N° d'enregistrement</p>
-                                            <p class="text-sm font-medium text-zinc-900 dark:text-white">{{ organization.registration_number || 'Non spécifié' }}</p>
+                                            <p class="text-sm font-medium text-zinc-900 dark:text-white">{{ org.registration_number || 'Non spécifié' }}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Team Section -->
-                            <div v-if="organization.members && organization.members.length > 0" class="mt-10 pt-8 border-t border-zinc-100 dark:border-zinc-800">
+                            <div v-if="org.members && org.members.length > 0" class="mt-10 pt-8 border-t border-zinc-100 dark:border-zinc-800">
                                 <h3 class="text-lg font-bold text-zinc-900 dark:text-white mb-5 flex items-center gap-2">
                                     <Users class="h-5 w-5 text-raosc-green" />
                                     Équipe de direction
                                 </h3>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div v-for="member in organization.members" :key="member.id" class="flex items-center gap-3 bg-zinc-50 dark:bg-zinc-800/50 p-3 rounded-xl border border-zinc-100 dark:border-zinc-700">
+                                    <div v-for="member in org.members" :key="member.id" class="flex items-center gap-3 bg-zinc-50 dark:bg-zinc-800/50 p-3 rounded-xl border border-zinc-100 dark:border-zinc-700">
                                         <div class="h-10 w-10 rounded-lg bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center font-bold text-raosc-green text-sm">
                                             {{ member.user ? member.user.name.charAt(0).toUpperCase() : '?' }}
                                         </div>

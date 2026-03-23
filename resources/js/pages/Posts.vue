@@ -36,73 +36,83 @@ const placeholderPosts = [
     <PublicLayout>
         <Head title="Actualités - RAOSC" />
 
-        <main class="relative bg-zinc-50 dark:bg-zinc-950 pb-24">
+        <main class="bg-zinc-50 dark:bg-zinc-950 min-h-screen pb-24">
             <!-- Header Section -->
-            <div class="relative bg-zinc-950 py-32 sm:py-48 px-6 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1491336477066-31156b5e4f35?q=80&w=2070" class="absolute inset-0 w-full h-full object-cover opacity-30 scale-105" />
-                <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+            <div class="bg-zinc-950 py-20 sm:py-28 px-6 overflow-hidden relative">
+                <div class="absolute inset-0 z-0">
+                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-5 rounded-full blur-[100px]"></div>
+                </div>
 
-                <div class="mx-auto max-w-7xl relative z-10 text-center">
+                <div class="mx-auto max-w-4xl relative z-10 text-center">
                     <div class="mb-8 flex justify-center">
-                        <div class="flex items-center gap-3 rounded-full bg-white/5 px-5 py-2.5 border border-white/10 backdrop-blur-xl">
-                            <span class="text-[11px] font-bold tracking-[0.1em] text-white uppercase italic">Journal du Réseau RAOSC</span>
+                        <div class="inline-flex items-center gap-3 rounded-full bg-white/10 px-4 py-2 border border-white/20">
+                            <span class="text-[10px] font-bold tracking-[0.2em] text-raosc-yellow uppercase">Journal du Réseau RAOSC</span>
                         </div>
                     </div>
-                    <h1 class="text-4xl sm:text-7xl font-extrabold text-white tracking-tight leading-none mb-8">
-                        Dernières <span class="bg-clip-text text-transparent bg-gradient-to-r from-raosc-yellow to-raosc-red">Actualités</span>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
+                        Dernières <span class="text-raosc-yellow">Actualités</span>
                     </h1>
-                    <p class="text-lg sm:text-2xl text-zinc-400 max-w-3xl mx-auto font-medium tracking-tight leading-relaxed">
+                    <p class="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto font-medium">
                         Suivez les moments forts, les projets et les opportunités au sein du réseau panafricain.
                     </p>
                 </div>
             </div>
 
             <!-- Posts Grid -->
-            <div class="mx-auto max-w-7xl px-6 lg:px-8 -mt-12 relative z-20">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
-                    <div v-for="(post, i) in placeholderPosts" :key="i" class="group bg-white dark:bg-zinc-900 rounded-[2.5rem] overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-2xl transition-all hover:-translate-y-2 hover:shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)]">
-                        <div class="h-48 bg-zinc-100 dark:bg-zinc-800 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-100 dark:from-zinc-800 dark:to-zinc-900 group-hover:scale-110 transition-transform duration-700"></div>
-                            <div class="absolute top-6 left-6">
-                                <span :class="['px-4 py-1.5 rounded-xl text-[10px] font-bold tracking-wider shadow-sm', post.color]">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 -mt-12 sm:-mt-16 relative z-20">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div 
+                        v-for="(post, i) in placeholderPosts" 
+                        :key="i" 
+                        class="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all duration-200"
+                    >
+                        <!-- Placeholder image area -->
+                        <div class="h-48 bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-zinc-200/50 to-zinc-100/50 dark:from-zinc-800/50 dark:to-zinc-900/50 group-hover:scale-105 transition-transform duration-500"></div>
+                            <div class="absolute top-5 left-5">
+                                <span :class="['px-3 py-1.5 rounded-full text-[10px] font-semibold shadow-sm', post.color]">
                                     {{ post.category }}
                                 </span>
                             </div>
                         </div>
-                        <div class="p-8 sm:p-10">
-                            <div class="flex items-center gap-3 text-[11px] font-semibold text-zinc-400 mb-4 tracking-tight">
+
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 mb-3">
                                 <Calendar class="h-3.5 w-3.5" />
-                                {{ post.date }}
+                                <span>{{ post.date }}</span>
                             </div>
-                            <h2 class="text-2xl font-bold text-zinc-900 dark:text-white tracking-tight leading-tight mb-4 group-hover:text-raosc-green transition-colors">
+                            <h2 class="text-xl font-bold text-zinc-900 dark:text-white leading-tight mb-3 group-hover:text-raosc-green transition-colors">
                                 {{ post.title }}
                             </h2>
-                            <p class="text-sm text-zinc-500 font-medium mb-8 line-clamp-2 border-l-3 border-raosc-green/20 pl-4 leading-relaxed">
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-5 line-clamp-2">
                                 {{ post.desc }}
                             </p>
-                            <button class="flex items-center gap-2 text-[11px] font-bold text-raosc-green hover:gap-4 transition-all group-hover:translate-x-1">
-                                Lire l'article <ArrowRight class="h-3.5 w-3.5" />
+                            <button class="inline-flex items-center gap-2 text-xs font-semibold text-raosc-green hover:gap-3 transition-all">
+                                Lire l'article
+                                <ArrowRight class="h-3.5 w-3.5" />
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Empty State / Soon Banner -->
-                <div class="mt-20 py-20 text-center bg-zinc-950 rounded-[3rem] border border-zinc-800 shadow-3xl relative overflow-hidden">
+                <!-- Bottom banner (simplified) -->
+                <div class="mt-16 bg-zinc-900 dark:bg-zinc-800 rounded-2xl p-10 text-center relative overflow-hidden shadow-sm">
                     <div class="relative z-10">
-                        <div class="mx-auto h-20 w-20 bg-white/5 rounded-[2rem] flex items-center justify-center text-zinc-500 mb-8 border border-white/10 shadow-inner">
-                            <Newspaper class="h-10 w-10" />
+                        <div class="h-14 w-14 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-5">
+                            <Newspaper class="h-7 w-7 text-zinc-400" />
                         </div>
-                        <h2 class="text-2xl font-bold text-white tracking-tight mb-4">Plus d'articles en préparation</h2>
-                        <p class="text-zinc-500 max-w-md mx-auto font-medium mb-10 leading-relaxed">Nous finalisons la rédaction de nouveaux dossiers et portraits d'organisations engagées.</p>
-                        <button class="bg-raosc-green hover:bg-[#006b40] text-white font-bold px-10 py-4 rounded-2xl text-xs transition-all shadow-lg shadow-raosc-green/10 hover:-translate-y-0.5">
+                        <h2 class="text-xl font-bold text-white mb-2">Plus d'articles en préparation</h2>
+                        <p class="text-sm text-zinc-400 max-w-md mx-auto mb-6">
+                            Nous finalisons la rédaction de nouveaux dossiers et portraits d'organisations engagées.
+                        </p>
+                        <button class="inline-flex items-center gap-2 bg-raosc-green hover:bg-raosc-green/90 text-white font-semibold px-6 py-2.5 rounded-full text-sm transition-colors shadow-sm">
                             S'abonner à la newsletter
+                            <ArrowRight class="h-4 w-4" />
                         </button>
                     </div>
-                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-raosc-green opacity-10 rounded-full blur-[80px]"></div>
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-raosc-green opacity-5 rounded-full blur-3xl"></div>
                 </div>
             </div>
         </main>
     </PublicLayout>
 </template>
-

@@ -84,18 +84,18 @@ const personalNavItems: NavItem[] = [
     },
 ];
 
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Paramètres',
-        href: '/settings/profile',
-        icon: Settings2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs',
-        icon: BookOpen,
-    },
-];
+// const footerNavItems: NavItem[] = [
+//     {
+//         title: 'Paramètres',
+//         href: '/settings/profile',
+//         icon: Settings2,
+//     },
+//     {
+//         title: 'Documentation',
+//         href: 'https://laravel.com/docs',
+//         icon: BookOpen,
+//     },
+// ];
 </script>
 
 <template>
@@ -119,7 +119,7 @@ const footerNavItems: NavItem[] = [
         </SidebarContent>
 
         <SidebarFooter>
-            <NavFooter :items="footerNavItems" />
+            <!-- <NavFooter :items="footerNavItems" /> -->
             <NavUser />
         </SidebarFooter>
     </Sidebar>

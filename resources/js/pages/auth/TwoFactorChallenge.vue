@@ -16,18 +16,18 @@ import type { TwoFactorConfigContent } from '@/types';
 const authConfigContent = computed<TwoFactorConfigContent>(() => {
     if (showRecoveryInput.value) {
         return {
-            title: 'Recovery code',
+            title: 'Code de récupération',
             description:
-                'Please confirm access to your account by entering one of your emergency recovery codes.',
-            buttonText: 'login using an authentication code',
+                'Veuillez confirmer votre accès en entrant l’un de vos codes de récupération d’urgence.',
+            buttonText: 'utiliser un code d’authentification',
         };
     }
 
     return {
-        title: 'Authentication code',
+        title: "Code d'authentification",
         description:
-            'Enter the authentication code provided by your authenticator application.',
-        buttonText: 'login using a recovery code',
+            "Entrez le code d'authentification fourni par votre application d'authentification.",
+        buttonText: 'utiliser un code de récupération',
     };
 });
 
@@ -47,13 +47,13 @@ const code = ref<string>('');
         :title="authConfigContent.title"
         :description="authConfigContent.description"
     >
-        <Head title="Two-factor authentication" />
+        <Head title="Authentification à deux facteurs" />
 
         <div class="space-y-6">
             <template v-if="!showRecoveryInput">
                 <Form
                     v-bind="store.form()"
-                    class="space-y-4"
+                    class="space-y-5"
                     reset-on-error
                     @error="code = ''"
                     #default="{ errors, processing, clearErrors }"
@@ -75,20 +75,25 @@ const code = ref<string>('');
                                         v-for="index in 6"
                                         :key="index"
                                         :index="index - 1"
+                                        class="rounded-lg border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-raosc-green/20"
                                     />
                                 </InputOTPGroup>
                             </InputOTP>
                         </div>
                         <InputError :message="errors.code" />
                     </div>
-                    <Button type="submit" class="w-full" :disabled="processing"
-                        >Continue</Button
+                    <Button
+                        type="submit"
+                        class="w-full bg-raosc-green hover:bg-raosc-green/90 text-white font-semibold rounded-full py-2.5 shadow-sm transition-all"
+                        :disabled="processing"
                     >
-                    <div class="text-center text-sm text-muted-foreground">
-                        <span>or you can </span>
+                        Continuer
+                    </Button>
+                    <div class="text-center text-sm text-zinc-500 dark:text-zinc-400">
+                        <span>ou vous pouvez </span>
                         <button
                             type="button"
-                            class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                            class="text-raosc-green font-semibold hover:text-raosc-green/80 transition-colors"
                             @click="() => toggleRecoveryMode(clearErrors)"
                         >
                             {{ authConfigContent.buttonText }}
@@ -100,27 +105,34 @@ const code = ref<string>('');
             <template v-else>
                 <Form
                     v-bind="store.form()"
-                    class="space-y-4"
+                    class="space-y-5"
                     reset-on-error
                     #default="{ errors, processing, clearErrors }"
                 >
-                    <Input
-                        name="recovery_code"
-                        type="text"
-                        placeholder="Enter recovery code"
-                        :autofocus="showRecoveryInput"
-                        required
-                    />
-                    <InputError :message="errors.recovery_code" />
-                    <Button type="submit" class="w-full" :disabled="processing"
-                        >Continue</Button
+                    <div class="grid gap-2">
+                        <Input
+                            name="recovery_code"
+                            type="text"
+                            placeholder="Entrez votre code de récupération"
+                            :autofocus="showRecoveryInput"
+                            required
+                            class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green"
+                        />
+                        <InputError :message="errors.recovery_code" />
+                    </div>
+                    <Button
+                        type="submit"
+                        class="w-full bg-raosc-green hover:bg-raosc-green/90 text-white font-semibold rounded-full py-2.5 shadow-sm transition-all"
+                        :disabled="processing"
                     >
+                        Continuer
+                    </Button>
 
-                    <div class="text-center text-sm text-muted-foreground">
-                        <span>or you can </span>
+                    <div class="text-center text-sm text-zinc-500 dark:text-zinc-400">
+                        <span>ou vous pouvez </span>
                         <button
                             type="button"
-                            class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                            class="text-raosc-green font-semibold hover:text-raosc-green/80 transition-colors"
                             @click="() => toggleRecoveryMode(clearErrors)"
                         >
                             {{ authConfigContent.buttonText }}
@@ -131,4 +143,3 @@ const code = ref<string>('');
         </div>
     </AuthLayout>
 </template>
-

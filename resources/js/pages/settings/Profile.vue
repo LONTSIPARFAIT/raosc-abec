@@ -23,7 +23,7 @@ defineProps<Props>();
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
-        title: 'Profile settings',
+        title: 'Paramètres du profil',
         href: edit(),
     },
 ];
@@ -34,16 +34,16 @@ const user = computed(() => page.props.auth.user);
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbItems">
-        <Head title="Profile settings" />
+        <Head title="Paramètres du profil" />
 
-        <h1 class="sr-only">Profile settings</h1>
+        <h1 class="sr-only">Paramètres du profil</h1>
 
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
                 <Heading
                     variant="small"
-                    title="Profile information"
-                    description="Update your name and email address"
+                    title="Informations du profil"
+                    description="Modifiez votre nom et votre adresse email"
                 />
 
                 <Form
@@ -52,61 +52,63 @@ const user = computed(() => page.props.auth.user);
                     v-slot="{ errors, processing, recentlySuccessful }"
                 >
                     <div class="grid gap-2">
-                        <Label for="name">Name</Label>
+                        <Label for="name" class="text-sm font-medium">Nom complet</Label>
                         <Input
                             id="name"
-                            class="mt-1 block w-full"
+                            class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green"
                             name="name"
                             :default-value="user.name"
                             required
                             autocomplete="name"
-                            placeholder="Full name"
+                            placeholder="Jean Dupont"
                         />
-                        <InputError class="mt-2" :message="errors.name" />
+                        <InputError :message="errors.name" />
                     </div>
 
                     <div class="grid gap-2">
-                        <Label for="email">Email address</Label>
+                        <Label for="email" class="text-sm font-medium">Adresse email</Label>
                         <Input
                             id="email"
                             type="email"
-                            class="mt-1 block w-full"
+                            class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green"
                             name="email"
                             :default-value="user.email"
                             required
                             autocomplete="username"
-                            placeholder="Email address"
+                            placeholder="exemple@raosc.org"
                         />
-                        <InputError class="mt-2" :message="errors.email" />
+                        <InputError :message="errors.email" />
                     </div>
 
                     <div v-if="mustVerifyEmail && !user.email_verified_at">
-                        <p class="-mt-4 text-sm text-muted-foreground">
-                            Your email address is unverified.
+                        <p class="-mt-4 text-sm text-zinc-500 dark:text-zinc-400">
+                            Votre adresse email n'est pas vérifiée.
                             <Link
                                 :href="send()"
                                 as="button"
-                                class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                class="text-raosc-green font-semibold hover:text-raosc-green/80 transition-colors"
                             >
-                                Click here to resend the verification email.
+                                Cliquez ici pour renvoyer l'email de vérification.
                             </Link>
                         </p>
 
                         <div
                             v-if="status === 'verification-link-sent'"
-                            class="mt-2 text-sm font-medium text-green-600"
+                            class="mt-2 text-sm font-medium text-emerald-600 dark:text-emerald-400"
                         >
-                            A new verification link has been sent to your email
-                            address.
+                            Un nouveau lien de vérification a été envoyé à votre adresse email.
                         </div>
                     </div>
 
                     <div class="flex items-center gap-4">
                         <Button
+                            type="submit"
                             :disabled="processing"
+                            class="bg-raosc-green hover:bg-raosc-green/90 text-white font-semibold rounded-full px-6 py-2.5 shadow-sm transition-all"
                             data-test="update-profile-button"
-                            >Save</Button
                         >
+                            Enregistrer
+                        </Button>
 
                         <Transition
                             enter-active-class="transition ease-in-out"
@@ -116,9 +118,9 @@ const user = computed(() => page.props.auth.user);
                         >
                             <p
                                 v-show="recentlySuccessful"
-                                class="text-sm text-neutral-600"
+                                class="text-sm text-emerald-600 dark:text-emerald-400"
                             >
-                                Saved.
+                                Enregistré.
                             </p>
                         </Transition>
                     </div>
@@ -129,4 +131,3 @@ const user = computed(() => page.props.auth.user);
         </SettingsLayout>
     </AppLayout>
 </template>
-

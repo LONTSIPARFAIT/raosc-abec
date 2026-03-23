@@ -11,43 +11,43 @@ import { store } from '@/routes/password/confirm';
 
 <template>
     <AuthLayout
-        title="Confirm your password"
-        description="This is a secure area of the application. Please confirm your password before continuing."
+        title="Confirmation du mot de passe"
+        description="Zone sécurisée. Veuillez confirmer votre mot de passe avant de continuer."
     >
-        <Head title="Confirm password" />
+        <Head title="Confirmation du mot de passe" />
 
         <Form
             v-bind="store.form()"
             reset-on-success
             v-slot="{ errors, processing }"
         >
-            <div class="space-y-6">
+            <div class="space-y-5">
                 <div class="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
+                    <Label for="password" class="text-sm font-medium">Mot de passe</Label>
                     <PasswordInput
                         id="password"
                         name="password"
-                        class="mt-1 block w-full"
+                        class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green"
                         required
                         autocomplete="current-password"
                         autofocus
+                        placeholder="Votre mot de passe"
                     />
-
                     <InputError :message="errors.password" />
                 </div>
 
                 <div class="flex items-center">
                     <Button
-                        class="w-full"
+                        type="submit"
+                        class="w-full bg-raosc-green hover:bg-raosc-green/90 text-white font-semibold rounded-full py-2.5 shadow-sm transition-all"
                         :disabled="processing"
                         data-test="confirm-password-button"
                     >
                         <Spinner v-if="processing" />
-                        Confirm password
+                        Confirmer le mot de passe
                     </Button>
                 </div>
             </div>
         </Form>
     </AuthLayout>
 </template>
-
