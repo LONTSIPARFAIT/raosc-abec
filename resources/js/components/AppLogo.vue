@@ -3,7 +3,7 @@
 
 <template>
     <div class="flex items-center gap-3">
-        <div class="flex aspect-square h-12 w-12 items-center justify-center rounded-lg bg-transparent">
+        <div class="flex aspect-square h-14 w-14 items-center justify-center rounded-lg bg-transparent">
             <img 
                 src="/images/Logo_Raosc-removebg-preview.png" 
                 alt="RAOSC Logo" 

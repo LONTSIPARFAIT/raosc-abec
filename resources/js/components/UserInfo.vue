@@ -15,38 +15,43 @@ const props = withDefaults(defineProps<Props>(), {
     compact: false,
 });
 
-const initials = computed(() => {
-    const names = props.user.name.split(' ');
-    if (names.length >= 2) {
-        return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
-    }
-    return props.user.name.charAt(0).toUpperCase();
-});
-
 const { getInitials } = useInitials();
 
-// Compute whether we should show the avatar image
-const showAvatar = computed(
-    () => props.user.avatar && props.user.avatar !== '',
-);
+// Determine if we should show the avatar image
+const showAvatar = computed(() => !!props.user.avatar);
 </script>
 
 <template>
-    <Avatar class="h-8 w-8 overflow-hidden rounded-lg">
-        <AvatarImage v-if="showAvatar" :src="user.avatar ?? ''" :alt="user.name" />
-        <AvatarFallback class="rounded-lg text-black dark:text-white">
-            {{ getInitials(user.name) }}
-        </AvatarFallback>
-    </Avatar>
-
-    <div v-if="!compact" class="grid flex-1 text-left text-sm leading-tight">
-        <span class="truncate font-medium">{{ user.name }}</span>
-        <span v-if="showEmail" class="truncate text-xs text-muted-foreground">{{
-            user.email
-        }}</span>
-    </div>
-    <div v-else class="flex items-center ml-2">
-        <span class="text-xs font-bold text-zinc-700 dark:text-zinc-300">{{ initials }}</span>
+    <div :class="[!compact ? 'flex items-center gap-3' : 'inline-flex']">
+        
+        <Avatar 
+            :class="[
+                'overflow-hidden bg-zinc-100 dark:bg-zinc-800',
+                compact ? 'h-6 w-6' : 'h-8 w-8',
+                compact ? 'rounded-full' : 'rounded-full'
+            ]"
+        >
+            <AvatarImage 
+                v-if="showAvatar" 
+                :src="user.avatar!" 
+                :alt="user.name" 
+                class="object-cover"
+            />
+            <AvatarFallback 
+                :class="[
+                    'flex items-center justify-center text-xs font-medium',
+                    compact ? 'text-[10px]' : 'text-xs',
+                    'text-zinc-700 dark:text-zinc-300'
+                ]"
+            >
+                {{ getInitials(user.name) }}
+            </AvatarFallback>
+        </Avatar>
+        <div v-if="!compact" class="grid flex-1 text-left text-sm leading-tight">
+            <span class="truncate font-semibold text-zinc-900 dark:text-white">{{ user.name }}</span>
+            <span v-if="showEmail" class="truncate text-xs text-zinc-500 dark:text-zinc-400">
+                {{ user.email }}
+            </span>
+        </div>
     </div>
 </template>
-
