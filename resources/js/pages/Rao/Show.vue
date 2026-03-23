@@ -4,7 +4,7 @@ import {
     MapPin, Building2, Calendar, Mail, CheckCircle2, Users, 
     ArrowLeft, ShieldCheck, Image as ImageIcon, ChevronLeft, ChevronRight, Globe, PhoneCall, Navigation
 } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { defineProps, ref } from 'vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
