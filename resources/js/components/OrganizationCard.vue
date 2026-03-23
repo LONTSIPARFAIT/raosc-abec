@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { Building2, MapPin, ArrowRight } from 'lucide-vue-next';
+
 
 interface Category {
     id: number;
@@ -33,7 +33,7 @@ defineProps<{
         prefetch
     >
         <!-- Thumbnail -->
-        <div class="relative h-32 bg-zinc-100 dark:bg-zinc-800 overflow-hidden shrink-0">
+        <div class="relative h-[50%] bg-zinc-100 dark:bg-zinc-800 overflow-hidden shrink-0">
             <img 
                 v-if="org.cover_image" 
                 :src="org.cover_image" 
