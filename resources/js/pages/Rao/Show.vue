@@ -159,7 +159,7 @@ const prevGallery = () => {
                                         </div>
                                         <div>
                                             <p class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Fondation</p>
-                                            <p class="text-sm font-medium text-zinc-900 dark:text-white">{{ org.founded_date || 'Non spécifiée' }}</p>
+                                            <p class="text-sm font-medium text-zinc-900 dark:text-white">{{ org.founded_date ? new Date(org.founded_date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Non spécifiée' }}</p>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-3">

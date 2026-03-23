@@ -225,7 +225,7 @@ const getStatusLabel = (status: string) => {
 
                         <!-- Quick Actions -->
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                            <Link href="/admin/coming-soon" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center gap-3 transition-all group">
+                            <Link href="/admin/users" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center gap-3 transition-all group">
                                 <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
                                     <Users class="w-5 h-5" />
                                 </div>
@@ -243,7 +243,7 @@ const getStatusLabel = (status: string) => {
                                 </div>
                                 <span class="text-xs font-semibold text-zinc-900 dark:text-white text-center">Exporter</span>
                             </Link>
-                            <Link href="/admin/coming-soon" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center gap-3 transition-all group">
+                            <Link href="/admin/settings" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center gap-3 transition-all group">
                                 <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
                                     <Settings class="w-5 h-5" />
                                 </div>

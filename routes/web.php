@@ -35,8 +35,15 @@ Route::prefix('rao')->name('rao.')->group(function () {
 });
 
 // Admin Routes
-Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::post('/organizations/{organization}/status', [\App\Http\Controllers\Admin\OrganizationManagementController::class, 'updateStatus'])->name('organizations.status');
+    
+    Route::get('/users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+    Route::put('/users/{user}/role', [\App\Http\Controllers\Admin\UserController::class, 'updateRole'])->name('users.role');
+    Route::delete('/users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
+    
+    Route::get('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
+    
     Route::get('/coming-soon', function() { return inertia('Admin/ComingSoon'); })->name('coming-soon');
 });
 

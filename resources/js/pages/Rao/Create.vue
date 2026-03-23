@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { Building2, Info, ArrowRight, CheckCircle2 } from 'lucide-vue-next';
+import { ref } from 'vue';
+import { Building2, Info, ArrowRight, CheckCircle2, X } from 'lucide-vue-next';
 import CountryPhoneInput from '@/components/CountryPhoneInput.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -25,7 +26,45 @@ const form = useForm({
     registration_number: '',
     founded_date: '',
     categories: [] as number[],
+    logo: null as File | null,
+    gallery: [] as File[],
 });
+
+const logoPreview = ref<string | null>(null);
+const galleryPreviews = ref<{file: File, url: string}[]>([]);
+
+const handleLogoUpload = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+        form.logo = target.files[0];
+        logoPreview.value = URL.createObjectURL(target.files[0]);
+    }
+};
+
+const removeLogo = () => {
+    form.logo = null;
+    logoPreview.value = null;
+    const input = document.getElementById('logo-upload') as HTMLInputElement;
+    if (input) input.value = '';
+};
+
+const handleGalleryUpload = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+        const newFiles = Array.from(target.files);
+        for(const file of newFiles) {
+            form.gallery.push(file);
+            galleryPreviews.value.push({ file, url: URL.createObjectURL(file) });
+        }
+        // clear input to allow same file selection again if needed
+        target.value = '';
+    }
+};
+
+const removeGalleryImage = (index: number) => {
+    form.gallery.splice(index, 1);
+    galleryPreviews.value.splice(index, 1);
+};
 
 const submit = () => {
     form.post('/rao/join');
@@ -150,6 +189,53 @@ const toggleCategory = (id: number) => {
                                                 type="date" 
                                                 class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
                                             />
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                        <!-- Logo Upload / Preview -->
+                                        <div>
+                                            <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Logo de l'OSC <span class="text-raosc-red">*</span></label>
+                                            <div v-if="!logoPreview">
+                                                <input 
+                                                    id="logo-upload"
+                                                    type="file"
+                                                    accept="image/jpeg, image/png, image/webp"
+                                                    :required="form.logo === null"
+                                                    @change="handleLogoUpload"
+                                                    class="block w-full text-xs text-zinc-500 dark:text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-raosc-green/10 file:text-raosc-green hover:file:bg-raosc-green/20 border border-zinc-200 dark:border-zinc-700 rounded-xl bg-zinc-50 dark:bg-zinc-900"
+                                                />
+                                            </div>
+                                            <div v-else class="relative w-24 h-24 mt-2">
+                                                <img :src="logoPreview" class="w-full h-full object-cover rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-sm" />
+                                                <button type="button" @click="removeLogo" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-md hover:bg-red-600 transition-colors">
+                                                    <X class="w-3 h-3" />
+                                                </button>
+                                            </div>
+                                            <div v-if="form.errors.logo" class="text-raosc-red text-xs mt-1">{{ form.errors.logo }}</div>
+                                        </div>
+
+                                        <!-- Gallery Upload / Previews -->
+                                        <div>
+                                            <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Images / Actions de l'OSC <span class="text-raosc-red">*</span></label>
+                                            <input 
+                                                id="gallery-upload"
+                                                type="file"
+                                                accept="image/jpeg, image/png, image/webp"
+                                                multiple
+                                                :required="form.gallery.length === 0"
+                                                @change="handleGalleryUpload"
+                                                class="block w-full text-xs text-zinc-500 dark:text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-raosc-green/10 file:text-raosc-green hover:file:bg-raosc-green/20 border border-zinc-200 dark:border-zinc-700 rounded-xl bg-zinc-50 dark:bg-zinc-900 mb-3"
+                                            />
+                                            <div v-if="galleryPreviews.length > 0" class="flex flex-wrap gap-3 mt-2">
+                                                <div v-for="(preview, idx) in galleryPreviews" :key="idx" class="relative w-16 h-16">
+                                                    <img :src="preview.url" class="w-full h-full object-cover rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm" />
+                                                    <button type="button" @click="removeGalleryImage(idx)" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full p-0.5 shadow-md hover:bg-red-600 transition-colors">
+                                                        <X class="w-3 h-3" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div v-if="form.errors.gallery" class="text-raosc-red text-xs mt-1">{{ form.errors.gallery }}</div>
                                         </div>
                                     </div>
                                 </div>

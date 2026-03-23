@@ -104,12 +104,29 @@ class RaoController extends Controller
             'founded_date' => 'nullable|date',
             'categories' => 'required|array',
             'categories.*' => 'exists:organization_categories,id',
+            'logo' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'gallery' => 'required|array|min:1',
+            'gallery.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
-        $organization = new Organization($validated);
+        $organizationData = collect($validated)->except(['categories', 'logo', 'gallery'])->toArray();
+        $organization = new Organization($organizationData);
         $organization->user_id = auth()->id();
         $organization->slug = Str::slug($validated['name']) . '-' . uniqid();
         $organization->status = 'pending'; // Doit être validé par un modérateur/admin ABEC
+        
+        if ($request->hasFile('logo')) {
+            $organization->logo = $request->file('logo')->store('organizations/logos', 'public');
+        }
+
+        if ($request->hasFile('gallery')) {
+            $galleryPaths = [];
+            foreach ($request->file('gallery') as $image) {
+                $galleryPaths[] = $image->store('organizations/gallery', 'public');
+            }
+            $organization->gallery = $galleryPaths;
+        }
+
         $organization->save();
 
         // Liaison avec les catégories choisies
@@ -177,9 +194,26 @@ class RaoController extends Controller
             'founded_date' => 'nullable|date',
             'categories' => 'required|array',
             'categories.*' => 'exists:organization_categories,id',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
-        $organization->update($validated);
+        $organizationData = collect($validated)->except(['categories', 'logo', 'gallery'])->toArray();
+
+        if ($request->hasFile('logo')) {
+            $organizationData['logo'] = $request->file('logo')->store('organizations/logos', 'public');
+        }
+
+        if ($request->hasFile('gallery')) {
+            $galleryPaths = $organization->gallery ?? [];
+            foreach ($request->file('gallery') as $image) {
+                $galleryPaths[] = $image->store('organizations/gallery', 'public');
+            }
+            $organizationData['gallery'] = $galleryPaths;
+        }
+
+        $organization->update($organizationData);
         $organization->categories()->sync($validated['categories']);
 
         return redirect()->route('dashboard')

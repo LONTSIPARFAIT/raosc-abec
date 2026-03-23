@@ -95,7 +95,7 @@ const featuredCategories = [
 
         <!-- Stats Section -->
         <div class="bg-white dark:bg-zinc-950 border-b border-zinc-100 dark:border-zinc-800">
-            <div class="mx-auto max-w-7xl px-6 py-12 sm:py-20">
+            <div class="mx-auto max-w-7xl px-3 py-8 sm:py-12">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
                     <div v-for="stat in stats" :key="stat.id" class="text-center group">
                         <div :class="['mx-auto flex h-14 w-14 items-center justify-center rounded-2xl mb-4 transition-transform group-hover:scale-105', stat.bg]">
@@ -109,9 +109,9 @@ const featuredCategories = [
         </div>
 
         <!-- Features Section -->
-        <div class="py-24 sm:py-32 bg-zinc-50/50 dark:bg-zinc-900/20">
+        <div class="py-12 sm:py-20 bg-zinc-50/50 dark:bg-zinc-900/20">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="text-center max-w-3xl mx-auto mb-12">
                     <span class="text-raosc-green text-xs font-semibold tracking-[0.2em] uppercase bg-raosc-green/10 px-4 py-1.5 rounded-full mb-4 inline-block">Pourquoi rejoindre le réseau ?</span>
                     <h2 class="text-3xl sm:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight mb-6">
                         Des outils pour transformer votre <span class="text-raosc-yellow">engagement</span>
@@ -135,7 +135,7 @@ const featuredCategories = [
         </div>
 
         <!-- Categories Section -->
-        <div class="py-24 sm:py-32 bg-white dark:bg-zinc-950">
+        <div class="py-12 sm:py-20 bg-white dark:bg-zinc-950">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
                     <div class="text-center md:text-left">
@@ -166,7 +166,7 @@ const featuredCategories = [
         </div>
 
         <!-- Featured Organizations -->
-        <div class="py-24 sm:py-32 bg-zinc-50/30 dark:bg-zinc-900/10">
+        <div class="py-12 sm:py-20 bg-zinc-50/30 dark:bg-zinc-900/10">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-12">
                     <div class="max-w-2xl">
@@ -200,7 +200,7 @@ const featuredCategories = [
         </div>
 
         <!-- CTA -->
-        <div class="bg-zinc-950 py-24 sm:py-32">
+        <div class="bg-zinc-950 py-12 sm:py-20">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f2c1f] to-[#1a3a2a] dark:from-[#0a1f15] dark:to-[#0f2c1f] p-12 sm:p-20 text-center shadow-lg">
                     <div class="absolute top-0 right-0 w-72 h-72 bg-raosc-green/20 rounded-full blur-3xl"></div>

@@ -61,12 +61,12 @@ const adminNavItems: NavItem[] = [
     },
     {
         title: 'Gestion Utilisateurs',
-        href: '/admin/coming-soon',
+        href: '/admin/users',
         icon: Users,
     },
     {
         title: 'Paramètres du site',
-        href: '/admin/coming-soon',
+        href: '/admin/settings',
         icon: Settings2,
     },
 ];

@@ -33,7 +33,8 @@ class DashboardController extends Controller
             ->get();
 
         // Organisations en attente de validation (pour l'admin)
-        $pendingOrgsList = Organization::where('status', 'pending')
+        $pendingOrgsList = Organization::with(['categories', 'members.user'])
+            ->where('status', 'pending')
             ->latest()
             ->take(5)
             ->get();
