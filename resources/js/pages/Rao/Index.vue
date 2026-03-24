@@ -156,7 +156,7 @@ watch([searchQuery, selectedCategory, selectedCity, selectedCountry], () => {
                 <p class="text-zinc-500 text-sm mt-1">Ajustez vos critères de recherche.</p>
             </div>
 
-            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-5 sm:gap-6">
                 <OrganizationCard 
                     v-for="org in organizations.data" 
                     :key="org.id" 

@@ -136,10 +136,10 @@ const prevGallery = () => {
                                 </Badge>
                             </div>
                             
-                            <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white mb-6">À propos de <span class="text-raosc-green">l'organisation</span></h2>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-slate-300 dark:text-white mb-6">À propos de <span class="text-raosc-green">l'organisation</span></h2>
                             
                             <div class="space-y-6">
-                                <p class="text-xl font-bold text-zinc-900 dark:text-white leading-relaxed">
+                                <p class="text-xl font-semibold text-zinc-900 dark:text-white leading-relaxed">
                                     {{ org.short_description }}
                                 </p>
                                 <div class="text-zinc-500 dark:text-zinc-400 text-lg leading-relaxed space-y-4" v-if="org.description" v-html="org.description.replace(/\n/g, '<br>')"></div>
