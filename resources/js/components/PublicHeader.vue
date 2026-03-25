@@ -49,8 +49,8 @@ const isActive = (href: string) => {
         <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8" aria-label="Global">
             <!-- Logo -->
             <div class="flex lg:flex-1">
-                <Link href="/" class="flex items-center gap-3 group" prefetch>
-                    <div class="flex aspect-square h-14 w-14 items-center justify-center rounded-lg bg-transparent">
+                <Link href="/" class="flex items-center gap-1 group" prefetch>
+                    <div class="flex aspect-square h-18 w-18 items-center justify-center rounded-lg bg-transparent">
                         <img 
                             src="/images/Logo_Raosc-removebg-preview.png" 
                             alt="RAOSC Logo" 

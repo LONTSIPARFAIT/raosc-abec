@@ -88,7 +88,7 @@ const featuredCategories = [
 
 <template>
     <PublicLayout>
-        <Head title="Bienvenue sur RAOSC - Réseau Africain de la Société Civile" />
+        <Head title="Bienvenue sur RAOSC - Réseau Africain des Organisations de la Société Civile" />
         
         <!-- Hero Section (unchanged) -->
         <HeroSlider :user="$page.props.auth.user" />
@@ -183,7 +183,7 @@ const featuredCategories = [
                     </Link>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-5 sm:gap-6">
                     <OrganizationCard 
                         v-for="org in organizations" 
                         :key="org.id" 

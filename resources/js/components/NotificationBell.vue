@@ -51,7 +51,7 @@ const formatDate = (dateString: string) => {
       </div>
       <DropdownMenuSeparator />
       <DropdownMenuItem as-child>
-        <Link href="/notifications" class="w-full text-center text-xs font-bold text-raosc-green py-2 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
+        <Link href="/dashboard/notifications" class="w-full text-center text-xs font-bold text-raosc-green py-2 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
           Voir tout
         </Link>
       </DropdownMenuItem>

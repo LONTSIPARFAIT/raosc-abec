@@ -63,7 +63,7 @@ const saveSettings = () => {
                         <form @submit.prevent="saveSettings" class="space-y-6">
                             <div>
                                 <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Nom de la Plateforme</label>
-                                <input type="text" value="RAOSC - Réseau Africain des OSC" class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-raosc-green outline-none dark:text-white" />
+                                <input type="text" value="RAOSC - Réseau Africain des Organisations de la Société Civile" class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-raosc-green outline-none dark:text-white" />
                             </div>
 
                             <div>
