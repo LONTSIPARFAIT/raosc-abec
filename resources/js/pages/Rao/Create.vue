@@ -110,7 +110,7 @@ const toggleCategory = (id: number) => {
                 <Card class="shadow-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden">
                     <CardContent class="p-8 sm:p-10">
                         <form @submit.prevent="submit" class="space-y-10">
-                            
+
                             <!-- Informations Générales -->
                             <section>
                                 <div class="flex items-center gap-4 mb-8 pb-4 border-b border-zinc-100 dark:border-zinc-800">
@@ -119,16 +119,16 @@ const toggleCategory = (id: number) => {
                                     </div>
                                     <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Identité de l'OSC</h2>
                                 </div>
-                                
+
                                 <div class="space-y-6">
                                     <div>
                                         <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Nom officiel de l'OSC <span class="text-raosc-red">*</span></label>
-                                        <input 
-                                            v-model="form.name" 
-                                            type="text" 
-                                            required 
-                                            placeholder="Ex: Développement Pour Tous" 
-                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
+                                        <input
+                                            v-model="form.name"
+                                            type="text"
+                                            required
+                                            placeholder="Ex: Développement Pour Tous"
+                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white"
                                         />
                                         <div v-if="form.errors.name" class="text-raosc-red text-xs mt-1">{{ form.errors.name }}</div>
                                     </div>
@@ -136,8 +136,8 @@ const toggleCategory = (id: number) => {
                                     <div>
                                         <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Domaines d'intervention <span class="text-raosc-red">*</span></label>
                                         <div class="flex flex-wrap gap-2 p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700">
-                                            <div 
-                                                v-for="cat in categories" 
+                                            <div
+                                                v-for="cat in categories"
                                                 :key="cat.id"
                                                 @click="toggleCategory(cat.id)"
                                                 class="cursor-pointer px-4 py-2 rounded-full text-xs font-semibold transition-all select-none border"
@@ -151,11 +151,11 @@ const toggleCategory = (id: number) => {
 
                                     <div>
                                         <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Résumé de mission <span class="text-raosc-red">*</span></label>
-                                        <textarea 
-                                            v-model="form.short_description" 
-                                            required 
-                                            rows="2" 
-                                            placeholder="Décrivez en quelques mots l'essence de votre engagement..." 
+                                        <textarea
+                                            v-model="form.short_description"
+                                            required
+                                            rows="2"
+                                            placeholder="Décrivez en quelques mots l'essence de votre engagement..."
                                             class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white resize-none"
                                         ></textarea>
                                         <div v-if="form.errors.short_description" class="text-raosc-red text-xs mt-1">{{ form.errors.short_description }}</div>
@@ -163,10 +163,10 @@ const toggleCategory = (id: number) => {
 
                                     <div>
                                         <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Description détaillée</label>
-                                        <textarea 
-                                            v-model="form.description" 
-                                            rows="4" 
-                                            placeholder="Objectifs, historique, réalisations majeures..." 
+                                        <textarea
+                                            v-model="form.description"
+                                            rows="4"
+                                            placeholder="Objectifs, historique, réalisations majeures..."
                                             class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white resize-y"
                                         ></textarea>
                                         <div v-if="form.errors.description" class="text-raosc-red text-xs mt-1">{{ form.errors.description }}</div>
@@ -175,19 +175,19 @@ const toggleCategory = (id: number) => {
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div>
                                             <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">N° Enregistrement Officiel</label>
-                                            <input 
-                                                v-model="form.registration_number" 
-                                                type="text" 
-                                                placeholder="Ex: 2024/001/MISP/..." 
-                                                class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
+                                            <input
+                                                v-model="form.registration_number"
+                                                type="text"
+                                                placeholder="Ex: 2024/001/MISP/..."
+                                                class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white"
                                             />
                                         </div>
                                         <div>
                                             <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Date de Fondation</label>
-                                            <input 
-                                                v-model="form.founded_date" 
-                                                type="date" 
-                                                class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
+                                            <input
+                                                v-model="form.founded_date"
+                                                type="date"
+                                                class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white"
                                             />
                                         </div>
                                     </div>
@@ -197,7 +197,7 @@ const toggleCategory = (id: number) => {
                                         <div>
                                             <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Logo de l'OSC <span class="text-raosc-red">*</span></label>
                                             <div v-if="!logoPreview">
-                                                <input 
+                                                <input
                                                     id="logo-upload"
                                                     type="file"
                                                     accept="image/jpeg, image/png, image/webp"
@@ -218,7 +218,7 @@ const toggleCategory = (id: number) => {
                                         <!-- Gallery Upload / Previews -->
                                         <div>
                                             <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Images / Actions de l'OSC <span class="text-raosc-red">*</span></label>
-                                            <input 
+                                            <input
                                                 id="gallery-upload"
                                                 type="file"
                                                 accept="image/jpeg, image/png, image/webp"
@@ -249,20 +249,20 @@ const toggleCategory = (id: number) => {
                                     </div>
                                     <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Localisation & Contact</h2>
                                 </div>
-                                
+
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div>
                                         <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Email Professionnel <span class="text-raosc-red">*</span></label>
-                                        <input 
-                                            v-model="form.email" 
-                                            type="email" 
-                                            required 
-                                            placeholder="contact@votre-ong.org" 
-                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
+                                        <input
+                                            v-model="form.email"
+                                            type="email"
+                                            required
+                                            placeholder="contact@votre-ong.org"
+                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white"
                                         />
                                         <div v-if="form.errors.email" class="text-raosc-red text-xs mt-1">{{ form.errors.email }}</div>
                                     </div>
-                                    
+
                                     <div>
                                         <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Téléphone</label>
                                         <CountryPhoneInput v-model="form.phone" />
@@ -270,45 +270,45 @@ const toggleCategory = (id: number) => {
 
                                     <div>
                                         <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Site Web</label>
-                                        <input 
-                                            v-model="form.website" 
-                                            type="url" 
-                                            placeholder="https://www.mon-ong.org" 
-                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
+                                        <input
+                                            v-model="form.website"
+                                            type="url"
+                                            placeholder="https://www.mon-ong.org"
+                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white"
                                         />
                                         <div v-if="form.errors.website" class="text-raosc-red text-xs mt-1">{{ form.errors.website }}</div>
                                     </div>
 
                                     <div>
                                         <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Pays <span class="text-raosc-red">*</span></label>
-                                        <input 
-                                            v-model="form.country" 
-                                            type="text" 
-                                            required 
-                                            placeholder="Bénin" 
-                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
+                                        <input
+                                            v-model="form.country"
+                                            type="text"
+                                            required
+                                            placeholder="Bénin"
+                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white"
                                         />
                                         <div v-if="form.errors.country" class="text-raosc-red text-xs mt-1">{{ form.errors.country }}</div>
                                     </div>
 
                                     <div>
                                         <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Ville <span class="text-raosc-red">*</span></label>
-                                        <input 
-                                            v-model="form.city" 
-                                            type="text" 
-                                            required 
-                                            placeholder="Cotonou" 
-                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
+                                        <input
+                                            v-model="form.city"
+                                            type="text"
+                                            required
+                                            placeholder="Cotonou"
+                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white"
                                         />
                                     </div>
 
                                     <div class="sm:col-span-2">
                                         <label class="block text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">Adresse détaillée</label>
-                                        <input 
-                                            v-model="form.address" 
-                                            type="text" 
-                                            placeholder="Rue, Quartier, Porte..." 
-                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
+                                        <input
+                                            v-model="form.address"
+                                            type="text"
+                                            placeholder="Rue, Quartier, Porte..."
+                                            class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white"
                                         />
                                     </div>
                                 </div>
@@ -320,9 +320,9 @@ const toggleCategory = (id: number) => {
                                         Annuler
                                     </Button>
                                 </Link>
-                                <Button 
-                                    type="submit" 
-                                    :disabled="form.processing" 
+                                <Button
+                                    type="submit"
+                                    :disabled="form.processing"
                                     class="w-full sm:w-auto bg-raosc-green hover:bg-raosc-green/90 text-white rounded-full px-8 py-2.5 text-xs font-semibold shadow-md hover:shadow-lg transition-all"
                                 >
                                     <span v-if="form.processing" class="flex items-center gap-2">Traitement en cours...</span>
