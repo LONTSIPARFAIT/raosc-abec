@@ -10,7 +10,7 @@ import PublicLayout from '@/layouts/PublicLayout.vue';
 
 const props = defineProps<{
     categories: any[];
-    isPublic?: boolea;
+    isPublic?: boolean;
 }>();
 
 const form = useForm({
