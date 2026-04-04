@@ -1,3 +1,4 @@
+<!-- components/ui/input/Input.vue -->
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue"
 import { useVModel } from "@vueuse/core"
@@ -24,11 +25,15 @@ const modelValue = useVModel(props, "modelValue", emits, {
     v-model="modelValue"
     data-slot="input"
     :class="cn(
-      'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-      'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-      'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
+      'w-full rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-base text-zinc-900 placeholder:text-zinc-400',
+      'transition-all duration-200 ease-in-out',
+      'hover:border-zinc-300 hover:bg-zinc-50/50',
+      'focus:border-raosc-green focus:outline-none focus:ring-2 focus:ring-raosc-green/20 focus:bg-white',
+      'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-zinc-50',
+      'dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-500',
+      'dark:hover:border-zinc-600 dark:hover:bg-zinc-900/50',
+      'dark:focus:border-raosc-green dark:focus:ring-raosc-green/20',
       props.class,
     )"
   >
 </template>
-

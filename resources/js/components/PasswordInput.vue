@@ -1,3 +1,4 @@
+<!-- components/PasswordInput.vue -->
 <script setup lang="ts">
 import { Eye, EyeOff } from 'lucide-vue-next';
 import { ref, useTemplateRef } from 'vue';
@@ -25,18 +26,18 @@ defineExpose({
         <Input
             ref="inputRef"
             :type="showPassword ? 'text' : 'password'"
-            :class="cn('pr-10', props.class)"
+            :class="cn('pr-11', props.class)"
             v-bind="$attrs"
         />
         <button
             type="button"
             @click="showPassword = !showPassword"
-            :class="
-                cn(
-                    'absolute inset-y-0 right-0 flex items-center rounded-r-md px-3 text-muted-foreground hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:outline-none',
-                )
-            "
-            :aria-label="showPassword ? 'Hide password' : 'Show password'"
+            :class="cn(
+                'absolute inset-y-0 right-0 flex items-center rounded-r-xl px-3 text-zinc-400',
+                'hover:text-raosc-green transition-colors duration-200',
+                'focus:outline-none focus:text-raosc-green',
+            )"
+            :aria-label="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
             :tabindex="-1"
         >
             <EyeOff v-if="showPassword" class="size-4" />
@@ -44,4 +45,3 @@ defineExpose({
         </button>
     </div>
 </template>
-

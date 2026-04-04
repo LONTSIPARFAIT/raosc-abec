@@ -1,3 +1,4 @@
+<!-- components/ui/label/Label.vue -->
 <script setup lang="ts">
 import type { LabelProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
@@ -14,14 +15,12 @@ const delegatedProps = reactiveOmit(props, "class")
   <Label
     data-slot="label"
     v-bind="delegatedProps"
-    :class="
-      cn(
-        'flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
-        props.class,
-      )
-    "
+    :class="cn(
+      'block text-sm font-semibold text-zinc-700 mb-1.5',
+      'dark:text-zinc-300',
+      props.class,
+    )"
   >
     <slot />
   </Label>
 </template>
-
