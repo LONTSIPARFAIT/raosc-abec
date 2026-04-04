@@ -62,7 +62,7 @@ const isActive = (href: string) => {
                             RAOSC
                         </span>
                         <span class="truncate leading-none text-[10px] text-zinc-500 font-medium">
-                            ONG ABEC
+                            Resaux africain des OSC
                         </span>
                     </div>
                 </Link>

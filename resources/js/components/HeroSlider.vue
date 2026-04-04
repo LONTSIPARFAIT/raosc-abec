@@ -66,6 +66,7 @@ onUnmounted(() => {
     <!-- Content -->
     <div class="absolute inset-0 z-10 flex h-full flex-col justify-center px-6 lg:px-12 max-w-7xl mx-auto">
         <div class="max-w-3xl">
+            <!-- Texte avec animation -->
             <transition-group name="slide-fade">
                 <div 
                     v-for="(slide, index) in slides" 
@@ -73,7 +74,7 @@ onUnmounted(() => {
                     v-show="currentIndex === index" 
                     class="space-y-6"
                 >
-                    <span class="inline-block text-raosc-yellow font-bold tracking-[0.2em] text-[10px] sm:text-xs">Initiative ONG ABEC</span>
+                    <span class="inline-block text-raosc-yellow font-bold tracking-[0.2em] text-[10px] sm:text-xs">Initiative de l'Organisation ABEC</span>
                     <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.15] tracking-tight">
                         {{ slide.title }}
                     </h1>
@@ -82,29 +83,30 @@ onUnmounted(() => {
                     </p>
                 </div>
             </transition-group>
-            
-            <div class="mt-10 sm:mt-12 flex flex-wrap gap-4 items-center">
-                <Link
-                    href="/rao"
-                    class="rounded-full bg-raosc-green px-8 py-3.5 text-xs font-bold text-white shadow-lg shadow-raosc-green/20 hover:bg-[#006b40] transition-all hover:-translate-y-0.5"
-                    prefetch
-                >
-                    Explorer l'annuaire
-                </Link>
-                <Link
-                    v-if="!user"
-                    :href="register()"
-                    class="flex items-center gap-2 text-white text-xs font-bold hover:text-raosc-yellow transition-colors group"
-                    prefetch
-                >
-                    Nous Rejoindre
-                    <ArrowRightIcon class="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-            </div>
         </div>
     </div>
     
-    <!-- Controls -->
+    <!-- Boutons d'action (FIXES, en bas à gauche) -->
+    <div class="absolute bottom-24 left-6 lg:left-12 z-20 flex flex-wrap gap-4 items-center">
+        <Link
+            href="/rao"
+            class="rounded-full bg-raosc-green px-8 py-3.5 text-xs font-bold text-white shadow-lg shadow-raosc-green/20 hover:bg-[#006b40] transition-all hover:-translate-y-0.5"
+            prefetch
+        >
+            Explorer l'annuaire
+        </Link>
+        <Link
+            v-if="!user"
+            :href="register()"
+            class="flex items-center gap-2 text-white text-xs font-bold hover:text-raosc-yellow transition-colors group"
+            prefetch
+        >
+            Nous Rejoindre
+            <ArrowRightIcon class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </Link>
+    </div>
+    
+    <!-- Controls (FIXES, en bas) -->
     <div class="absolute bottom-10 inset-x-0 z-20 flex justify-between px-6 lg:px-12 items-center max-w-7xl mx-auto">
         <div class="flex gap-4">
             <button @click="prevSlide" class="h-10 w-10 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-black transition-all">
@@ -152,4 +154,3 @@ onUnmounted(() => {
   transform: translateY(-20px);
 }
 </style>
-
