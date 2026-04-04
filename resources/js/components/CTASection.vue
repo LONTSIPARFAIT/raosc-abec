@@ -1,0 +1,44 @@
+<!-- components/CTASection.vue -->
+<script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+import { ArrowRight } from 'lucide-vue-next';
+import { register } from '@/routes';
+
+defineProps<{
+    isAuthenticated: boolean;
+}>();
+</script>
+
+<template>
+    <div class="bg-zinc-950 py-12 sm:py-20">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f2c1f] to-[#1a3a2a] dark:from-[#0a1f15] dark:to-[#0f2c1f] p-12 sm:p-20 text-center shadow-lg">
+                <div class="absolute top-0 right-0 w-72 h-72 bg-raosc-green/20 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 w-72 h-72 bg-raosc-yellow/10 rounded-full blur-3xl"></div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl sm:text-5xl font-bold text-white mb-6 max-w-3xl mx-auto leading-tight">
+                        Rejoignez la plus grande coalition d'ONG en <span class="text-raosc-yellow">Afrique</span>
+                    </h2>
+                    <p class="text-white/70 text-base sm:text-lg max-w-2xl mx-auto mb-10">
+                        Inscrivez votre organisation gratuitement et devenez un acteur clé du réseau RAOSC.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-5">
+                        <Link
+                            v-if="!isAuthenticated"
+                            :href="register()"
+                            class="inline-flex items-center gap-2 bg-white text-zinc-900 px-8 py-3.5 rounded-xl font-bold text-sm hover:bg-white/90 transition-all shadow-md hover:-translate-y-0.5"
+                            prefetch
+                        >
+                            S'inscrire maintenant
+                            <ArrowRight class="w-4 h-4" />
+                        </Link>
+                        <Link href="/contact" class="inline-flex items-center gap-2 text-white font-semibold text-sm bg-white/10 hover:bg-white/20 px-8 py-3.5 rounded-xl transition-all border border-white/20">
+                            En savoir plus
+                            <ArrowRight class="w-4 h-4" />
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
