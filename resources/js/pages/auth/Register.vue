@@ -10,12 +10,15 @@ import { Spinner } from '@/components/ui/spinner';
 import AuthBase from '@/layouts/AuthLayout.vue';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
+
+defineProps<{
+    canResetPassword?: boolean;
+}>();
 </script>
 
 <template>
     <AuthBase
         title="Créer un compte"
-        description="Entrez vos informations pour créer votre compte RAOSC"
     >
         <Head title="Inscription" />
 
@@ -26,8 +29,9 @@ import { store } from '@/routes/register';
             class="flex flex-col gap-6"
         >
             <div class="grid gap-5">
-                <div class="grid gap-2">
-                    <Label for="name" class="text-sm font-medium">Nom complet</Label>
+                <!-- Nom complet -->
+                <div class="grid gap-1">
+                    <Label for="name">Nom complet</Label>
                     <Input
                         id="name"
                         type="text"
@@ -37,13 +41,13 @@ import { store } from '@/routes/register';
                         autocomplete="name"
                         name="name"
                         placeholder="Jean Dupont"
-                        class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green"
                     />
                     <InputError :message="errors.name" />
                 </div>
 
-                <div class="grid gap-2">
-                    <Label for="email" class="text-sm font-medium">Adresse email</Label>
+                <!-- Email -->
+                <div class="grid gap-1">
+                    <Label for="email">Adresse email</Label>
                     <Input
                         id="email"
                         type="email"
@@ -52,13 +56,13 @@ import { store } from '@/routes/register';
                         autocomplete="email"
                         name="email"
                         placeholder="jean@exemple.org"
-                        class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green"
                     />
                     <InputError :message="errors.email" />
                 </div>
 
-                <div class="grid gap-2">
-                    <Label for="password" class="text-sm font-medium">Mot de passe</Label>
+                <!-- Mot de passe -->
+                <div class="grid gap-1">
+                    <Label for="password">Mot de passe</Label>
                     <PasswordInput
                         id="password"
                         required
@@ -66,13 +70,13 @@ import { store } from '@/routes/register';
                         autocomplete="new-password"
                         name="password"
                         placeholder="Créez un mot de passe sécurisé"
-                        class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green"
                     />
                     <InputError :message="errors.password" />
                 </div>
 
-                <div class="grid gap-2">
-                    <Label for="password_confirmation" class="text-sm font-medium">Confirmer le mot de passe</Label>
+                <!-- Confirmation mot de passe -->
+                <div class="grid gap-1">
+                    <Label for="password_confirmation">Confirmer le mot de passe</Label>
                     <PasswordInput
                         id="password_confirmation"
                         required
@@ -80,29 +84,29 @@ import { store } from '@/routes/register';
                         autocomplete="new-password"
                         name="password_confirmation"
                         placeholder="Confirmez votre mot de passe"
-                        class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green"
                     />
                     <InputError :message="errors.password_confirmation" />
                 </div>
 
+                <!-- Bouton d'inscription -->
                 <Button
                     type="submit"
-                    class="mt-2 w-full bg-raosc-green hover:bg-raosc-green/90 text-white font-semibold rounded-full py-2.5 shadow-sm transition-all"
-                    tabindex="5"
+                    :tabindex="5"
                     :disabled="processing"
-                    data-test="register-user-button"
+                    class="w-full mt-2"
                 >
-                    <Spinner v-if="processing" />
-                    Créer mon compte
+                    <Spinner v-if="processing" class="mr-2" />
+                    {{ processing ? 'Inscription en cours...' : 'Créer mon compte' }}
                 </Button>
             </div>
 
-            <div class="text-center text-sm text-zinc-500 dark:text-zinc-400">
+            <!-- Lien de connexion -->
+            <div class="text-center text-sm text-zinc-500">
                 Vous avez déjà un compte ?
                 <TextLink
                     :href="login()"
-                    class="text-raosc-green font-semibold hover:text-raosc-green/80"
                     :tabindex="6"
+                    class="ml-1"
                 >
                     Se connecter
                 </TextLink>
