@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import { ArrowLeft, Clock, Building2 } from 'lucide-vue-next';
+import { ArrowLeft, Clock, Calendar, Building2, Tag } from 'lucide-vue-next';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 
 defineProps<{

@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { 
-    BookOpen, 
     LayoutGrid, 
     Home, 
     Users, 
     MessageSquare, 
     Bell, 
-    Globe, 
     Building2, 
     Newspaper,
     Settings2,
@@ -16,7 +14,6 @@ import {
     Briefcase
 } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
-import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import {
@@ -51,6 +48,11 @@ const mainNavItems: NavItem[] = [
         title: 'Projets & Bénévolats',
         href: '/dashboard/projects',
         icon: Briefcase,
+    },
+    {
+        title: 'Nos Actualités',
+        href: '/dashboard/posts',
+        icon: Newspaper,
     },
     {
         title: 'Inscrire une OSC',
