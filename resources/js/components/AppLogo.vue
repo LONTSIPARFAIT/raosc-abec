@@ -4,9 +4,9 @@
 <template>
     <div class="flex items-center gap-3">
         <div class="flex aspect-square h-14 w-14 items-center justify-center rounded-lg bg-transparent">
-            <img 
-                src="/images/Logo_Raosc-removebg-preview.png" 
-                alt="RAOSC Logo" 
+            <img
+                src="/images/Logo_Raosc-removebg-preview.png"
+                alt="RAOSC Logo"
                 class="h-full w-full object-contain"
             />
         </div>
@@ -15,7 +15,7 @@
                 RAOSC
             </span>
             <span class="truncate leading-none text-[10px] text-zinc-500 font-medium">
-                ONG ABEC
+                Reseaux des OSC
             </span>
         </div>
     </div>

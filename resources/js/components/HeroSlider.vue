@@ -59,20 +59,20 @@ onUnmounted(() => {
 
 <template>
 <div class="relative w-full h-[400px] sm:h-[500px] overflow-hidden bg-zinc-950">
-    <!-- 
+    <!--
       SECTION 1: IMAGES DE FOND
       - Les images changent avec une transition slide horizontale
       - L'image active a un zoom léger (scale-105)
     -->
     <div class="absolute inset-0 w-full h-full">
         <div class="relative w-full h-full">
-            <div 
-                v-for="(slide, index) in slides" 
+            <div
+                v-for="(slide, index) in slides"
                 :key="'img-'+index"
                 :class="[
                     'absolute inset-0 w-full h-full transition-all duration-700 ease-in-out',
-                    currentIndex === index 
-                        ? 'translate-x-0 opacity-100 z-10' 
+                    currentIndex === index
+                        ? 'translate-x-0 opacity-100 z-10'
                         : direction === 'next' && index < currentIndex
                             ? '-translate-x-full opacity-0 z-0'
                             : direction === 'next' && index > currentIndex
@@ -82,11 +82,11 @@ onUnmounted(() => {
                                     : 'translate-x-full opacity-0 z-0'
                 ]"
             >
-                <img 
-                    :src="slide.image" 
+                <img
+                    :src="slide.image"
                     :alt="slide.title"
-                    class="w-full h-full object-cover transition-transform duration-[7000ms] scale-105" 
-                    :style="{ transform: currentIndex === index ? 'scale(1)' : 'scale(1.05)' }" 
+                    class="w-full h-full object-cover transition-transform duration-[7000ms] scale-105"
+                    :style="{ transform: currentIndex === index ? 'scale(1)' : 'scale(1.05)' }"
                 />
                 <!-- Dégradé pour améliorer la lisibilité du texte -->
                 <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
@@ -94,7 +94,7 @@ onUnmounted(() => {
         </div>
     </div>
 
-    <!-- 
+    <!--
       SECTION 2: CONTENU TEXTE
       - Centré verticalement avec flex justify-center
       - Le texte glisse horizontalement comme un vrai carousel
@@ -103,13 +103,13 @@ onUnmounted(() => {
     <div class="relative z-10 h-full flex flex-col justify-center px-6 lg:px-12 max-w-7xl mx-auto pb-20">
         <div class="max-w-3xl">
             <div class="relative overflow-hidden">
-                <div 
-                    v-for="(slide, index) in slides" 
+                <div
+                    v-for="(slide, index) in slides"
                     :key="'text-'+index"
                     :class="[
                         'transition-all duration-500 ease-out absolute w-full',
-                        currentIndex === index 
-                            ? 'translate-x-0 opacity-100 z-10 relative' 
+                        currentIndex === index
+                            ? 'translate-x-0 opacity-100 z-10 relative'
                             : direction === 'next' && index < currentIndex
                                 ? '-translate-x-full opacity-0 z-0 absolute'
                                 : direction === 'next' && index > currentIndex
@@ -137,8 +137,8 @@ onUnmounted(() => {
             </div>
         </div>
     </div>
-    
-    <!-- 
+
+    <!--
       SECTION 3: BOUTONS D'ACTION
       - Position: absolute bottom-20 (fixe en bas, ne disparaît pas)
       - Ne fait PAS partie de la transition du texte
@@ -163,8 +163,8 @@ onUnmounted(() => {
             </Link>
         </div>
     </div>
-    
-    <!-- 
+
+    <!--
       SECTION 4: CONTROLES DE NAVIGATION
       - Boutons Prev/Next et Dots
       - Position: absolute bottom-6 (tout en bas)
@@ -173,26 +173,26 @@ onUnmounted(() => {
     <div class="absolute bottom-6 inset-x-0 z-20 flex justify-between px-6 lg:px-12 items-center max-w-7xl mx-auto">
         <!-- Boutons Prev/Next -->
         <div class="flex gap-3">
-            <button 
-                @click="prevSlide" 
+            <button
+                @click="prevSlide"
                 class="h-9 w-9 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
                 aria-label="Diapositive précédente"
             >
                 <ChevronLeft class="h-4 w-4" />
             </button>
-            <button 
-                @click="nextSlide" 
+            <button
+                @click="nextSlide"
                 class="h-9 w-9 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
                 aria-label="Diapositive suivante"
             >
                 <ChevronRight class="h-4 w-4" />
             </button>
         </div>
-        
+
         <!-- Dots indicateurs -->
         <div class="flex gap-2">
-            <button 
-                v-for="(_, index) in slides" 
+            <button
+                v-for="(_, index) in slides"
                 :key="'dot-'+index"
                 @click="currentIndex = index"
                 class="transition-all duration-300 h-1 rounded-full bg-white"

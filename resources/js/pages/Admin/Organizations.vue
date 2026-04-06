@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import { 
-    Building2, 
-    CheckCircle2, 
+import {
+    Building2,
+    CheckCircle2,
     ShieldAlert,
     LayoutDashboard,
     Search,
@@ -49,7 +49,7 @@ const searchQuery = ref('');
 
 const filteredPending = computed(() => {
     if (!searchQuery.value) return props.pending;
-    return props.pending.filter(org => 
+    return props.pending.filter(org =>
         org.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
         org.city?.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
@@ -69,7 +69,7 @@ const getStatusClass = (status: string) => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-8 bg-zinc-50 dark:bg-zinc-950 p-6 lg:p-8">
-            
+
             <!-- Header -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
@@ -82,10 +82,10 @@ const getStatusClass = (status: string) => {
 
                 <div class="relative w-full md:w-72">
                     <Search class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
-                    <input 
+                    <input
                         v-model="searchQuery"
-                        type="text" 
-                        placeholder="Rechercher une demande..." 
+                        type="text"
+                        placeholder="Rechercher une demande..."
                         class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green transition-all"
                     />
                 </div>
@@ -98,7 +98,7 @@ const getStatusClass = (status: string) => {
                         <Clock class="w-6 h-6" />
                     </div>
                     <div>
-                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">En attente</p>
+                        <p class="text-[12px] font-bold text-zinc-400 tracking-widest">En attente</p>
                         <p class="text-2xl font-black text-zinc-900 dark:text-white">{{ pending.length }}</p>
                     </div>
                 </div>
@@ -107,7 +107,7 @@ const getStatusClass = (status: string) => {
                         <CheckCircle2 class="w-6 h-6" />
                     </div>
                     <div>
-                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Dernières approbations</p>
+                        <p class="text-[12px] font-bold text-zinc-400 tracking-widest">Dernières approbations</p>
                         <p class="text-2xl font-black text-zinc-900 dark:text-white">{{ recent.filter(o => o.status === 'approved').length }}</p>
                     </div>
                 </div>
@@ -126,7 +126,7 @@ const getStatusClass = (status: string) => {
                     <div v-if="filteredPending.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <AdminApprovalCard v-for="org in filteredPending" :key="org.id" :organization="org" />
                     </div>
-                    
+
                     <div v-else class="bg-white dark:bg-zinc-900 rounded-[2.5rem] border border-zinc-100 dark:border-zinc-800 p-12 text-center">
                         <div class="h-20 w-20 bg-zinc-50 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6">
                             <SearchX v-if="searchQuery" class="h-10 w-10 text-zinc-300" />
@@ -143,8 +143,8 @@ const getStatusClass = (status: string) => {
 
                 <!-- Sidebar: Recent History -->
                 <div class="lg:col-span-4 bg-white dark:bg-zinc-900 rounded-[2.5rem] border border-zinc-100 dark:border-zinc-800 p-8 shadow-sm">
-                    <h3 class="text-lg font-black text-zinc-900 dark:text-white mb-6 uppercase tracking-tighter">Historique Récent</h3>
-                    
+                    <h3 class="text-lg font-black text-zinc-900 dark:text-white mb-6 tracking-tighter">Historique Récent</h3>
+
                     <div class="space-y-6">
                         <div v-for="org in recent" :key="org.id" class="flex items-start gap-4">
                             <div class="h-10 w-10 rounded-xl bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center shrink-0 border border-zinc-100 dark:border-zinc-700 overflow-hidden">
