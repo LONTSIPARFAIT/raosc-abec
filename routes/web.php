@@ -7,6 +7,12 @@ Route::get('/', function () {
     return inertia('Welcome', [
         'canRegister' => Features::enabled(Features::registration()),
         'organizations' => \App\Models\Organization::with('categories')->where('status', 'approved')->latest()->take(3)->get(),
+        'stats' => [
+            'organizations_count' => \App\Models\Organization::where('status', 'approved')->count(),
+            'categories_count' => \App\Models\OrganizationCategory::count(),
+            'projects_count' => \App\Models\Project::count(),
+            'countries_count' => \App\Models\Organization::where('status', 'approved')->distinct('country')->count('country'),
+        ]
     ]);
 })->name('home');
 
