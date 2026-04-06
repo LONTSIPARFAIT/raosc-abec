@@ -61,7 +61,7 @@ class RaoController extends Controller
      */
     public function show(Request $request, $slug)
     {
-        $organization = Organization::with(['categories', 'members.user'])
+        $organization = Organization::with(['categories', 'members.user', 'projects'])
             ->where('slug', $slug)
             ->where('status', 'approved')
             ->firstOrFail();

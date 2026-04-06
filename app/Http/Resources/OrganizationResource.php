@@ -39,6 +39,14 @@ class OrganizationResource extends JsonResource
             // On charge conditionnellement les relations si elles ont été "eager loaded"
             'categories' => OrganizationCategoryResource::collection($this->whenLoaded('categories')),
             'members' => OrganizationMemberResource::collection($this->whenLoaded('members')),
+            'projects' => $this->whenLoaded('projects', fn() => $this->projects->map(fn($p) => [
+                'id' => $p->id,
+                'title' => $p->title,
+                'description' => $p->description,
+                'type' => $p->type,
+                'status' => $p->status,
+                'cover_image' => $p->cover_image ? asset('storage/' . $p->cover_image) : null,
+            ])->values()),
         ];
     }
 }
