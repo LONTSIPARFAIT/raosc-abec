@@ -228,7 +228,7 @@ const getStatusLabel = (status: string) => {
                                 </div>
                                 <span class="text-xs font-semibold text-zinc-900 dark:text-white text-center">Utilisateurs</span>
                             </Link>
-                            <Link href="/admin/coming-soon" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center gap-3 transition-all group">
+                            <Link href="/admin/categories" class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-raosc-green/50 p-4 rounded-2xl flex flex-col items-center gap-3 transition-all group">
                                 <div class="h-10 w-10 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:bg-raosc-green/10 group-hover:text-raosc-green transition-colors">
                                     <FileText class="w-5 h-5" />
                                 </div>
@@ -290,6 +290,9 @@ const getStatusLabel = (status: string) => {
                                 <div class="flex flex-wrap gap-3 pt-2">
                                     <Link :href="`/rao/orga/${userOrganization.slug}/edit`" class="bg-raosc-green text-white px-6 py-2.5 rounded-xl text-xs font-semibold hover:bg-raosc-green/90 transition-colors shadow-sm">
                                         Éditer le profil
+                                    </Link>
+                                    <Link :href="`/dashboard/projects`" class="bg-indigo-600 dark:bg-indigo-500 text-white px-6 py-2.5 rounded-xl text-xs font-semibold hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors shadow-sm">
+                                        Gérer Projets & Bénévolat
                                     </Link>
                                     <button class="border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-6 py-2.5 rounded-xl text-xs font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors">
                                         Médiathèque

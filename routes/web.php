@@ -23,6 +23,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
     Route::put('dashboard/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.read');
     Route::put('dashboard/notifications/read-all', [\App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notifications.readAll');
+
+    // Projets & Bénévolat
+    Route::get('dashboard/projects', [\App\Http\Controllers\Dashboard\ProjectController::class, 'index'])->name('projects.index');
+    Route::post('dashboard/projects', [\App\Http\Controllers\Dashboard\ProjectController::class, 'store'])->name('projects.store');
+    Route::delete('dashboard/projects/{project}', [\App\Http\Controllers\Dashboard\ProjectController::class, 'destroy'])->name('projects.destroy');
 });
 
 // Routes publiques RAO
@@ -51,6 +56,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     
     Route::get('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
     
+    // Catégories
+    Route::get('/categories', [\App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [\App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('categories.store');
+    Route::delete('/categories/{category}', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('categories.destroy');
+
     Route::get('/coming-soon', function() { return inertia('Admin/ComingSoon'); })->name('coming-soon');
 });
 

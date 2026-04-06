@@ -201,6 +201,9 @@ const getStatusLabel = (status: string) => {
                                 <Link :href="`/rao/orga/${userOrganization.slug}/edit`" class="bg-raosc-green text-white px-6 py-2.5 rounded-xl text-xs font-semibold hover:bg-raosc-green/90 transition-colors shadow-sm">
                                     Éditer le profil
                                 </Link>
+                                <Link :href="`/dashboard/projects`" class="bg-indigo-600 dark:bg-indigo-500 text-white px-6 py-2.5 rounded-xl text-xs font-semibold hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors shadow-sm">
+                                    Gérer Projets & Bénévolat
+                                </Link>
                                 <button class="border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-6 py-2.5 rounded-xl text-xs font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors">
                                     Médiathèque
                                 </button>
