@@ -53,15 +53,19 @@ const getTextColor = (color: string) => {
 </script>
 
 <template>
-    <section class="py-16 sm:py-24 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-800">
+    <section class="py-8 sm:py-12 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-800">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-4">
-                    Actualités <span class="text-raosc-green">Récentes</span>
-                </h2>
-                <p class="text-lg text-zinc-500 max-w-2xl mx-auto font-medium">
-                    Découvrez les dernières avancées, événements et succès des organisations membres de notre réseau.
-                </p>
+             <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
+                <div class="text-center md:text-left">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white tracking-tight">
+                        Actualités <span class="text-raosc-green">Récentes</span>
+                    </h2>
+                    <p class="text-sm text-zinc-500 mt-1">Découvrez les dernières avancées, événements et succès des organisations membres de notre réseau.</p>
+                </div>
+                <Link href="/posts" class="inline-flex items-center gap-2 text-xs font-semibold text-raosc-green hover:text-raosc-green/80 transition-colors bg-raosc-green/10 px-5 py-2.5 rounded-full border border-raosc-green/20 hover:border-raosc-green/30">
+                    Voir toutes les actualités
+                    <ArrowRight class="w-4 h-4" />
+                </Link>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -102,15 +106,6 @@ const getTextColor = (color: string) => {
                         </Link>
                     </div>
                 </div>
-            </div>
-            
-            <div class="mt-12 text-center">
-                <Link 
-                    href="/posts" 
-                    class="inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 px-8 py-3.5 rounded-full font-bold text-sm hover:scale-105 transition-transform"
-                >
-                    Voir toutes les actualités
-                </Link>
             </div>
         </div>
     </section>

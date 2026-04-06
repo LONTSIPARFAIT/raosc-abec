@@ -58,7 +58,7 @@ const categories: Category[] = [
 </script>
 
 <template>
-    <div class="py-12 sm:py-20 bg-white dark:bg-zinc-950">
+    <div class="py-8 sm:py-12 bg-white dark:bg-zinc-950">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
                 <div class="text-center md:text-left">
