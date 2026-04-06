@@ -17,7 +17,7 @@ defineProps<{
                 <div class="absolute bottom-0 left-0 w-72 h-72 bg-raosc-yellow/10 rounded-full blur-3xl"></div>
                 <div class="relative z-10">
                     <h2 class="text-3xl sm:text-5xl font-bold text-white mb-6 max-w-3xl mx-auto leading-tight">
-                        Rejoignez la plus grande coalition d'ONG en <span class="text-raosc-yellow">Afrique</span>
+                        Rejoignez la plus grande coalition d'OSC en <span class="text-raosc-yellow">Afrique</span>
                     </h2>
                     <p class="text-white/70 text-base sm:text-lg max-w-2xl mx-auto mb-10">
                         Inscrivez votre organisation gratuitement et devenez un acteur clé du réseau RAOSC.
