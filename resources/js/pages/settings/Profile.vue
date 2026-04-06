@@ -67,14 +67,23 @@ const user = computed(() => page.props.auth.user);
 
                     <div class="grid gap-2">
                         <Label for="avatar" class="text-sm font-medium">Photo de profil (Avatar)</Label>
-                        <Input
-                            id="avatar"
-                            type="file"
-                            accept="image/*"
-                            class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800"
-                            name="avatar"
-                            @change="(e) => ProfileController.update.form().avatar = e.target.files[0]"
-                        />
+                        <div class="flex items-center gap-4">
+                            <div class="h-16 w-16 shrink-0 rounded-full overflow-hidden bg-zinc-100 dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 flex items-center justify-center">
+                                <img v-if="user.avatar" :src="user.avatar" class="h-full w-full object-cover">
+                                <span v-else class="text-zinc-400 font-bold text-xl">{{ user.name.charAt(0).toUpperCase() }}</span>
+                            </div>
+                            <div class="flex-1">
+                                <Input
+                                    id="avatar"
+                                    type="file"
+                                    accept="image/*"
+                                    class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-raosc-green file:text-white hover:file:bg-raosc-green/90 cursor-pointer"
+                                    name="avatar"
+                                    @change="(e) => ProfileController.update.form().avatar = e.target.files[0]"
+                                />
+                                <p class="text-[10px] text-zinc-500 mt-1.5 ml-2">Format accepté : JPG, PNG. Taille max : 1MB.</p>
+                            </div>
+                        </div>
                         <InputError :message="errors.avatar" />
                     </div>
 
