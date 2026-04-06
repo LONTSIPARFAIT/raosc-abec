@@ -11,11 +11,7 @@ class ProjectController extends Controller
     {
         $organization = auth()->user()->organizations()->first();
         
-        if (!$organization) {
-            return redirect()->route('dashboard')->with('error', 'Vous devez d\'abord créer une organisation.');
-        }
-
-        $projects = $organization->projects()->latest()->get();
+        $projects = $organization ? $organization->projects()->latest()->get() : [];
 
         return inertia('Dashboard/Projects', [
             'projects' => $projects,

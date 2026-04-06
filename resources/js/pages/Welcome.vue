@@ -8,6 +8,7 @@ import FeaturesSection from '@/components/FeaturesSection.vue';
 import HeroSlider from '@/components/HeroSlider.vue';
 import OrganizationsSection from '@/components/OrganizationsSection.vue';
 import StatsSection from '@/components/StatsSection.vue';
+import RecentNewsSection from '@/components/RecentNewsSection.vue';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 
 interface Category {
@@ -102,56 +103,7 @@ const features = [
 
             <OrganizationsSection :organizations="organizations" />
 
-            <!-- Actualités Récentes -->
-            <section class="py-16 sm:py-24 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-800">
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="text-center mb-12">
-                        <h2 class="text-3xl font-bold text-zinc-900 dark:text-white mb-4">Actualités <span class="text-raosc-green">Récentes</span></h2>
-                        <p class="text-zinc-500 max-w-2xl mx-auto">Découvrez les dernières avancées, événements et succès des organisations membres de notre réseau.</p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Article 1 -->
-                        <div class="bg-white dark:bg-zinc-900 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                            <div class="h-48 bg-zinc-200 dark:bg-zinc-800 w-full relative">
-                                <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Actualité 1" />
-                                <div class="absolute top-4 left-4 bg-raosc-green text-white text-xs font-medium px-3 py-1 rounded">Solidarité</div>
-                            </div>
-                            <div class="p-5">
-                                <p class="text-xs text-zinc-400 mb-2">4 Avril 2026</p>
-                                <h3 class="text-lg font-semibold text-zinc-900 dark:text-white mb-2 line-clamp-2 hover:text-raosc-green transition-colors cursor-pointer">Lancement du programme d'accès à l'eau potable en zone rurale</h3>
-                                <p class="text-sm text-zinc-500 line-clamp-3 mb-4">De nombreuses ONG se sont réunies pour initier ce grand projet visant à fournir de l'eau potable à plus de 50 villages...</p>
-                                <a href="#" class="text-raosc-green font-medium text-sm hover:underline inline-flex items-center gap-1">Lire la suite <span>→</span></a>
-                            </div>
-                        </div>
-                        <!-- Article 2 -->
-                        <div class="bg-white dark:bg-zinc-900 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                            <div class="h-48 bg-zinc-200 dark:bg-zinc-800 w-full relative">
-                                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Actualité 2" />
-                                <div class="absolute top-4 left-4 bg-raosc-yellow text-zinc-900 text-xs font-medium px-3 py-1 rounded">Éducation</div>
-                            </div>
-                            <div class="p-5">
-                                <p class="text-xs text-zinc-400 mb-2">2 Avril 2026</p>
-                                <h3 class="text-lg font-semibold text-zinc-900 dark:text-white mb-2 line-clamp-2 hover:text-raosc-yellow transition-colors cursor-pointer">Nouvelle convention de partenariat pour la scolarisation des jeunes filles</h3>
-                                <p class="text-sm text-zinc-500 line-clamp-3 mb-4">Un accord historique a été signé aujourd'hui pour soutenir financièrement les familles et encourager la scolarisation continuelle des jeunes filles.</p>
-                                <a href="#" class="text-raosc-yellow font-medium text-sm hover:underline inline-flex items-center gap-1">Lire la suite <span>→</span></a>
-                            </div>
-                        </div>
-                        <!-- Article 3 -->
-                        <div class="bg-white dark:bg-zinc-900 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                            <div class="h-48 bg-zinc-200 dark:bg-zinc-800 w-full relative">
-                                <img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Actualité 3" />
-                                <div class="absolute top-4 left-4 bg-raosc-red text-white text-xs font-medium px-3 py-1 rounded">Santé</div>
-                            </div>
-                            <div class="p-5">
-                                <p class="text-xs text-zinc-400 mb-2">30 Mars 2026</p>
-                                <h3 class="text-lg font-semibold text-zinc-900 dark:text-white mb-2 line-clamp-2 hover:text-raosc-red transition-colors cursor-pointer">Campagne de vaccination gratuite et de prévention communautaire</h3>
-                                <p class="text-sm text-zinc-500 line-clamp-3 mb-4">Les équipes médicales bénévoles se déploient dans plusieurs régions pour des consultations gratuites et de la prévention médicale.</p>
-                                <a href="#" class="text-raosc-red font-medium text-sm hover:underline inline-flex items-center gap-1">Lire la suite <span>→</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <RecentNewsSection />
 
             <CTASection :is-authenticated="!!$page.props.auth.user" />
         </div>
