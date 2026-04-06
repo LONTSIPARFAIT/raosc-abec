@@ -75,4 +75,12 @@ class Organization extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    /**
+     * Les actualités publiées par l'organisation.
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
 }

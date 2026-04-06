@@ -28,6 +28,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard/projects', [\App\Http\Controllers\Dashboard\ProjectController::class, 'index'])->name('projects.index');
     Route::post('dashboard/projects', [\App\Http\Controllers\Dashboard\ProjectController::class, 'store'])->name('projects.store');
     Route::delete('dashboard/projects/{project}', [\App\Http\Controllers\Dashboard\ProjectController::class, 'destroy'])->name('projects.destroy');
+
+    // Actualités (gestion par les orgs)
+    Route::get('dashboard/posts', [\App\Http\Controllers\PostController::class, 'dashboard'])->name('dashboard.posts.index');
+    Route::post('dashboard/posts', [\App\Http\Controllers\PostController::class, 'store'])->name('dashboard.posts.store');
+    Route::delete('dashboard/posts/{post}', [\App\Http\Controllers\PostController::class, 'destroy'])->name('dashboard.posts.destroy');
 });
 
 // Routes publiques RAO
@@ -65,7 +70,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 });
 
 // Autres pages publiques
-Route::get('/posts', function() { return inertia('Posts'); })->name('posts');
+Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index'])->name('posts');
+Route::get('/posts/{slug}', [\App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
 Route::get('/about', function() { return inertia('About'); })->name('about');
 Route::get('/contact', function() { return inertia('Contact'); })->name('contact');
 Route::get('/community', function() { return inertia('Community'); })->name('community');
