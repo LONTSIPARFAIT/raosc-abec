@@ -236,6 +236,38 @@ const getFlagEmoji = (countryName: string) => {
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Projects and Volunteering Section -->
+                            <div v-if="org.projects && org.projects.length > 0" class="mt-12 pt-8 border-none">
+                                <h3 class="text-lg font-black text-zinc-900 dark:text-white mb-6 flex items-center gap-2 uppercase tracking-tighter">
+                                    Projets & Bénévolat
+                                </h3>
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div v-for="project in org.projects" :key="project.id" class="flex flex-col sm:flex-row items-start gap-4 bg-zinc-100/40 dark:bg-zinc-800/20 p-5 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                        <div v-if="project.cover_image" class="w-full sm:w-48 h-32 shrink-0 rounded-2xl overflow-hidden bg-zinc-200 dark:bg-zinc-900">
+                                            <img :src="project.cover_image" class="w-full h-full object-cover">
+                                        </div>
+                                        <div v-else class="w-full sm:w-48 h-32 shrink-0 rounded-2xl overflow-hidden bg-zinc-200 dark:bg-zinc-900 flex items-center justify-center">
+                                            <Building2 class="text-zinc-400 w-10 h-10 border-none" />
+                                        </div>
+                                        
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-2 mb-2">
+                                                <Badge :class="project.type === 'benevolat' ? 'bg-raosc-green/10 text-raosc-green' : 'bg-raosc-yellow/10 text-raosc-yellow'" class="text-[10px] font-bold border-none uppercase tracking-wider px-2 py-0.5">
+                                                    {{ project.type === 'benevolat' ? 'Bénévolat' : 'Projet' }}
+                                                </Badge>
+                                                <Badge :class="project.status === 'active' ? 'bg-emerald-50 text-emerald-600' : 'bg-zinc-100 text-zinc-500'" class="text-[10px] font-bold border-none uppercase tracking-wider px-2 py-0.5">
+                                                    {{ project.status === 'active' ? 'En cours' : 'Terminé' }}
+                                                </Badge>
+                                            </div>
+                                            <h4 class="text-lg font-bold text-zinc-900 dark:text-white mb-2">{{ project.title }}</h4>
+                                            <p class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3">
+                                                {{ project.description }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Gallery Section -->

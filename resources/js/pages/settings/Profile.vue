@@ -66,6 +66,19 @@ const user = computed(() => page.props.auth.user);
                     </div>
 
                     <div class="grid gap-2">
+                        <Label for="avatar" class="text-sm font-medium">Photo de profil (Avatar)</Label>
+                        <Input
+                            id="avatar"
+                            type="file"
+                            accept="image/*"
+                            class="rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800"
+                            name="avatar"
+                            @change="(e) => ProfileController.update.form().avatar = e.target.files[0]"
+                        />
+                        <InputError :message="errors.avatar" />
+                    </div>
+
+                    <div class="grid gap-2">
                         <Label for="email" class="text-sm font-medium">Adresse email</Label>
                         <Input
                             id="email"
