@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { Mail, Phone, MapPin, Twitter, Instagram, Facebook } from 'lucide-vue-next';
+import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -33,7 +33,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook } from 'lucide-vue-ne
                             <Twitter class="h-4 w-4" />
                         </a>
                         <a href="#" class="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-raosc-red hover:text-white transition-colors">
-                            <Instagram class="h-4 w-4" />
+                            <Linkedin class="h-4 w-4" />
                         </a>
                     </div>
                 </div>
@@ -80,17 +80,35 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook } from 'lucide-vue-ne
                 </div>
             </div>
 
-            <!-- Bottom Footer -->
-            <div class="pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-zinc-500">
-                <p>
-                    Propulsé par 
-                    <a target="_blank" href="https://universalwelfare.org/" class="text-raosc-green hover:text-raosc-green/80 font-medium transition-colors">l'ONG ABEC</a>. 
-                    &copy; {{ new Date().getFullYear() }} Tous droits réservés.
+            <!-- Bottom Footer - Version améliorée -->
+            <div class="pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+                <!-- Left side - Copyright and credits -->
+                <div class="text-center md:text-left space-y-1">
+                    <p class="text-zinc-600 text-[11px]">
+                        Propulsé par
+                        <a target="_blank" href="https://universalwelfare.org/"
+                        class="text-raosc-green hover:text-raosc-green/80 transition-colors font-medium">
+                        l'Organisation ABEC
+                    </a>
+                    — Initiative portée et coordonnée par l'Association de Bien-Être Communautaire
                 </p>
+                <p class="text-zinc-500">
+                    © {{ new Date().getFullYear() }} <span class="text-white font-medium">RAOSC</span>.
+                    Tous droits réservés.
+                </p>
+                </div>
+
+                <!-- Right side - Legal links -->
                 <div class="flex gap-6">
-                    <Link href="/privacy" class="hover:text-white transition-colors">Confidentialité</Link>
-                    <Link href="/terms" class="hover:text-white transition-colors">Conditions</Link>
-                    <Link href="/cookies" class="hover:text-white transition-colors">Cookies</Link>
+                    <Link href="/privacy" class="hover:text-white transition-colors text-zinc-500 hover:text-raosc-green">
+                        Confidentialité
+                    </Link>
+                    <Link href="/terms" class="hover:text-white transition-colors text-zinc-500 hover:text-raosc-green">
+                        Conditions
+                    </Link>
+                    <Link href="/cookies" class="hover:text-white transition-colors text-zinc-500 hover:text-raosc-green">
+                        Cookies
+                    </Link>
                 </div>
             </div>
         </div>
