@@ -1,7 +1,7 @@
 <!-- WelcomePage.vue (le composant principal simplifié) -->
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import { Users, Globe, Heart, ShieldCheck, Zap, MessageSquare, Trophy } from 'lucide-vue-next';
+import { Users, Globe, ShieldCheck, Zap, MessageSquare, Trophy } from 'lucide-vue-next';
 import CategoriesSection from '@/components/CategoriesSection.vue';
 import CTASection from '@/components/CTASection.vue';
 import FeaturesSection from '@/components/FeaturesSection.vue';
@@ -87,13 +87,18 @@ const features = [
     <PublicLayout>
         <Head title="Bienvenue sur RAOSC - Réseau Africain des Organisations de la Société Civile" />
 
-        <HeroSlider :user="$page.props.auth.user" />
+        <!-- Décor Africain / Carte du Monde en fond de page -->
+        <div class="fixed inset-0 z-[0] pointer-events-none opacity-[0.03] dark:opacity-[0.06]" 
+             style="background-image: url('data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 stroke=%22currentColor%22 viewBox=%220 0 24 24%22%3E%3Cpath stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%221%22 d=%22M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z%22/%3E%3C/svg%3E'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
 
-        <StatsSection :stats="resolvedStats" />
+        <div class="relative z-10">
+            <HeroSlider :user="$page.props.auth.user" />
 
-        <FeaturesSection :features="features" />
+            <StatsSection :stats="resolvedStats" />
 
-        <CategoriesSection />
+            <FeaturesSection :features="features" />
+
+            <CategoriesSection />
 
         <OrganizationsSection :organizations="organizations" />
 
@@ -149,5 +154,6 @@ const features = [
         </section>
 
         <CTASection :is-authenticated="!!$page.props.auth.user" />
+        </div>
     </PublicLayout>
 </template>

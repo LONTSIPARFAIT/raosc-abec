@@ -160,9 +160,10 @@ const isActive = (href: string) => {
             </div>
         </nav>
 
-        <!-- Mobile Menu -->
-        <div v-if="isMenuOpen" class="lg:hidden bg-white dark:bg-zinc-950 px-6 py-8 border-t border-zinc-100 dark:border-zinc-800 space-y-6">
-            <div class="flex flex-col gap-4">
+        <!-- Mobile Menu Overlay -->
+        <transition name="mobile-fade">
+            <div v-if="isMenuOpen" class="fixed inset-0 top-[72px] z-40 lg:hidden bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl px-6 py-8 border-t border-zinc-100/50 dark:border-zinc-800/50 overflow-y-auto w-full h-[calc(100vh-72px)] flex flex-col justify-start">
+                <div class="flex flex-col gap-5 w-full">
                 <Link
                     v-for="link in navLinks"
                     :key="link.name"
@@ -183,12 +184,13 @@ const isActive = (href: string) => {
                     <Link :href="login()" class="text-base font-medium transition-colors" :class="isActive(login()) ? 'text-raosc-green' : 'text-zinc-600 dark:text-zinc-400'" @click="isMenuOpen = false">
                         Connexion
                     </Link>
-                    <Link :href="register()" class="text-base font-bold transition-colors" :class="isActive(register()) ? 'text-raosc-green' : 'text-raosc-green'" @click="isMenuOpen = false">
+                    <Link :href="register()" class="text-base font-bold text-center w-full rounded-xl bg-raosc-green px-6 py-3 text-white shadow-sm hover:bg-raosc-green/90 transition-all" @click="isMenuOpen = false">
                         S'inscrire
                     </Link>
                 </template>
             </div>
         </div>
+        </transition>
     </header>
 </template>
 
@@ -200,5 +202,12 @@ const isActive = (href: string) => {
     opacity: 0;
     width: 0;
     transform: translateX(20px);
+}
+.mobile-fade-enter-active, .mobile-fade-leave-active {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.mobile-fade-enter-from, .mobile-fade-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
 }
 </style>

@@ -27,6 +27,50 @@ const nextGallery = () => {
 const prevGallery = () => {
     galleryIndex.value = (galleryIndex.value - 1 + gallery.length) % gallery.length;
 };
+
+// Fonction pour lier un pays à son drapeau
+const getFlagEmoji = (countryName: string) => {
+    if (!countryName) return '🌍';
+    const flags: Record<string, string> = {
+        'Cameroun': '🇨🇲',
+        'Sénégal': '🇸🇳',
+        'Côte d\'Ivoire': '🇨🇮',
+        'Mali': '🇲🇱',
+        'Burkina Faso': '🇧🇫',
+        'Togo': '🇹🇬',
+        'Bénin': '🇧🇯',
+        'Niger': '🇳🇪',
+        'Guinée': '🇬🇳',
+        'Tchad': '🇹🇩',
+        'République Centrafricaine': '🇨🇫',
+        'Gabon': '🇬🇦',
+        'Congo': '🇨🇬',
+        'République Démocratique du Congo': '🇨🇩',
+        'RDC': '🇨🇩',
+        'Rwanda': '🇷🇼',
+        'Burundi': '🇧🇮',
+        'Maroc': '🇲🇦',
+        'Algérie': '🇩🇿',
+        'Tunisie': '🇹🇳',
+        'Madagascar': '🇲🇬',
+        'Djibouti': '🇩🇯',
+        'Mauritanie': '🇲🇷',
+        'Comores': '🇰🇲',
+        'France': '🇫🇷',
+        'Canada': '🇨🇦',
+        'Belgique': '🇧🇪',
+        'Suisse': '🇨🇭'
+    };
+    
+    const normalized = countryName.trim();
+    for (const [key, value] of Object.entries(flags)) {
+        if (normalized.toLowerCase() === key.toLowerCase() || 
+            normalized.toLowerCase().includes(key.toLowerCase())) {
+            return value;
+        }
+    }
+    return '🌍';
+};
 </script>
 
 <template>
@@ -75,8 +119,11 @@ const prevGallery = () => {
                                         <MapPin class="h-4 w-4 text-zinc-400 shrink-0 mt-0.5" />
                                         <div>
                                             <dt class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Localisation</dt>
-                                            <dd class="text-sm font-medium text-zinc-900 dark:text-white">
-                                                {{ org.city }}, {{ org.country }}
+                                            <dd class="text-sm font-medium text-zinc-900 dark:text-white flex items-center gap-1.5 mt-0.5">
+                                                <span>{{ org.city }},</span>
+                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-xs font-semibold">
+                                                    {{ getFlagEmoji(org.country) }} {{ org.country }}
+                                                </span>
                                             </dd>
                                         </div>
                                     </div>
