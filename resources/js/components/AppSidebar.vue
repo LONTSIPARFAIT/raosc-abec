@@ -12,7 +12,8 @@ import {
     Newspaper,
     Settings2,
     PlusCircle,
-    ShieldCheck
+    ShieldCheck,
+    Briefcase
 } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -45,6 +46,11 @@ const mainNavItems: NavItem[] = [
         title: 'Mes Structures',
         href: '/rao/mes-structures',
         icon: Building2,
+    },
+    {
+        title: 'Projets & Bénévolats',
+        href: '/dashboard/projects',
+        icon: Briefcase,
     },
     {
         title: 'Inscrire une OSC',
