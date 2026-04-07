@@ -18,7 +18,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
                                 RAOSC
                             </span>
                             <span class="text-[9px] font-medium text-raosc-green tracking-wide leading-none mt-1">
-                                Initiative ONG ABEC
+                                Initiative De l'Organisation ABEC
                             </span>
                         </div>
                     </Link>
