@@ -32,9 +32,18 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="icon" href="/favicon.ico" sizes="any">
+        <!-- Favicon pour navigateur (onglet) -->
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        
+        <!-- Meilleure compatibilité avec tous les navigateurs -->
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any">
+        
+        <!-- Pour iPhone, iPad et écran d'accueil -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        
+        <!-- <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
