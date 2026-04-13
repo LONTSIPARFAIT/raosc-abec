@@ -81,11 +81,6 @@ const adminNavItems: NavItem[] = [
 
 const personalNavItems: NavItem[] = [
     {
-        title: 'Messages',
-        href: '/messages',
-        icon: MessageSquare,
-    },
-    {
         title: 'Notifications',
         href: '/dashboard/notifications',
         icon: Bell,

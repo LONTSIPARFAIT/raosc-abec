@@ -89,7 +89,7 @@ const features = [
         <Head title="Bienvenue sur RAOSC - Réseau Africain des Organisations de la Société Civile" />
 
         <!-- Motif décoratif subtil -->
-        <div class="fixed top-0 left-0 right-0 z-[0] pointer-events-none opacity-[0.02] dark:opacity-[0.04]" 
+        <div class="fixed top-0 left-0 right-0 z-[0] pointer-events-none opacity-[0.02] dark:opacity-[0.04]"
              style="background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 1px); background-size: 40px 40px;"></div>
 
         <div class="relative z-10">
