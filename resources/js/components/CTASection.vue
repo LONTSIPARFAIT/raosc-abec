@@ -12,10 +12,29 @@ defineProps<{
 <template>
     <div class="bg-zinc-950 py-12 sm:py-20">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f2c1f] to-[#1a3a2a] dark:from-[#0a1f15] dark:to-[#0f2c1f] p-12 sm:p-20 text-center shadow-lg">
-                <div class="absolute top-0 right-0 w-72 h-72 bg-raosc-green/20 rounded-full blur-3xl"></div>
-                <div class="absolute bottom-0 left-0 w-72 h-72 bg-raosc-yellow/10 rounded-full blur-3xl"></div>
-                <div class="relative z-10">
+            <!-- Section avec vidéo en arrière-plan -->
+            <div class="relative overflow-hidden rounded-2xl text-center shadow-lg">
+                <!-- Vidéo d'arrière-plan -->
+                <video
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="absolute inset-0 w-full h-full object-cover"
+                >
+                    <source src="/img/video.mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la vidéo.
+                </video>
+
+                <!-- Overlay sombre pour améliorer la lisibilité du texte -->
+                <div class="absolute inset-0 bg-black/50"></div>
+
+                <!-- Dégradés colorés -->
+                <div class="absolute top-0 right-0 w-72 h-72 bg-raosc-green/20 rounded-full blur-3xl z-0"></div>
+                <div class="absolute bottom-0 left-0 w-72 h-72 bg-raosc-yellow/10 rounded-full blur-3xl z-0"></div>
+
+                <!-- Contenu -->
+                <div class="relative z-10 p-12 sm:p-20">
                     <h2 class="text-3xl sm:text-5xl font-bold text-white mb-6 max-w-3xl mx-auto leading-tight">
                         Rejoignez la plus grande coalition d'OSC en <span class="text-raosc-yellow">Afrique</span>
                     </h2>
