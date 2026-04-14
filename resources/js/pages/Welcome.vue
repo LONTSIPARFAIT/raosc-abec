@@ -82,10 +82,15 @@ const features = [
         bg: 'bg-raosc-red/10'
     }
 ];
+
+// Configuration de l'image d'arrière-plan
+// Remplacez 'welcome-bg.jpg' par le nom de votre fichier
+const backgroundImage = '/img-bg/bg-1.png';
+const overlayOpacity = 0.35; // Ajustez selon vos besoins (0 = transparent, 1 = noir total)
 </script>
 
 <template>
-    <PublicLayout>
+    <PublicLayout :backgroundImage="backgroundImage" :overlayOpacity="overlayOpacity">
         <Head title="Bienvenue sur RAOSC - Réseau Africain des Organisations de la Société Civile" />
 
         <!-- Motif décoratif subtil -->
