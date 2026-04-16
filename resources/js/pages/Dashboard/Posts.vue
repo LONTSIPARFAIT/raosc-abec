@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { PlusCircle, Newspaper, Trash2, ShieldAlert, Eye, X } from 'lucide-vue-next';
-import { ref, watch } from 'vue'; // 👈 Ajout de watch
+import { ref } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import RichTextEditor from '@/components/RichTextEditor.vue'; // 👈 Import du nouvel éditeur
 
 const props = defineProps<{
     posts: any[];
@@ -12,7 +11,6 @@ const props = defineProps<{
 
 const isFormOpen = ref(false);
 const coverPreview = ref<string | null>(null);
-const editorContent = ref(''); // 👈 Variable pour l'éditeur
 
 const form = useForm({
     title: '',
@@ -20,11 +18,6 @@ const form = useForm({
     content: '',
     category: '',
     cover_image: null as File | null,
-});
-
-// 👈 Synchroniser l'éditeur avec le formulaire
-watch(editorContent, (newValue) => {
-    form.content = newValue;
 });
 
 const handleFile = (e: Event) => {
@@ -42,7 +35,6 @@ const submit = () => {
         forceFormData: true,
         onSuccess: () => {
             form.reset();
-            editorContent.value = ''; // 👈 Réinitialiser l'éditeur
             coverPreview.value = null;
             isFormOpen.value = false;
         },
@@ -140,15 +132,10 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                                 <p v-if="form.errors.summary" class="text-red-500 text-xs mt-1">{{ form.errors.summary }}</p>
                             </div>
 
-                            <!-- CONTENU COMPLET - NOUVEL ÉDITEUR RICHE -->
+                            <!-- Contenu -->
                             <div class="md:col-span-2">
-                                <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">
-                                    Contenu complet de l'article <span class="text-red-500">*</span>
-                                </label>
-
-                                <!-- 👇 Remplacer le textarea par l'éditeur riche -->
-                                <RichTextEditor v-model="editorContent" />
-
+                                <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">Contenu complet de l'article <span class="text-red-500">*</span></label>
+                                <textarea v-model="form.content" required rows="10" placeholder="Rédigez votre article ici. Utilisez des sauts de ligne pour structurer vos paragraphes..." class="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-raosc-green/30 focus:border-raosc-green outline-none text-sm leading-relaxed transition-all"></textarea>
                                 <p v-if="form.errors.content" class="text-red-500 text-xs mt-1">{{ form.errors.content }}</p>
                             </div>
                         </div>

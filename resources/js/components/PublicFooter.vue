@@ -4,15 +4,15 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
 </script>
 
 <template>
-    <footer class="bg-zinc-950 pt-16 pb-8 text-zinc-400 border-t border-zinc-800">
+    <footer class="bg-zinc-950 pt-12 pb-8 text-zinc-400 border-t border-zinc-800">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
                 <!-- Brand Column -->
                 <div class="md:col-span-12 lg:col-span-5">
                     <Link href="/" class="flex items-center gap-3 mb-6 group" prefetch>
-                        <div
-                            class="flex items-center justify-center transition-transform group-hover:scale-105">
-                            <img src="/images/Logo_Raosc-removebg-preview.png" alt="RAOSC Logo" class="max-h-12 w-auto" />
+                        <div class="flex aspect-square h-18 w-18 items-center justify-center rounded-lg bg-transparent">
+                            <img src="/images/Logo_Raosc-removebg-preview.png" alt="RAOSC Logo"
+                                class="h-full w-full object-contain transition-transform group-hover:scale-105" />
                         </div>
                         <div class="flex flex-col">
                             <span class="text-xl font-bold text-white leading-none">
