@@ -10,8 +10,9 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
                 <!-- Brand Column -->
                 <div class="md:col-span-12 lg:col-span-5">
                     <Link href="/" class="flex items-center gap-3 mb-6 group" prefetch>
-                        <div class="flex h-16 w-16 items-center justify-center transition-transform group-hover:scale-105">
-                            <img src="/images/Logo_Raosc-removebg-preview.png" alt="RAOSC Logo" class="h-full w-full" />
+                        <div
+                            class="flex items-center justify-center transition-transform group-hover:scale-105">
+                            <img src="/images/Logo_Raosc-removebg-preview.png" alt="RAOSC Logo" class="max-h-12 w-auto" />
                         </div>
                         <div class="flex flex-col">
                             <span class="text-xl font-bold text-white leading-none">
@@ -23,16 +24,20 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
                         </div>
                     </Link>
                     <p class="text-sm leading-relaxed text-zinc-500 max-w-md mb-6">
-                        Bâtir une société civile africaine forte, connectée et capable d'influencer le changement social à travers l'innovation technologique et la collaboration stratégique.
+                        Bâtir une société civile africaine forte, connectée et capable d'influencer le changement social
+                        à travers l'innovation technologique et la collaboration stratégique.
                     </p>
                     <div class="flex gap-3">
-                        <a href="#" class="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-raosc-green hover:text-white transition-colors">
+                        <a href="#"
+                            class="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-raosc-green hover:text-white transition-colors">
                             <Facebook class="h-4 w-4" />
                         </a>
-                        <a href="#" class="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-raosc-green hover:text-white transition-colors">
+                        <a href="#"
+                            class="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-raosc-green hover:text-white transition-colors">
                             <Twitter class="h-4 w-4" />
                         </a>
-                        <a href="#" class="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-raosc-red hover:text-white transition-colors">
+                        <a href="#"
+                            class="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-raosc-red hover:text-white transition-colors">
                             <Linkedin class="h-4 w-4" />
                         </a>
                     </div>
@@ -42,10 +47,18 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
                 <div class="md:col-span-4 lg:col-span-2">
                     <h3 class="text-white font-semibold text-xs tracking-wide mb-5">Navigation</h3>
                     <ul class="space-y-3 text-sm">
-                        <li><Link href="/" class="hover:text-raosc-green transition-colors">Accueil</Link></li>
-                        <li><Link href="/rao" class="hover:text-raosc-green transition-colors">Annuaire OSC</Link></li>
-                        <li><Link href="/posts" class="hover:text-raosc-green transition-colors">Actualités</Link></li>
-                        <li><Link href="/community" class="hover:text-raosc-green transition-colors">Communauté</Link></li>
+                        <li>
+                            <Link href="/" class="hover:text-raosc-green transition-colors">Accueil</Link>
+                        </li>
+                        <li>
+                            <Link href="/rao" class="hover:text-raosc-green transition-colors">Annuaire OSC</Link>
+                        </li>
+                        <li>
+                            <Link href="/posts" class="hover:text-raosc-green transition-colors">Actualités</Link>
+                        </li>
+                        <li>
+                            <Link href="/community" class="hover:text-raosc-green transition-colors">Communauté</Link>
+                        </li>
                     </ul>
                 </div>
 
@@ -53,10 +66,18 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
                 <div class="md:col-span-4 lg:col-span-2">
                     <h3 class="text-white font-semibold text-xs tracking-wide mb-5">L'Organisation</h3>
                     <ul class="space-y-3 text-sm">
-                        <li><Link href="/about" class="hover:text-raosc-green transition-colors">Charte éthique</Link></li>
-                        <li><Link href="/about" class="hover:text-raosc-green transition-colors">Nos Valeurs</Link></li>
-                        <li><Link href="/contact" class="hover:text-raosc-green transition-colors">Contact</Link></li>
-                        <li><Link href="/mentions-legales" class="hover:text-raosc-green transition-colors">Légal</Link></li>
+                        <li>
+                            <Link href="/about" class="hover:text-raosc-green transition-colors">Charte éthique</Link>
+                        </li>
+                        <li>
+                            <Link href="/about" class="hover:text-raosc-green transition-colors">Nos Valeurs</Link>
+                        </li>
+                        <li>
+                            <Link href="/contact" class="hover:text-raosc-green transition-colors">Contact</Link>
+                        </li>
+                        <li>
+                            <Link href="/mentions-legales" class="hover:text-raosc-green transition-colors">Légal</Link>
+                        </li>
                     </ul>
                 </div>
 
@@ -70,43 +91,48 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
                         </li>
                         <li class="flex items-center gap-3">
                             <Mail class="h-4 w-4 text-raosc-green shrink-0" />
-                            <a href="mailto:contact@raosc.org" class="text-sm hover:text-raosc-green transition-colors">contact@raosc.org</a>
+                            <a href="mailto:contact@raosc.org"
+                                class="text-sm hover:text-raosc-green transition-colors">contact@raosc.org</a>
                         </li>
                         <li class="flex items-center gap-3">
                             <Phone class="h-4 w-4 text-raosc-red shrink-0" />
-                            <a href="tel:+237697000000" class="text-sm hover:text-raosc-green transition-colors">+237 697 00 00 00</a>
+                            <a href="tel:+237697000000" class="text-sm hover:text-raosc-green transition-colors">+237
+                                697 00 00 00</a>
                         </li>
                     </ul>
                 </div>
             </div>
 
             <!-- Bottom Footer - Version améliorée -->
-            <div class="pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+            <div
+                class="pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
                 <!-- Left side - Copyright and credits -->
                 <div class="text-center md:text-left space-y-1">
                     <p class="text-zinc-600 text-[11px]">
                         Propulsé par
                         <a target="_blank" href="https://universalwelfare.org/"
-                        class="text-raosc-green hover:text-raosc-green/80 transition-colors font-medium">
-                        l'Organisation ABEC
-                    </a>
-                    — Initiative portée et coordonnée par l'Association de Bien-Être Communautaire
-                </p>
-                <p class="text-zinc-500">
-                    © {{ new Date().getFullYear() }} <span class="text-white font-medium">RAOSC</span>.
-                    Tous droits réservés.
-                </p>
+                            class="text-raosc-green hover:text-raosc-green/80 transition-colors font-medium">
+                            l'Organisation ABEC
+                        </a>
+                        — Initiative portée et coordonnée par l'Association de Bien-Être Communautaire
+                    </p>
+                    <p class="text-zinc-500">
+                        © {{ new Date().getFullYear() }} <span class="text-white font-medium">RAOSC</span>.
+                        Tous droits réservés.
+                    </p>
                 </div>
 
                 <!-- Right side - Legal links -->
                 <div class="flex gap-6">
-                    <Link href="/privacy" class="hover:text-white transition-colors text-zinc-500 hover:text-raosc-green">
+                    <Link href="/privacy"
+                        class="hover:text-white transition-colors text-zinc-500 hover:text-raosc-green">
                         Confidentialité
                     </Link>
                     <Link href="/terms" class="hover:text-white transition-colors text-zinc-500 hover:text-raosc-green">
                         Conditions
                     </Link>
-                    <Link href="/cookies" class="hover:text-white transition-colors text-zinc-500 hover:text-raosc-green">
+                    <Link href="/cookies"
+                        class="hover:text-white transition-colors text-zinc-500 hover:text-raosc-green">
                         Cookies
                     </Link>
                 </div>
