@@ -102,13 +102,13 @@ const overlayOpacity = 0.35; // Ajustez selon vos besoins (0 = transparent, 1 = 
 
             <StatsSection :stats="resolvedStats" />
 
+            <RecentNewsSection />
+
             <FeaturesSection :features="features" />
 
             <CategoriesSection />
 
             <OrganizationsSection :organizations="organizations" />
-
-            <RecentNewsSection />
 
             <CTASection :is-authenticated="!!$page.props.auth.user" />
         </div>
