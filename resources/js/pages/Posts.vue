@@ -2,13 +2,35 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { Newspaper, ArrowRight, Clock, Building2 } from 'lucide-vue-next';
 import PublicLayout from '@/layouts/PublicLayout.vue';
+import { show as showPost } from '@/actions/App/Http/Controllers/PostController';
+import { show as showOrga } from '@/actions/App/Http/Controllers/RaoController';
 
-const props = defineProps<{
-    posts?: { data: any[] };
+interface PostData {
+    id: number;
+    slug: string | null;
+    title: string;
+    summary: string;
+    category: string | null;
+    created_at: string;
+    cover_image: string | null;
+    read_time: number | null;
+    colorKey: string;
+    organization: {
+        name: string;
+        slug: string;
+        logo: string | null;
+    } | null;
+}
+
+const {
+    posts = { data: [] }
+} = defineProps<{
+    posts?: { data: PostData[] };
 }>();
 
-const fallbackPosts = [
+const fallbackPosts: PostData[] = [
     {
+        id: 0,
         slug: null,
         title: "Lancement du programme d'accès à l'eau potable en zone rurale",
         summary: "De nombreuses ONG se sont réunies pour un grand projet d'eau potable via des forages solaires de dernière génération.",
@@ -20,6 +42,7 @@ const fallbackPosts = [
         colorKey: "green",
     },
     {
+        id: 0,
         slug: null,
         title: "Convention de partenariat pour la scolarisation des jeunes filles",
         summary: "Un accord historique pour soutenir financièrement les familles et encourager la scolarisation continue.",
@@ -31,6 +54,7 @@ const fallbackPosts = [
         colorKey: "yellow",
     },
     {
+        id: 0,
         slug: null,
         title: "Campagne de vaccination gratuite et prévention communautaire",
         summary: "Des équipes médicales bénévoles se déploient dans plusieurs régions pour des consultations gratuites.",
@@ -42,6 +66,7 @@ const fallbackPosts = [
         colorKey: "red",
     },
     {
+        id: 0,
         slug: null,
         title: "Formation et insertion socioprofessionnelle des jeunes",
         summary: "200 artisans formés aux métiers du bois, soudure et BTP grâce au consortium RAOSC.",
@@ -53,6 +78,7 @@ const fallbackPosts = [
         colorKey: "zinc",
     },
     {
+        id: 0,
         slug: null,
         title: "Sommet sur le changement climatique et l'action citoyenne",
         summary: "Focus sur les initiatives de reboisement et d'assainissement pilotées par notre réseau.",
@@ -64,6 +90,7 @@ const fallbackPosts = [
         colorKey: "green",
     },
     {
+        id: 0,
         slug: null,
         title: "Distribution de kits alimentaires pour les fêtes",
         summary: "Solidarité inter-religieuse avec plus de 5 tonnes de vivres distribuées par l'association Vivre Ensemble.",
@@ -77,8 +104,8 @@ const fallbackPosts = [
 ];
 
 // Réels ou placeholders
-const displayPosts = (props.posts?.data && props.posts.data.length > 0)
-    ? props.posts.data.map(p => ({ ...p, colorKey: 'green' }))
+const displayPosts = (posts.data && posts.data.length > 0)
+    ? posts.data.map(p => ({ ...p, colorKey: 'green' }))
     : fallbackPosts;
 
 const badgeClass: Record<string, string> = {
@@ -163,7 +190,7 @@ const linkClass: Record<string, string> = {
                                     <img v-if="post.organization.logo" :src="post.organization.logo" class="h-full w-full object-cover" />
                                     <Building2 v-else class="w-3 h-3 text-zinc-400" />
                                 </div>
-                                <Link :href="`/rao/orga/${post.organization.slug}`" class="text-xs font-semibold text-zinc-500 hover:text-raosc-green transition-colors truncate">
+                                <Link :href="showOrga(post.organization.slug).url" class="text-xs font-semibold text-zinc-500 hover:text-raosc-green transition-colors truncate">
                                     {{ post.organization.name }}
                                 </Link>
                             </div>
@@ -181,7 +208,7 @@ const linkClass: Record<string, string> = {
                             <div class="border-t border-zinc-100 dark:border-zinc-800 pt-4 mt-auto">
                                 <Link
                                     v-if="post.slug"
-                                    :href="`/posts/${post.slug}`"
+                                    :href="showPost(post.slug).url"
                                     :class="['inline-flex items-center gap-1.5 text-sm font-bold transition-colors', linkClass[post.colorKey] ?? linkClass.green]"
                                 >
                                     Lire l'article complet

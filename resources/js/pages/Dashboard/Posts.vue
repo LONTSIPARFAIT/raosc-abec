@@ -1,49 +1,50 @@
 <script setup lang="ts">
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, Form } from '@inertiajs/vue3';
 import { PlusCircle, Newspaper, Trash2, ShieldAlert, Eye, X } from 'lucide-vue-next';
 import { ref } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { store, destroy } from '@/actions/App/Http/Controllers/PostController';
+import { show as showPost } from '@/actions/App/Http/Controllers/PostController';
 
-const props = defineProps<{
-    posts: any[];
-    organization: any;
+interface Post {
+    id: number;
+    title: string;
+    summary: string;
+    category: string | null;
+    slug: string;
+    cover_image: string | null;
+    read_time: number | null;
+}
+
+interface Organization {
+    id: number;
+    name: string;
+    slug: string;
+}
+
+const {
+    posts = [],
+    organization = null
+} = defineProps<{
+    posts?: Post[];
+    organization?: Organization | null;
 }>();
 
 const isFormOpen = ref(false);
 const coverPreview = ref<string | null>(null);
 
-const form = useForm({
-    title: '',
-    summary: '',
-    content: '',
-    category: '',
-    cover_image: null as File | null,
-});
-
-const handleFile = (e: Event) => {
+const handleFile = (e: Event, data: any) => {
     const file = (e.target as HTMLInputElement).files?.[0];
     if (!file) return;
-    form.cover_image = file;
+    data.cover_image = file;
     const reader = new FileReader();
     reader.onload = (ev) => { coverPreview.value = ev.target?.result as string; };
     reader.readAsDataURL(file);
 };
 
-const submit = () => {
-    form.post('/dashboard/posts', {
-        preserveScroll: true,
-        forceFormData: true,
-        onSuccess: () => {
-            form.reset();
-            coverPreview.value = null;
-            isFormOpen.value = false;
-        },
-    });
-};
-
 const deletePost = (id: number) => {
     if (confirm('Supprimer cet article définitivement ?')) {
-        useForm({}).delete(`/dashboard/posts/${id}`, { preserveScroll: true });
+        useForm({}).delete(destroy(id).url, { preserveScroll: true });
     }
 };
 
@@ -92,19 +93,33 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                             <X class="w-5 h-5" />
                         </button>
                     </div>
-                    <form @submit.prevent="submit" class="space-y-5">
+                    
+                    <Form 
+                        :action="store()"
+                        :data="{
+                            title: '',
+                            summary: '',
+                            content: '',
+                            category: '',
+                            cover_image: null as File | null,
+                        }"
+                        v-slot="{ data, errors, processing }"
+                        preserve-scroll
+                        @success="() => { coverPreview = null; isFormOpen = false; }"
+                        class="space-y-5"
+                    >
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <!-- Titre -->
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">Titre de l'article <span class="text-red-500">*</span></label>
-                                <input v-model="form.title" type="text" required placeholder="Un titre accrocheur..." class="w-full h-11 px-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-raosc-green/30 focus:border-raosc-green outline-none text-sm transition-all" />
-                                <p v-if="form.errors.title" class="text-red-500 text-xs mt-1">{{ form.errors.title }}</p>
+                                <input v-model="data.title" type="text" required placeholder="Un titre accrocheur..." class="w-full h-11 px-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-raosc-green/30 focus:border-raosc-green outline-none text-sm transition-all" />
+                                <p v-if="errors.title" class="text-red-500 text-xs mt-1">{{ errors.title }}</p>
                             </div>
 
                             <!-- Catégorie -->
                             <div>
                                 <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">Catégorie</label>
-                                <select v-model="form.category" class="w-full h-11 px-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-raosc-green/30 focus:border-raosc-green outline-none text-sm">
+                                <select v-model="data.category" class="w-full h-11 px-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-raosc-green/30 focus:border-raosc-green outline-none text-sm">
                                     <option value="">-- Choisir --</option>
                                     <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
                                 </select>
@@ -116,8 +131,8 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                                 <div class="relative">
                                     <label class="flex items-center gap-3 w-full h-11 px-4 rounded-xl border border-dashed border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 text-zinc-500 text-sm cursor-pointer hover:border-raosc-green hover:text-raosc-green transition-colors">
                                         <Newspaper class="w-4 h-4 shrink-0" />
-                                        <span class="truncate">{{ form.cover_image ? form.cover_image.name : 'Choisir une image...' }}</span>
-                                        <input type="file" accept="image/*" @change="handleFile" class="hidden" />
+                                        <span class="truncate">{{ data.cover_image ? data.cover_image.name : 'Choisir une image...' }}</span>
+                                        <input type="file" accept="image/*" @change="(e) => handleFile(e, data)" class="hidden" />
                                     </label>
                                 </div>
                                 <div v-if="coverPreview" class="mt-2 h-24 w-full rounded-lg overflow-hidden">
@@ -128,15 +143,15 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                             <!-- Résumé -->
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">Accroche / Résumé <span class="text-red-500">*</span></label>
-                                <textarea v-model="form.summary" required rows="2" placeholder="Un résumé court et percutant (visible sur la liste des articles)..." class="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-raosc-green/30 focus:border-raosc-green outline-none text-sm resize-none transition-all"></textarea>
-                                <p v-if="form.errors.summary" class="text-red-500 text-xs mt-1">{{ form.errors.summary }}</p>
+                                <textarea v-model="data.summary" required rows="2" placeholder="Un résumé court et percutant (visible sur la liste des articles)..." class="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-raosc-green/30 focus:border-raosc-green outline-none text-sm resize-none transition-all"></textarea>
+                                <p v-if="errors.summary" class="text-red-500 text-xs mt-1">{{ errors.summary }}</p>
                             </div>
 
                             <!-- Contenu -->
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">Contenu complet de l'article <span class="text-red-500">*</span></label>
-                                <textarea v-model="form.content" required rows="10" placeholder="Rédigez votre article ici. Utilisez des sauts de ligne pour structurer vos paragraphes..." class="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-raosc-green/30 focus:border-raosc-green outline-none text-sm leading-relaxed transition-all"></textarea>
-                                <p v-if="form.errors.content" class="text-red-500 text-xs mt-1">{{ form.errors.content }}</p>
+                                <textarea v-model="data.content" required rows="10" placeholder="Rédigez votre article ici. Utilisez des sauts de ligne pour structurer vos paragraphes..." class="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-raosc-green/30 focus:border-raosc-green outline-none text-sm leading-relaxed transition-all"></textarea>
+                                <p v-if="errors.content" class="text-red-500 text-xs mt-1">{{ errors.content }}</p>
                             </div>
                         </div>
 
@@ -144,12 +159,12 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                             <button type="button" @click="isFormOpen = false" class="px-5 py-2.5 text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full text-sm font-semibold transition-colors">
                                 Annuler
                             </button>
-                            <button type="submit" :disabled="form.processing" class="flex items-center gap-2 px-6 py-2.5 bg-raosc-green text-white font-bold rounded-full text-sm hover:bg-raosc-green/90 transition-colors disabled:opacity-60 shadow-sm shadow-raosc-green/20">
-                                <span v-if="form.processing">Publication en cours...</span>
+                            <button type="submit" :disabled="processing" class="flex items-center gap-2 px-6 py-2.5 bg-raosc-green text-white font-bold rounded-full text-sm hover:bg-raosc-green/90 transition-colors disabled:opacity-60 shadow-sm shadow-raosc-green/20">
+                                <span v-if="processing">Publication en cours...</span>
                                 <span v-else>Publier l'article</span>
                             </button>
                         </div>
-                    </form>
+                    </Form>
                 </div>
 
                 <!-- Liste des articles -->
@@ -176,7 +191,7 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                             <p class="text-xs text-zinc-500 line-clamp-1 mt-0.5">{{ post.summary }}</p>
                         </div>
                         <div class="flex flex-col gap-2 shrink-0">
-                            <Link :href="`/posts/${post.slug}`" class="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 hover:text-raosc-green hover:bg-raosc-green/10 transition-colors">
+                            <Link :href="showPost(post.slug).url" class="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 hover:text-raosc-green hover:bg-raosc-green/10 transition-colors">
                                 <Eye class="w-4 h-4" />
                             </Link>
                             <button @click="deletePost(post.id)" class="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
