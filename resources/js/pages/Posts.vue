@@ -224,7 +224,7 @@ const linkClass: Record<string, string> = {
                 </div>
 
                 <!-- Newsletter -->
-                <div class="mt-20 bg-zinc-950 border border-zinc-800 rounded-3xl p-10 sm:p-14 text-center relative overflow-hidden">
+                <!-- <div class="mt-20 bg-zinc-950 border border-zinc-800 rounded-3xl p-10 sm:p-14 text-center relative overflow-hidden">
                     <div class="relative z-10">
                         <div class="h-14 w-14 bg-raosc-green/10 border border-raosc-green/20 rounded-2xl flex items-center justify-center mx-auto mb-5">
                             <Newspaper class="h-7 w-7 text-raosc-green" />
@@ -242,7 +242,7 @@ const linkClass: Record<string, string> = {
                     </div>
                     <div class="absolute -top-24 -right-24 w-72 h-72 bg-raosc-green/10 rounded-full blur-3xl pointer-events-none"></div>
                     <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-raosc-yellow/10 rounded-full blur-3xl pointer-events-none"></div>
-                </div>
+                </div> -->
             </div>
         </main>
     </PublicLayout>
