@@ -2,6 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { ArrowLeft, Clock, Building2, Calendar, Tag } from 'lucide-vue-next';
 import PublicLayout from '@/layouts/PublicLayout.vue';
+import { marked } from 'marked';
 
 defineProps<{
     post: {
@@ -96,8 +97,14 @@ defineProps<{
 
                 <!-- Contenu -->
                 <div
-                    class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-[1.9] space-y-5 [&>p]:mb-5"
-                    v-html="post.content.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br>')"
+                    class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-[1.9] prose dark:prose-invert max-w-none 
+                    [&>p]:mb-6 [&>h1]:text-2xl [&>h1]:font-black [&>h1]:text-zinc-900 [&>h1]:dark:text-white [&>h1]:mb-4
+                    [&>h2]:text-xl [&>h2]:font-bold [&>h2]:text-zinc-900 [&>h2]:dark:text-white [&>h2]:mt-8 [&>h2]:mb-4
+                    [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:mb-6
+                    [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:mb-6
+                    [&>blockquote]:border-l-4 [&>blockquote]:border-raosc-green [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-zinc-500
+                    [&>a]:text-raosc-green [&>a]:font-bold [&>a]:hover:underline"
+                    v-html="marked.parse(post.content)"
                 ></div>
 
                 <!-- Pied de page -->

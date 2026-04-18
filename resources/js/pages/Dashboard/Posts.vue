@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { Head, Link, useForm, Form } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { PlusCircle, Newspaper, Trash2, ShieldAlert, Eye, X, Upload, Clock, Tag } from 'lucide-vue-next';
 import { ref, reactive } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { store, destroy } from '@/actions/App/Http/Controllers/PostController';
 import { show as showPost } from '@/actions/App/Http/Controllers/PostController';
+import { marked } from 'marked';
 
 interface Post {
     id: number;
@@ -16,31 +17,68 @@ interface Post {
     read_time: number | null;
 }
 
-interface Organization {
-    id: number;
-    name: string;
-    slug: string;
-}
-
 const {
     posts = [],
-    organization = null
+    organization = null,
+    organizations = [],
+    organizationId = null
 } = defineProps<{
     posts?: Post[];
-    organization?: Organization | null;
+    organization?: any;
+    organizations?: Organization[];
+    organizationId?: number | null;
 }>();
 
 const isFormOpen = ref(false);
 const coverPreview = ref<string | null>(null);
 const isDeleting = ref<number | null>(null);
 
-const postFormData = reactive({
+const postFormData = useForm({
+    organization_id: organizationId || (organizations.length > 0 ? organizations[0].id : null),
     title: '',
     summary: '',
     content: '',
     category: '',
     cover_image: null as File | null,
 });
+
+const isPreviewMode = ref(false);
+const contentTextarea = ref<HTMLTextAreaElement | null>(null);
+
+const insertMarkdown = (tag: string, placeholder = '') => {
+    if (!contentTextarea.value) return;
+    const start = contentTextarea.value.selectionStart;
+    const end = contentTextarea.value.selectionEnd;
+    const text = postFormData.content;
+    const before = text.substring(0, start);
+    const selection = text.substring(start, end) || placeholder;
+    const after = text.substring(end);
+
+    let newText = '';
+    switch (tag) {
+        case 'bold': newText = `${before}**${selection}**${after}`; break;
+        case 'italic': newText = `${before}*${selection}*${after}`; break;
+        case 'link': newText = `${before}[${selection}](https://...)${after}`; break;
+        case 'h1': newText = `${before}\n# ${selection}\n${after}`; break;
+        case 'h2': newText = `${before}\n## ${selection}\n${after}`; break;
+        case 'h3': newText = `${before}\n### ${selection}\n${after}`; break;
+        case 'list': newText = `${before}\n- ${selection}\n${after}`; break;
+        case 'quote': newText = `${before}\n> ${selection}\n${after}`; break;
+        case 'code': newText = `${before}\n\`\`\`javascript\n${selection}\n\`\`\`\n${after}`; break;
+    }
+    
+    postFormData.content = newText;
+    
+    // Focus back and set cursor
+    setTimeout(() => {
+        if (contentTextarea.value) {
+            contentTextarea.value.focus();
+            const offset = (tag === 'bold' || tag === 'italic') ? (tag === 'bold' ? 2 : 1) : 0;
+            const newPos = start + offset;
+            contentTextarea.value.setSelectionRange(newPos, newPos + selection.length + offset);
+        }
+    }, 50);
+};
 
 const handleFile = (e: Event) => {
     const file = (e.target as HTMLInputElement).files?.[0];
@@ -71,7 +109,7 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
         <div class="p-6 lg:p-10 bg-zinc-50 dark:bg-zinc-950 min-h-screen">
 
             <!-- Alerte: pas d'organisation avec glassmorphism -->
-            <div v-if="!organization"
+            <div v-if="organizations.length === 0"
                 class="max-w-2xl mx-auto mt-10 backdrop-blur-lg bg-white/90 dark:bg-zinc-900/90 border border-red-200/50 dark:border-red-800/50 rounded-3xl p-12 text-center shadow-xl animate-fade-in">
                 <div class="animate-pulse">
                     <div class="h-20 w-20 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-500/20 dark:to-red-600/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -98,7 +136,16 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                                 <p class="text-xs font-bold uppercase tracking-wider text-raosc-green">Espace Média</p>
                             </div>
                             <h1 class="text-3xl lg:text-4xl font-black text-zinc-900 dark:text-white">Nos Actualités</h1>
-                            <p class="text-zinc-600 dark:text-zinc-400">Partagez les actions de votre organisation avec la communauté.</p>
+                            <div v-if="organizations.length > 1" class="flex items-center gap-3 mt-4">
+                                <span class="text-xs font-bold text-zinc-500">Filtrer par organisation :</span>
+                                <select 
+                                    :value="organizationId" 
+                                    @change="(e: any) => $inertia.visit(`?organization_id=${e.target.value}`, { preserveScroll: true })"
+                                    class="text-xs font-bold bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl px-3 py-1.5 focus:ring-raosc-green"
+                                >
+                                    <option v-for="org in organizations" :key="org.id" :value="org.id">{{ org.name }}</option>
+                                </select>
+                            </div>
                         </div>
                         <button @click="isFormOpen = true"
                             class="group flex items-center gap-2 px-6 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-2xl font-bold text-sm hover:scale-105 hover:shadow-xl transition-all duration-300 shrink-0">
@@ -123,9 +170,33 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                             </button>
                         </div>
 
-                        <Form :action="store()" :data="postFormData" v-slot="{ errors, processing }" preserve-scroll
-                            @success="() => { coverPreview = null; isFormOpen = false; postFormData.title = ''; postFormData.summary = ''; postFormData.content = ''; postFormData.category = ''; postFormData.cover_image = null; }" class="space-y-6">
+                        <form 
+                            @submit.prevent="postFormData.post(store().url, { 
+                                onSuccess: () => { coverPreview = null; isFormOpen = false; postFormData.reset(); },
+                                preserveScroll: true
+                            })"
+                            class="space-y-6"
+                        >
+                            <div v-if="Object.keys(postFormData.errors).length > 0" class="p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-2xl mb-6">
+                                <div class="flex items-center gap-2 text-raosc-red font-bold text-sm mb-1">
+                                    <ShieldAlert class="w-4 h-4" />
+                                    Erreurs de validation
+                                </div>
+                                <ul class="text-xs text-raosc-red/80 space-y-1 ml-6 list-disc">
+                                    <li v-for="(error, field) in postFormData.errors" :key="field">{{ error }}</li>
+                                </ul>
+                            </div>
+
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div v-if="organizations.length > 1" class="lg:col-span-2">
+                                    <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
+                                        Organisation auteur <span class="text-raosc-red">*</span>
+                                    </label>
+                                    <select v-model="postFormData.organization_id" required
+                                        class="w-full h-12 px-5 rounded-2xl border-2 border-zinc-200 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-white focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300 cursor-pointer">
+                                        <option v-for="org in organizations" :key="org.id" :value="org.id">{{ org.name }}</option>
+                                    </select>
+                                </div>
                                 <!-- Titre -->
                                 <div class="lg:col-span-2">
                                     <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
@@ -134,9 +205,9 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                                     <input v-model="postFormData.title" type="text" required 
                                         placeholder="Un titre accrocheur qui capte l'attention..."
                                         class="w-full h-12 px-5 rounded-2xl border-2 border-zinc-200 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
-                                        :class="{ 'border-raosc-red focus:ring-raosc-red/20': errors.title }" />
+                                        :class="{ 'border-raosc-red focus:ring-raosc-red/20': postFormData.errors.title }" />
                                     <Transition name="slide-down">
-                                        <p v-if="errors.title" class="text-raosc-red text-xs mt-2">{{ errors.title }}</p>
+                                        <div v-if="postFormData.errors.title" class="text-raosc-red text-xs mt-2">{{ postFormData.errors.title }}</div>
                                     </Transition>
                                 </div>
 
@@ -151,7 +222,7 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                                         <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
                                     </select>
                                     <Transition name="slide-down">
-                                        <p v-if="errors.category" class="text-raosc-red text-xs mt-2">{{ errors.category }}</p>
+                                        <div v-if="postFormData.errors.category" class="text-raosc-red text-xs mt-2">{{ postFormData.errors.category }}</div>
                                     </Transition>
                                 </div>
 
@@ -169,7 +240,7 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                                         </label>
                                     </div>
                                     <Transition name="slide-down">
-                                        <p v-if="errors.cover_image" class="text-raosc-red text-xs mt-2">{{ errors.cover_image }}</p>
+                                        <div v-if="postFormData.errors.cover_image" class="text-raosc-red text-xs mt-1">{{ postFormData.errors.cover_image }}</div>
                                     </Transition>
                                     <Transition name="fade">
                                         <div v-if="coverPreview" class="mt-3 h-28 w-full rounded-xl overflow-hidden border-2 border-zinc-200 dark:border-zinc-700 hover:scale-[1.02] transition-transform duration-300">
@@ -186,23 +257,72 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                                     <textarea v-model="postFormData.summary" required rows="3"
                                         placeholder="Un résumé court et percutant qui donne envie de lire la suite..."
                                         class="w-full px-5 py-3 rounded-2xl border-2 border-zinc-200 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm resize-none transition-all duration-300"
-                                        :class="{ 'border-raosc-red focus:ring-raosc-red/20': errors.summary }"></textarea>
+                                        :class="{ 'border-raosc-red focus:ring-raosc-red/20': postFormData.errors.summary }"></textarea>
                                     <Transition name="slide-down">
-                                        <p v-if="errors.summary" class="text-raosc-red text-xs mt-2">{{ errors.summary }}</p>
+                                        <div v-if="postFormData.errors.summary" class="text-raosc-red text-xs mt-1">{{ postFormData.errors.summary }}</div>
                                     </Transition>
                                 </div>
 
-                                <!-- Contenu -->
                                 <div class="lg:col-span-2">
-                                    <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
-                                        Contenu complet <span class="text-raosc-red">*</span>
-                                    </label>
-                                    <textarea v-model="postFormData.content" required rows="12"
+                                    <div class="flex items-center justify-between mb-2">
+                                        <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                                            Contenu complet (Markdown) <span class="text-raosc-red">*</span>
+                                        </label>
+                                        <div class="flex items-center p-1 bg-zinc-100 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700">
+                                            <button 
+                                                type="button" 
+                                                @click="isPreviewMode = false" 
+                                                class="px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-300"
+                                                :class="!isPreviewMode ? 'bg-white dark:bg-zinc-700 text-raosc-green shadow-sm shadow-raosc-green/20' : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'"
+                                            >
+                                                Éditeur
+                                            </button>
+                                            <button 
+                                                type="button" 
+                                                @click="isPreviewMode = true" 
+                                                class="px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 flex items-center gap-2"
+                                                :class="isPreviewMode ? 'bg-raosc-green text-white shadow-lg shadow-raosc-green/30' : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300'"
+                                            >
+                                                <Eye class="w-3 h-3" /> Aperçu Premium
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Barre d'outils Markdown -->
+                                    <div v-if="!isPreviewMode" class="flex flex-wrap items-center gap-1 mb-2 bg-white/50 dark:bg-zinc-900/50 p-2 rounded-xl border border-zinc-200 dark:border-zinc-700 backdrop-blur-sm">
+                                        <div class="flex items-center gap-1 pr-2 mr-2 border-r border-zinc-200 dark:border-zinc-700">
+                                            <button type="button" @click="insertMarkdown('bold', 'texte gras')" title="Gras" class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-sm font-bold">B</button>
+                                            <button type="button" @click="insertMarkdown('italic', 'texte italique')" title="Italique" class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-sm italic font-serif">I</button>
+                                        </div>
+                                        <div class="flex items-center gap-1 pr-2 mr-2 border-r border-zinc-200 dark:border-zinc-700">
+                                            <button type="button" @click="insertMarkdown('h1', 'Titre Principal')" title="Titre 1" class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-xs font-black">H1</button>
+                                            <button type="button" @click="insertMarkdown('h2', 'Sous-titre')" title="Titre 2" class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-xs font-extrabold">H2</button>
+                                            <button type="button" @click="insertMarkdown('h3', 'Section')" title="Titre 3" class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-xs font-bold">H3</button>
+                                        </div>
+                                        <div class="flex items-center gap-1 pr-2 mr-2 border-r border-zinc-200 dark:border-zinc-700">
+                                            <button type="button" @click="insertMarkdown('list', 'élément')" title="Liste" class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-sm">List</button>
+                                            <button type="button" @click="insertMarkdown('quote', 'citation')" title="Citation" class="h-8 w-8 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-sm">"</button>
+                                        </div>
+                                        <div class="flex items-center gap-1">
+                                            <button type="button" @click="insertMarkdown('link', 'nom du lien')" title="Insérer un lien" class="px-3 h-8 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-xs font-bold text-raosc-green">Lien</button>
+                                            <button type="button" @click="insertMarkdown('code', 'console.log()')" title="Code" class="px-3 h-8 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-xs font-mono bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 border">Code</button>
+                                        </div>
+                                    </div>
+
+                                    <div v-if="isPreviewMode" class="w-full px-8 py-10 rounded-2xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900/50 min-h-[350px] overflow-auto prose dark:prose-invert max-w-none shadow-inner
+                                        prose-headings:text-raosc-green prose-a:text-raosc-green prose-blockquote:border-raosc-green prose-img:rounded-3xl">
+                                        <div v-if="postFormData.content" v-html="marked.parse(postFormData.content)"></div>
+                                        <div v-else class="flex flex-col items-center justify-center h-48 text-zinc-400 italic">
+                                            <Eye class="w-8 h-8 mb-2 opacity-20" />
+                                            Votre contenu formaté apparaîtra ici...
+                                        </div>
+                                    </div>
+                                    <textarea v-else ref="contentTextarea" v-model="postFormData.content" required rows="12"
                                         placeholder="Rédigez votre article ici... (Markdown supporté)"
                                         class="w-full px-5 py-3 rounded-2xl border-2 border-zinc-200 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm leading-relaxed transition-all duration-300 font-mono"
-                                        :class="{ 'border-raosc-red focus:ring-raosc-red/20': errors.content }"></textarea>
+                                        :class="{ 'border-raosc-red focus:ring-raosc-red/20': postFormData.errors.content }"></textarea>
                                     <Transition name="slide-down">
-                                        <p v-if="errors.content" class="text-raosc-red text-xs mt-2">{{ errors.content }}</p>
+                                        <div v-if="postFormData.errors.content" class="text-raosc-red text-xs mt-1">{{ postFormData.errors.content }}</div>
                                     </Transition>
                                 </div>
                             </div>
@@ -212,13 +332,13 @@ const categories = ['Solidarité', 'Éducation', 'Santé', 'Environnement', 'Emp
                                     class="px-6 py-2.5 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-2xl text-sm font-semibold transition-all duration-300 hover:scale-105">
                                     Annuler
                                 </button>
-                                <button type="submit" :disabled="processing"
+                                <button type="submit" :disabled="postFormData.processing"
                                     class="group flex items-center gap-2 px-8 py-2.5 bg-raosc-green text-white font-bold rounded-2xl text-sm hover:scale-105 hover:shadow-lg transition-all duration-300 disabled:opacity-60 disabled:hover:scale-100">
-                                    <PlusCircle v-if="!processing" class="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
-                                    <span>{{ processing ? 'Publication en cours...' : 'Publier l\'article' }}</span>
+                                    <PlusCircle v-if="!postFormData.processing" class="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
+                                    <span>{{ postFormData.processing ? 'Publication en cours...' : 'Publier l\'article' }}</span>
                                 </button>
                             </div>
-                        </Form>
+                        </form>
                     </div>
                 </Transition>
 

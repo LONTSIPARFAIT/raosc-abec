@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link, Form } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref, reactive } from 'vue';
 import { Building2, Info, ArrowRight, CheckCircle2 } from 'lucide-vue-next';
 import CountryPhoneInput from '@/components/CountryPhoneInput.vue';
@@ -39,7 +39,8 @@ const {
 
 const org = ('data' in organization) ? organization.data : organization;
 
-const formData = reactive({
+const formData = useForm({
+    _method: 'PUT',
     name: org.name || '',
     short_description: org.short_description || '',
     description: org.description || '',
@@ -93,10 +94,8 @@ const toggleCategory = (id: number) => {
             <div class="mx-auto max-w-4xl px-6 -mt-12 sm:-mt-16 relative z-20">
                 <Card class="shadow-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden">
                     <CardContent class="p-8 sm:p-10">
-                        <Form 
-                            :action="update(org.slug)"
-                            :data="formData"
-                            v-slot="{ errors, processing }"
+                        <form 
+                            @submit.prevent="formData.post(update(org.slug).url)"
                             class="space-y-10"
                         >
                             
@@ -119,7 +118,7 @@ const toggleCategory = (id: number) => {
                                             placeholder="Ex: Développement Pour Tous" 
                                             class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
                                         />
-                                        <div v-if="errors.name" class="text-raosc-red text-xs mt-1">{{ errors.name }}</div>
+                                        <div v-if="formData.errors.name" class="text-raosc-red text-xs mt-1">{{ formData.errors.name }}</div>
                                     </div>
 
                                     <div>
@@ -135,7 +134,7 @@ const toggleCategory = (id: number) => {
                                                 {{ cat.name }}
                                             </div>
                                         </div>
-                                        <div v-if="errors.categories" class="text-raosc-red text-xs mt-1">{{ errors.categories }}</div>
+                                        <div v-if="formData.errors.categories" class="text-raosc-red text-xs mt-1">{{ formData.errors.categories }}</div>
                                     </div>
 
                                     <div>
@@ -147,7 +146,7 @@ const toggleCategory = (id: number) => {
                                             placeholder="Décrivez en quelques mots l'essence de votre engagement..." 
                                             class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white resize-none"
                                         ></textarea>
-                                        <div v-if="errors.short_description" class="text-raosc-red text-xs mt-1">{{ errors.short_description }}</div>
+                                        <div v-if="formData.errors.short_description" class="text-raosc-red text-xs mt-1">{{ formData.errors.short_description }}</div>
                                     </div>
 
                                     <div>
@@ -158,7 +157,7 @@ const toggleCategory = (id: number) => {
                                             placeholder="Objectifs, historique, réalisations majeures..." 
                                             class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white resize-y"
                                         ></textarea>
-                                        <div v-if="errors.description" class="text-raosc-red text-xs mt-1">{{ errors.description }}</div>
+                                        <div v-if="formData.errors.description" class="text-raosc-red text-xs mt-1">{{ formData.errors.description }}</div>
                                     </div>
 
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -202,7 +201,7 @@ const toggleCategory = (id: number) => {
                                             placeholder="contact@votre-ong.org" 
                                             class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
                                         />
-                                        <div v-if="errors.email" class="text-raosc-red text-xs mt-1">{{ errors.email }}</div>
+                                        <div v-if="formData.errors.email" class="text-raosc-red text-xs mt-1">{{ formData.errors.email }}</div>
                                     </div>
                                     
                                     <div>
@@ -218,7 +217,7 @@ const toggleCategory = (id: number) => {
                                             placeholder="https://www.mon-ong.org" 
                                             class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
                                         />
-                                        <div v-if="errors.website" class="text-raosc-red text-xs mt-1">{{ errors.website }}</div>
+                                        <div v-if="formData.errors.website" class="text-raosc-red text-xs mt-1">{{ formData.errors.website }}</div>
                                     </div>
 
                                     <div>
@@ -230,7 +229,7 @@ const toggleCategory = (id: number) => {
                                             placeholder="Bénin" 
                                             class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl px-5 py-3 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green outline-none transition-all dark:text-white" 
                                         />
-                                        <div v-if="errors.country" class="text-raosc-red text-xs mt-1">{{ errors.country }}</div>
+                                        <div v-if="formData.errors.country" class="text-raosc-red text-xs mt-1">{{ formData.errors.country }}</div>
                                     </div>
 
                                     <div>
@@ -264,14 +263,14 @@ const toggleCategory = (id: number) => {
                                 </Link>
                                 <Button 
                                     type="submit" 
-                                    :disabled="processing" 
+                                    :disabled="formData.processing" 
                                     class="w-full sm:w-auto bg-raosc-green hover:bg-raosc-green/90 text-white rounded-full px-8 py-2.5 text-xs font-semibold shadow-md hover:shadow-lg transition-all"
                                 >
-                                    <span v-if="processing" class="flex items-center gap-2">Enregistrement...</span>
+                                    <span v-if="formData.processing" class="flex items-center gap-2">Enregistrement...</span>
                                     <span v-else class="flex items-center gap-2">Enregistrer les modifications <ArrowRight class="w-4 h-4" /></span>
                                 </Button>
                             </div>
-                        </Form>
+                        </form>
                     </CardContent>
                 </Card>
 

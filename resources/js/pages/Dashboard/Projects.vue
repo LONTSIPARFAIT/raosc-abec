@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Head, Link, useForm, Form } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Badge } from '@/components/ui/badge';
 import { ref, reactive } from 'vue';
-import { PlusCircle, Target, Users, Trash2, ShieldAlert, Calendar, TrendingUp, Heart, Briefcase, CheckCircle, Clock, X } from 'lucide-vue-next';
+import { PlusCircle, Target, Users, Trash2, ShieldAlert, Calendar, TrendingUp, Heart, Briefcase, CheckCircle, Clock, X, ArrowRight } from 'lucide-vue-next';
 import { store, destroy } from '@/actions/App/Http/Controllers/Dashboard/ProjectController';
 import { create as joinRao } from '@/actions/App/Http/Controllers/RaoController';
 
@@ -16,23 +16,22 @@ interface Project {
     created_at?: string;
 }
 
-interface Organization {
-    id: number;
-    name: string;
-    slug: string;
-}
-
 const {
     projects = [],
-    organization = null
+    organization = null,
+    organizations = [],
+    organizationId = null
 } = defineProps<{
     projects?: Project[];
-    organization?: Organization | null;
+    organization?: any;
+    organizations?: any[];
+    organizationId?: number | null;
 }>();
 
 const isFormOpen = ref(false);
 const isDeleting = ref<number | null>(null);
-const projectFormData = reactive({
+const projectFormData = useForm({
+    organization_id: organizationId || (organizations.length > 0 ? organizations[0].id : null),
     title: '',
     type: 'projet' as 'projet' | 'benevolat',
     description: '',
@@ -107,7 +106,7 @@ const formatDate = (date?: string) => {
             </div>
 
             <!-- Affichage si pas d'organisation -->
-            <div v-if="!organization" class="max-w-2xl mx-auto mt-10 animate-fade-in">
+            <div v-if="organizations.length === 0" class="max-w-2xl mx-auto mt-10 animate-fade-in">
                 <div class="backdrop-blur-xl bg-white/90 dark:bg-zinc-900/90 rounded-3xl p-12 text-center shadow-2xl border border-red-200/50 dark:border-red-800/50">
                     <div class="animate-pulse">
                         <div class="h-20 w-20 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-500/20 dark:to-red-600/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -136,7 +135,16 @@ const formatDate = (date?: string) => {
                                 <p class="text-xs font-bold uppercase tracking-wider text-raosc-green">Initiatives d'impact</p>
                             </div>
                             <h1 class="text-3xl lg:text-4xl font-black text-zinc-900 dark:text-white">Projets & Bénévolats</h1>
-                            <p class="text-zinc-600 dark:text-zinc-400 max-w-xl">Mettez en lumière vos actions actives pour attirer des partenaires ou recruter des bénévoles engagés.</p>
+                            <div v-if="organizations.length > 1" class="flex items-center gap-3 mt-4">
+                                <span class="text-xs font-bold text-zinc-500">Filtrer par organisation :</span>
+                                <select 
+                                    :value="organizationId" 
+                                    @change="(e: any) => $inertia.visit(`?organization_id=${e.target.value}`, { preserveScroll: true })"
+                                    class="text-xs font-bold bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl px-3 py-1.5 focus:ring-raosc-green"
+                                >
+                                    <option v-for="org in organizations" :key="org.id" :value="org.id">{{ org.name }}</option>
+                                </select>
+                            </div>
                         </div>
                         <button 
                             @click="isFormOpen = true" 
@@ -165,15 +173,33 @@ const formatDate = (date?: string) => {
                             </button>
                         </div>
 
-                        <Form 
-                            :action="store()"
-                            :data="projectFormData"
-                            v-slot="{ errors, processing }"
-                            preserve-scroll
-                            @success="resetForm"
+                        <form 
+                            @submit.prevent="projectFormData.post(store().url, { 
+                                onSuccess: () => resetForm(),
+                                preserveScroll: true
+                            })"
                             class="space-y-6 relative z-10"
                         >
+                            <div v-if="Object.keys(projectFormData.errors).length > 0" class="p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-2xl mb-6">
+                                <div class="flex items-center gap-2 text-raosc-red font-bold text-sm mb-1">
+                                    <ShieldAlert class="w-4 h-4" />
+                                    Erreurs de validation
+                                </div>
+                                <ul class="text-xs text-raosc-red/80 space-y-1 ml-6 list-disc">
+                                    <li v-for="(error, field) in projectFormData.errors" :key="field">{{ error }}</li>
+                                </ul>
+                            </div>
+
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div v-if="organizations.length > 1" class="lg:col-span-2">
+                                    <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
+                                        Organisation concernée <span class="text-raosc-red">*</span>
+                                    </label>
+                                    <select v-model="projectFormData.organization_id" required
+                                        class="w-full h-12 px-5 rounded-2xl border-2 border-zinc-200 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-white focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300">
+                                        <option v-for="org in organizations" :key="org.id" :value="org.id">{{ org.name }}</option>
+                                    </select>
+                                </div>
                                 <div class="lg:col-span-2">
                                     <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
                                         Titre saisissant <span class="text-raosc-red">*</span>
@@ -184,10 +210,10 @@ const formatDate = (date?: string) => {
                                         placeholder="Ex: Forage hydraulique dans la région de..." 
                                         required 
                                         class="w-full h-12 px-5 rounded-2xl border-2 border-zinc-200 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
-                                        :class="{ 'border-raosc-red focus:ring-raosc-red/20': errors.title }"
+                                        :class="{ 'border-raosc-red focus:ring-raosc-red/20': projectFormData.errors.title }"
                                     />
                                     <Transition name="slide-down">
-                                        <p v-if="errors.title" class="text-raosc-red text-xs mt-2">{{ errors.title }}</p>
+                                        <p v-if="projectFormData.errors.title" class="text-raosc-red text-xs mt-2">{{ projectFormData.errors.title }}</p>
                                     </Transition>
                                 </div>
 
@@ -247,7 +273,7 @@ const formatDate = (date?: string) => {
                                         />
                                     </div>
                                     <Transition name="slide-down">
-                                        <p v-if="errors.cover_image" class="text-raosc-red text-xs mt-2">{{ errors.cover_image }}</p>
+                                        <p v-if="projectFormData.errors.cover_image" class="text-raosc-red text-xs mt-2">{{ projectFormData.errors.cover_image }}</p>
                                     </Transition>
                                 </div>
 
@@ -271,7 +297,7 @@ const formatDate = (date?: string) => {
                                         </div>
                                     </div>
                                     <Transition name="slide-down">
-                                        <p v-if="errors.gallery" class="text-raosc-red text-xs mt-2">{{ errors.gallery }}</p>
+                                        <p v-if="projectFormData.errors.gallery" class="text-raosc-red text-xs mt-2">{{ projectFormData.errors.gallery }}</p>
                                     </Transition>
                                 </div>
 
@@ -285,10 +311,10 @@ const formatDate = (date?: string) => {
                                         placeholder="Expliquez les objectifs, l'impact direct, les besoins spécifiques..." 
                                         required 
                                         class="w-full px-5 py-3 rounded-2xl border-2 border-zinc-200 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm leading-relaxed transition-all duration-300 resize-none"
-                                        :class="{ 'border-raosc-red focus:ring-raosc-red/20': errors.description }"
+                                        :class="{ 'border-raosc-red focus:ring-raosc-red/20': projectFormData.errors.description }"
                                     ></textarea>
                                     <Transition name="slide-down">
-                                        <p v-if="errors.description" class="text-raosc-red text-xs mt-2">{{ errors.description }}</p>
+                                        <p v-if="projectFormData.errors.description" class="text-raosc-red text-xs mt-2">{{ projectFormData.errors.description }}</p>
                                     </Transition>
                                 </div>
                             </div>
@@ -298,13 +324,13 @@ const formatDate = (date?: string) => {
                                     class="px-6 py-2.5 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-2xl text-sm font-semibold transition-all duration-300 hover:scale-105">
                                     Annuler
                                 </button>
-                                <button type="submit" :disabled="processing" 
+                                <button type="submit" :disabled="projectFormData.processing" 
                                     class="group flex items-center gap-2 px-8 py-2.5 bg-gradient-to-r from-raosc-green to-raosc-green/80 text-white font-bold rounded-2xl text-sm hover:scale-105 hover:shadow-xl transition-all duration-300 disabled:opacity-60 disabled:hover:scale-100">
-                                    <TrendingUp v-if="!processing" class="w-4 h-4 group-hover:translate-y-[-2px] transition-transform duration-300" />
-                                    <span>{{ processing ? 'Publication...' : 'Mettre en ligne' }}</span>
+                                    <TrendingUp v-if="!projectFormData.processing" class="w-4 h-4 group-hover:translate-y-[-2px] transition-transform duration-300" />
+                                    <span>{{ projectFormData.processing ? 'Publication...' : 'Mettre en ligne' }}</span>
                                 </button>
                             </div>
-                        </Form>
+                        </form>
                     </div>
                 </Transition>
 

@@ -9,8 +9,10 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $organization = auth()->user()->organizations()->first();
+        $organizations = auth()->user()->organizations()->get();
+        $selectedOrgId = request('organization_id') ?? $organizations->first()?->id;
         
+        $organization = $organizations->firstWhere('id', $selectedOrgId);
         $projects = $organization ? $organization->projects()->latest()->get() : [];
 
         return inertia('Dashboard/Projects', [
@@ -19,13 +21,21 @@ class ProjectController extends Controller
                 'id' => $organization->id,
                 'name' => $organization->name,
                 'slug' => $organization->slug
-            ] : null
+            ] : null,
+            'organizations' => $organizations->map(fn($o) => [
+                'id' => $o->id,
+                'name' => $o->name,
+                'slug' => $o->slug
+            ]),
+            'organizationId' => (int) $selectedOrgId
         ]);
     }
 
     public function store(Request $request)
     {
-        $organization = auth()->user()->organizations()->first();
+        $organizations = auth()->user()->organizations;
+        $orgId = $request->input('organization_id') ?? $organizations->first()?->id;
+        $organization = $organizations->firstWhere('id', $orgId);
         
         if (!$organization) {
             return back()->with('error', 'Organisation non trouvée.');

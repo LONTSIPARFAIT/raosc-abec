@@ -79,12 +79,25 @@ class PostController extends Controller
      */
     public function dashboard(): Response
     {
-        $organization = auth()->user()?->organizations()->first();
+        $organizations = auth()->user()?->organizations()->get() ?? collect();
+        $selectedOrgId = request('organization_id') ?? $organizations->first()?->id;
+        
+        $organization = $organizations->firstWhere('id', $selectedOrgId);
         $posts = $organization ? $organization->posts()->latest()->get() : [];
 
         return Inertia::render('Dashboard/Posts', [
             'posts'        => $posts,
-            'organization' => $organization,
+            'organization' => $organization ? [
+                'id' => $organization->id,
+                'name' => $organization->name,
+                'slug' => $organization->slug
+            ] : null,
+            'organizations' => $organizations->map(fn($o) => [
+                'id' => $o->id,
+                'name' => $o->name,
+                'slug' => $o->slug
+            ]),
+            'organizationId' => (int) $selectedOrgId
         ]);
     }
 
@@ -93,7 +106,9 @@ class PostController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $organization = auth()->user()?->organizations()->first();
+        $organizations = auth()->user()?->organizations;
+        $orgId = $request->input('organization_id') ?? $organizations->first()?->id;
+        $organization = $organizations->firstWhere('id', $orgId);
 
         if (!$organization) {
             return back()->with('error', 'Organisation non trouvée.');

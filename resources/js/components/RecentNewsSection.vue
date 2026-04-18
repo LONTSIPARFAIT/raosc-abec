@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { ArrowRight } from 'lucide-vue-next';
+import { marked } from 'marked';
 
 defineProps<{
     news?: any[];
 }>();
+
+const parseMarkdown = (content: string) => {
+    return marked.parse(content);
+};
 
 const getColorClass = (index: number) => {
     const colors = ['bg-raosc-green text-white', 'bg-raosc-yellow text-zinc-900', 'bg-raosc-red text-white'];
@@ -38,7 +43,11 @@ const getTextColor = (index: number) => {
                 </Link>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div v-if="!news || news.length === 0" class="py-20 text-center bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800">
+                <p class="text-zinc-500 font-medium">Aucune actualité publiée pour le moment.</p>
+            </div>
+            
+            <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div 
                     v-for="(item, index) in news" 
                     :key="item.id"
@@ -59,7 +68,7 @@ const getTextColor = (index: number) => {
                             Actualité
                         </div>
                         <div class="absolute bottom-4 left-4 right-4">
-                            <p class="text-xs font-semibold text-white/90 mb-1 drop-shadow-md">{{ new Date(item.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) }}</p>
+                            <p class="text-xs font-semibold text-white/90 mb-1 drop-shadow-md">{{ item.created_at }}</p>
                         </div>
                     </div>
                     
@@ -67,8 +76,7 @@ const getTextColor = (index: number) => {
                         <h3 :class="['text-xl font-bold text-zinc-900 dark:text-white mb-3 line-clamp-2 transition-colors cursor-pointer', getHoverColor(index)]">
                             {{ item.title }}
                         </h3>
-                        <p v-if="item.content" class="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 mb-5 leading-relaxed" v-html="item.content.replace(/\n/g, '<br>').substring(0, 150) + '...'"></p>
-                        <p v-else class="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 mb-5 leading-relaxed">{{ item.summary }}</p>
+                        <p class="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 mb-5 leading-relaxed">{{ item.summary }}</p>
                         
                         <Link 
                             :href="`/posts/${item.slug}`" 
