@@ -1,32 +1,47 @@
 <script setup lang="ts">
-import { router } from '@inertiajs/vue3';
+import { Form } from '@inertiajs/vue3';
 import { Check, X, Eye, Building2, MapPin, Mail, Globe, PhoneCall, Calendar } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
+import { updateStatus as updateStatusAction } from '@/actions/App/Http/Controllers/Admin/OrganizationManagementController';
 
-const props = defineProps<{
-    organization: any;
+interface Organization {
+    id: number;
+    name: string;
+    slug: string;
+    status: string;
+    city?: string;
+    country?: string;
+    logo?: string;
+    short_description?: string;
+    description?: string;
+    email?: string;
+    phone?: string;
+    website?: string;
+    address?: string;
+    registration_number?: string;
+    categories?: { id: number, name: string }[];
+    members?: { user: { name: string, email: string } }[];
+    gallery?: string[];
+}
+
+const {
+    organization
+} = defineProps<{
+    organization: Organization;
 }>();
 
 const showingRejectInput = ref(false);
-const rejectionReason = ref('');
 const showingDetailsModal = ref(false);
 
-const updateStatus = (status: string) => {
-    if (status === 'rejected' && !rejectionReason.value) {
-        showingRejectInput.value = true;
-        return;
-    }
+const rejectionData = reactive({
+    status: 'rejected',
+    rejection_reason: '',
+});
 
-    router.post(`/admin/organizations/${props.organization.id}/status`, {
-        status,
-        rejection_reason: rejectionReason.value
-    }, {
-        onSuccess: () => {
-            showingRejectInput.value = false;
-            showingDetailsModal.value = false;
-            rejectionReason.value = '';
-        }
-    });
+const onSuccess = () => {
+    showingRejectInput.value = false;
+    showingDetailsModal.value = false;
+    rejectionData.rejection_reason = '';
 };
 </script>
 
@@ -48,20 +63,30 @@ const updateStatus = (status: string) => {
             <div class="flex gap-2">
                 <button 
                     @click="showingDetailsModal = true"
+                    type="button"
                     class="h-8 w-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 text-blue-600 flex items-center justify-center hover:bg-blue-100 transition-all"
                     title="Voir les détails"
                 >
                     <Eye class="w-4 h-4" />
                 </button>
-                <button 
-                    @click="updateStatus('approved')"
-                    class="h-8 w-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 flex items-center justify-center hover:bg-emerald-100 transition-all"
-                    title="Approuver"
+                
+                <Form 
+                    :action="updateStatusAction(organization.id)" 
+                    :data="{ status: 'approved' }"
+                    @success="onSuccess"
                 >
-                    <Check class="w-4 h-4" />
-                </button>
+                    <button 
+                        type="submit"
+                        class="h-8 w-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 flex items-center justify-center hover:bg-emerald-100 transition-all"
+                        title="Approuver"
+                    >
+                        <Check class="w-4 h-4" />
+                    </button>
+                </Form>
+
                 <button 
                     @click="showingRejectInput = !showingRejectInput"
+                    type="button"
                     class="h-8 w-8 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-600 flex items-center justify-center hover:bg-red-100 transition-all"
                     title="Rejeter"
                 >
@@ -70,21 +95,31 @@ const updateStatus = (status: string) => {
             </div>
         </div>
 
-        <div v-if="showingRejectInput" class="space-y-3 animate-in fade-in slide-in-from-top-2 mt-2 border-t border-zinc-100 dark:border-zinc-800 pt-4">
-            <textarea 
-                v-model="rejectionReason"
-                placeholder="Motif du rejet..."
-                class="w-full text-xs p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 focus:ring-1 focus:ring-red-500 outline-none min-h-[80px] dark:text-zinc-200"
-            ></textarea>
-            <div class="flex justify-end gap-2">
-                <button @click="showingRejectInput = false" class="text-[10px] font-bold text-zinc-500 px-3 py-1.5 hover:text-zinc-700 transition">Annuler</button>
-                <button 
-                    @click="updateStatus('rejected')"
-                    class="bg-red-600 text-white text-[10px] font-bold px-4 py-1.5 rounded-lg hover:bg-red-700 transition-all"
-                >
-                    Confirmer le rejet
-                </button>
-            </div>
+        <div v-if="showingRejectInput" class="animate-in fade-in slide-in-from-top-2 mt-2 border-t border-zinc-100 dark:border-zinc-800 pt-4">
+            <Form 
+                :action="updateStatusAction(organization.id)" 
+                :data="rejectionData"
+                v-slot="{ processing }"
+                @success="onSuccess"
+                class="space-y-3"
+            >
+                <textarea 
+                    v-model="rejectionData.rejection_reason"
+                    placeholder="Motif du rejet..."
+                    required
+                    class="w-full text-xs p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 focus:ring-1 focus:ring-red-500 outline-none min-h-[80px] dark:text-zinc-200"
+                ></textarea>
+                <div class="flex justify-end gap-2">
+                    <button @click="showingRejectInput = false" type="button" class="text-[10px] font-bold text-zinc-500 px-3 py-1.5 hover:text-zinc-700 transition">Annuler</button>
+                    <button 
+                        type="submit"
+                        :disabled="processing"
+                        class="bg-red-600 text-white text-[10px] font-bold px-4 py-1.5 rounded-lg hover:bg-red-700 transition-all disabled:opacity-50"
+                    >
+                        {{ processing ? 'Envoi...' : 'Confirmer le rejet' }}
+                    </button>
+                </div>
+            </Form>
         </div>
 
         <!-- Details Modal Overlay -->
@@ -181,12 +216,19 @@ const updateStatus = (status: string) => {
                         >
                             <X class="w-4 h-4" /> Rejeter
                         </button>
-                        <button 
-                            @click="updateStatus('approved')"
-                            class="px-6 py-2 rounded-xl bg-raosc-green text-white font-bold hover:bg-emerald-600 text-sm shadow-md transition-all flex items-center gap-2"
+                        
+                        <Form 
+                            :action="updateStatusAction(organization.id)" 
+                            :data="{ status: 'approved' }"
+                            @success="onSuccess"
                         >
-                            <Check class="w-4 h-4" /> Approuver l'OSC
-                        </button>
+                            <button 
+                                type="submit"
+                                class="px-6 py-2 rounded-xl bg-raosc-green text-white font-bold hover:bg-emerald-600 text-sm shadow-md transition-all flex items-center gap-2"
+                            >
+                                <Check class="w-4 h-4" /> Approuver l'OSC
+                            </button>
+                        </Form>
                     </div>
                 </div>
             </div>

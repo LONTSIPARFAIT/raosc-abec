@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { Building2, MapPin, ArrowRight } from 'lucide-vue-next';
+import { show as showRao } from '@/actions/App/Http/Controllers/RaoController';
 
 interface Category {
     id: number;
@@ -20,7 +21,9 @@ interface Organization {
     categories?: Category[];
 }
 
-defineProps<{
+const {
+    org
+} = defineProps<{
     org: Organization;
 }>();
 </script>
@@ -28,7 +31,7 @@ defineProps<{
 <template>
     <article class="h-full">
         <Link 
-            :href="`/rao/orga/${org.slug}`"
+            :href="showRao(org.slug).url"
             class="group flex flex-col h-full bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 transition-all duration-300 hover:border-raosc-green/40 hover:shadow-md overflow-hidden"
             prefetch
         >

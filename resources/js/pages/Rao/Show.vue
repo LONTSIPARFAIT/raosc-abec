@@ -5,21 +5,50 @@ import {
     ChevronLeft, ChevronRight, Globe, PhoneCall, Navigation,
     Users, Target, Calendar, Image as ImageIcon
 } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import PublicLayout from '@/layouts/PublicLayout.vue';
+import { index as raoIndex } from '@/actions/App/Http/Controllers/RaoController';
+import { index as dashboardIndex } from '@/actions/App/Http/Controllers/DashboardController';
 
-const props = defineProps<{
-    organization: { data: any };
+interface Organization {
+    id: number;
+    name: string;
+    slug: string;
+    logo?: string;
+    cover_image?: string;
+    short_description?: string;
+    description?: string;
+    city?: string;
+    country?: string;
+    email?: string;
+    phone?: string;
+    website?: string;
+    address?: string;
+    registration_number?: string;
+    founded_date?: string;
+    categories?: { id: number, name: string }[];
+    members?: { id: number, user: { name: string }, job_title?: string }[];
+    projects?: { id: number, title: string, type: string, status: string, description: string }[];
+    gallery?: string[];
+}
+
+const {
+    organization,
+    isPublic = false
+} = defineProps<{
+    organization: { data: Organization } | Organization;
     isPublic?: boolean;
 }>();
 
-const org = props.organization.data;
+const org = ('data' in organization) ? organization.data : organization;
 const gallery: string[] = org.gallery || [];
 const galleryIndex = ref(0);
 
 const nextGallery = () => galleryIndex.value = (galleryIndex.value + 1) % gallery.length;
 const prevGallery = () => galleryIndex.value = (galleryIndex.value - 1 + gallery.length) % gallery.length;
+
+const backUrl = computed(() => isPublic ? raoIndex().url : dashboardIndex().url);
 </script>
 
 <template>
@@ -33,12 +62,13 @@ const prevGallery = () => galleryIndex.value = (galleryIndex.value - 1 + gallery
                 <img v-if="org.cover_image" :src="org.cover_image" class="absolute inset-0 w-full h-full object-cover opacity-40" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                 <Link
-                    :href="isPublic ? '/rao' : '/dashboard/rao'"
+                    :href="backUrl"
                     class="absolute top-5 left-5 sm:left-8 z-10 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium backdrop-blur-sm border border-white/10 transition-all"
                 >
                     <ArrowLeft class="w-4 h-4" /> Retour
                 </Link>
             </div>
+            <!-- ... reste du template (déjà correct) ... -->
 
             <div class="mx-auto max-w-6xl px-5 sm:px-8">
 

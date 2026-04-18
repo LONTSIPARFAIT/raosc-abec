@@ -36,11 +36,12 @@ const navLinks = [
 ];
 
 // Helper to check if a link is active
-const isActive = (href: string) => {
-    if (href === '/') {
+const isActive = (href: string | { url: string }) => {
+    const targetUrl = typeof href === 'string' ? href : href.url;
+    if (targetUrl === '/') {
         return currentUrl.value === '/';
     }
-    return currentUrl.value.startsWith(href);
+    return currentUrl.value.startsWith(targetUrl);
 };
 </script>
 
@@ -127,7 +128,7 @@ const isActive = (href: string) => {
                 <template v-if="user">
                     <NotificationBell />
                     <Link
-                        :href="dashboard()"
+                        :href="dashboard().url"
                         class="flex items-center gap-2 text-sm font-semibold transition-colors"
                         :class="isActive(dashboard()) ? 'text-raosc-green' : 'text-zinc-900 dark:text-white hover:text-raosc-green'"
                         prefetch
@@ -140,7 +141,7 @@ const isActive = (href: string) => {
                 </template>
                 <template v-else>
                     <Link
-                        :href="login()"
+                        :href="login().url"
                         class="text-sm font-medium transition-colors"
                         :class="isActive(login()) ? 'text-raosc-green' : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'"
                         prefetch
@@ -149,7 +150,7 @@ const isActive = (href: string) => {
                     </Link>
                     <Link
                         v-if="canRegister"
-                        :href="register()"
+                        :href="register().url"
                         class="rounded-full bg-raosc-green px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-raosc-green/90 transition-all"
                         :class="isActive(register()) ? 'ring-2 ring-raosc-green ring-offset-2 ring-offset-white dark:ring-offset-zinc-950' : ''"
                         prefetch
@@ -176,15 +177,15 @@ const isActive = (href: string) => {
                 </Link>
                 <hr class="border-zinc-100 dark:border-zinc-800"/>
                 <template v-if="user">
-                    <Link :href="dashboard()" class="text-base font-bold transition-colors" :class="isActive(dashboard()) ? 'text-raosc-green' : 'text-raosc-green'" @click="isMenuOpen = false">
+                    <Link :href="dashboard().url" class="text-base font-bold transition-colors" :class="isActive(dashboard()) ? 'text-raosc-green' : 'text-raosc-green'" @click="isMenuOpen = false">
                         Tableau de bord
                     </Link>
                 </template>
                 <template v-else>
-                    <Link :href="login()" class="text-base font-medium transition-colors" :class="isActive(login()) ? 'text-raosc-green' : 'text-zinc-600 dark:text-zinc-400'" @click="isMenuOpen = false">
+                    <Link :href="login().url" class="text-base font-medium transition-colors" :class="isActive(login()) ? 'text-raosc-green' : 'text-zinc-600 dark:text-zinc-400'" @click="isMenuOpen = false">
                         Connexion
                     </Link>
-                    <Link :href="register()" class="text-base font-bold text-center w-full rounded-xl bg-raosc-green px-6 py-3 text-white shadow-sm hover:bg-raosc-green/90 transition-all" @click="isMenuOpen = false">
+                    <Link :href="register().url" class="text-base font-bold text-center w-full rounded-xl bg-raosc-green px-6 py-3 text-white shadow-sm hover:bg-raosc-green/90 transition-all" @click="isMenuOpen = false">
                         S'inscrire
                     </Link>
                 </template>

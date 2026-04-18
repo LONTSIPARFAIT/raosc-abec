@@ -1,28 +1,53 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import { Filter, Search, Globe, Map, Building2 } from 'lucide-vue-next';
-import { ref, watch } from 'vue';
+import { ref, watch, type Ref } from 'vue';
 import OrganizationCard from '@/components/OrganizationCard.vue';
 import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
 import PublicLayout from '@/layouts/PublicLayout.vue';
+import { index as raoIndex } from '@/actions/App/Http/Controllers/RaoController';
 
-const props = defineProps<{
-    organizations: any;
-    categories: any[];
-    filters: Record<string, string>;
+interface Category {
+    id: number;
+    name: string;
+    slug: string;
+}
+
+interface Organization {
+    id: number;
+    name: string;
+    slug: string;
+}
+
+interface OrganizationsPagination {
+    data: Organization[];
+    total: number;
+    last_page: number;
+    links: { url: string | null; label: string; active: boolean }[];
+}
+
+const {
+    organizations,
+    categories = [],
+    filters = {},
+    isPublic = false
+} = defineProps<{
+    organizations: OrganizationsPagination;
+    categories?: Category[];
+    filters?: Record<string, string>;
     isPublic?: boolean;
 }>();
 
-const searchQuery = ref(props.filters.search || '');
-const selectedCategory = ref(props.filters.category || '');
-const selectedCity = ref(props.filters.city || '');
-const selectedCountry = ref(props.filters.country || '');
+const searchQuery = ref(filters.search || '');
+const selectedCategory = ref(filters.category || '');
+const selectedCity = ref(filters.city || '');
+const selectedCountry = ref(filters.country || '');
 const isLoading = ref(false);
 
 const handleSearch = () => {
     isLoading.value = true;
-    router.get(props.isPublic ? '/rao' : '/dashboard/rao', {
+    router.get(raoIndex().url, {
         search: searchQuery.value,
         category: selectedCategory.value,
         city: selectedCity.value,
@@ -44,7 +69,7 @@ const resetFilters = () => {
     handleSearch();
 };
 
-let timeout: any = null;
+let timeout: ReturnType<typeof setTimeout> | null = null;
 watch([searchQuery, selectedCategory, selectedCity, selectedCountry], () => {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => {

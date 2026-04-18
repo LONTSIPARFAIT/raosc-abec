@@ -1,37 +1,45 @@
 <script setup lang="ts">
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, Form } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Badge } from '@/components/ui/badge';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { PlusCircle, Target, Users, Trash2, ShieldAlert } from 'lucide-vue-next';
+import { store, destroy } from '@/actions/App/Http/Controllers/Dashboard/ProjectController';
+import { create as joinRao } from '@/actions/App/Http/Controllers/RaoController';
 
-const props = defineProps<{
-    projects: any[];
-    organization: any;
+interface Project {
+    id: number;
+    title: string;
+    type: 'projet' | 'benevolat';
+    description: string;
+    status: 'active' | 'completed';
+}
+
+interface Organization {
+    id: number;
+    name: string;
+    slug: string;
+}
+
+const {
+    projects = [],
+    organization = null
+} = defineProps<{
+    projects?: Project[];
+    organization?: Organization | null;
 }>();
 
-const form = useForm({
-    title: '',
-    type: 'projet',
-    description: '',
-    status: 'active',
-});
-
 const isFormOpen = ref(false);
-
-const submit = () => {
-    form.post('/dashboard/projects', {
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-            isFormOpen.value = false;
-        },
-    });
-};
+const projectFormData = reactive({
+    title: '',
+    type: 'projet' as 'projet' | 'benevolat',
+    description: '',
+    status: 'active' as 'active' | 'completed',
+});
 
 const deleteProject = (id: number) => {
     if (confirm('Êtes-vous sûr de vouloir retirer cet engagement public ?')) {
-        form.delete(`/dashboard/projects/${id}`, {
+        useForm({}).delete(destroy(id).url, {
             preserveScroll: true
         });
     }
@@ -53,7 +61,7 @@ const deleteProject = (id: number) => {
                 <p class="text-zinc-600 dark:text-zinc-400 mb-6">
                     Vous devez d'abord lier votre compte à une organisation civile valide avant de pouvoir publier des initiatives.
                 </p>
-                <Link href="/rao/join" class="bg-red-600 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-red-600/20 hover:scale-105 transition-transform">
+                <Link :href="joinRao().url" class="bg-red-600 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-red-600/20 hover:scale-105 transition-transform">
                     Inscrire mon organisation
                 </Link>
             </div>
@@ -82,32 +90,41 @@ const deleteProject = (id: number) => {
                     <div class="absolute top-0 right-0 w-64 h-64 bg-raosc-green/5 rounded-full blur-[80px]"></div>
                     
                     <h3 class="text-2xl font-bold dark:text-white mb-8 relative z-10">Détails de l'initiative</h3>
-                    <form @submit.prevent="submit" class="space-y-6 relative z-10">
+                    <Form 
+                        :action="store()"
+                        :data="projectFormData"
+                        v-slot="{ errors, processing }"
+                        preserve-scroll
+                        @success="isFormOpen = false"
+                        class="space-y-6 relative z-10"
+                    >
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-sm font-bold mb-2 dark:text-zinc-300">Titre saisissant</label>
-                                <input v-model="form.title" type="text" placeholder="Ex: Forage hydraulique dans la région de..." required class="w-full h-12 px-4 rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green transition-all shadow-sm">
+                                <input v-model="projectFormData.title" type="text" placeholder="Ex: Forage hydraulique dans la région de..." required class="w-full h-12 px-4 rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green transition-all shadow-sm">
+                                <p v-if="errors.title" class="text-red-500 text-xs mt-1">{{ errors.title }}</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-bold mb-2 dark:text-zinc-300">Type de l'action</label>
                                 <div class="grid grid-cols-2 gap-3">
-                                    <label :class="['flex items-center justify-center p-3 border-2 rounded-xl cursor-pointer transition-all', form.type === 'projet' ? 'border-raosc-yellow bg-raosc-yellow/5' : 'border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800']">
-                                        <input type="radio" v-model="form.type" value="projet" class="hidden">
-                                        <span class="font-bold flex items-center gap-2" :class="form.type === 'projet' ? 'text-raosc-yellow' : 'text-zinc-500'"><Target class="w-4 h-4"/> Projet</span>
+                                    <label :class="['flex items-center justify-center p-3 border-2 rounded-xl cursor-pointer transition-all', projectFormData.type === 'projet' ? 'border-raosc-yellow bg-raosc-yellow/5' : 'border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800']">
+                                        <input type="radio" v-model="projectFormData.type" value="projet" class="hidden">
+                                        <span class="font-bold flex items-center gap-2" :class="projectFormData.type === 'projet' ? 'text-raosc-yellow' : 'text-zinc-500'"><Target class="w-4 h-4"/> Projet</span>
                                     </label>
-                                    <label :class="['flex items-center justify-center p-3 border-2 rounded-xl cursor-pointer transition-all', form.type === 'benevolat' ? 'border-raosc-green bg-raosc-green/5' : 'border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800']">
-                                        <input type="radio" v-model="form.type" value="benevolat" class="hidden">
-                                        <span class="font-bold flex items-center gap-2" :class="form.type === 'benevolat' ? 'text-raosc-green' : 'text-zinc-500'"><Users class="w-4 h-4"/> Bénévolat</span>
+                                    <label :class="['flex items-center justify-center p-3 border-2 rounded-xl cursor-pointer transition-all', projectFormData.type === 'benevolat' ? 'border-raosc-green bg-raosc-green/5' : 'border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800']">
+                                        <input type="radio" v-model="projectFormData.type" value="benevolat" class="hidden">
+                                        <span class="font-bold flex items-center gap-2" :class="projectFormData.type === 'benevolat' ? 'text-raosc-green' : 'text-zinc-500'"><Users class="w-4 h-4"/> Bénévolat</span>
                                     </label>
                                 </div>
                             </div>
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-bold mb-2 dark:text-zinc-300">Description détaillée</label>
-                                <textarea v-model="form.description" rows="4" placeholder="Expliquez les objectifs, l'impact direct..." required class="w-full p-4 rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green transition-all shadow-sm"></textarea>
+                                <textarea v-model="projectFormData.description" rows="4" placeholder="Expliquez les objectifs, l'impact direct..." required class="w-full p-4 rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green transition-all shadow-sm"></textarea>
+                                <p v-if="errors.description" class="text-red-500 text-xs mt-1">{{ errors.description }}</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-bold mb-2 dark:text-zinc-300">Statut actuel</label>
-                                <select v-model="form.status" required class="w-full h-12 px-4 rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green shadow-sm">
+                                <select v-model="projectFormData.status" required class="w-full h-12 px-4 rounded-xl border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800 focus:ring-2 focus:ring-raosc-green/20 focus:border-raosc-green shadow-sm">
                                     <option value="active">🟢 Actuellement en cours</option>
                                     <option value="completed">✅ Déjà terminé avec succès</option>
                                 </select>
@@ -115,11 +132,11 @@ const deleteProject = (id: number) => {
                         </div>
                         <div class="flex gap-4 justify-end mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-800">
                             <button type="button" @click="isFormOpen = false" class="px-6 py-3 text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full font-bold transition-colors">Annuler</button>
-                            <button type="submit" :disabled="form.processing" class="bg-raosc-green text-white px-8 py-3 rounded-full font-bold hover:shadow-lg hover:shadow-raosc-green/30 hover:-translate-y-0.5 transition-all">
+                            <button type="submit" :disabled="processing" class="bg-raosc-green text-white px-8 py-3 rounded-full font-bold hover:shadow-lg hover:shadow-raosc-green/30 hover:-translate-y-0.5 transition-all">
                                 Mettre en ligne
                             </button>
                         </div>
-                    </form>
+                    </Form>
                 </div>
 
                 <!-- Liste dynamique (Cartes premium) -->

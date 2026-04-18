@@ -1,20 +1,19 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import {
     Building2,
     CheckCircle2,
     ShieldAlert,
-    LayoutDashboard,
     Search,
-    ChevronRight,
     SearchX,
     Clock
 } from 'lucide-vue-next';
 import AdminApprovalCard from '@/components/AdminApprovalCard.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
 import { ref, computed } from 'vue';
+import { index as dashboardIndex } from '@/actions/App/Http/Controllers/DashboardController';
+import { index as orgsIndex } from '@/actions/App/Http/Controllers/Admin/OrganizationManagementController';
 
 interface Organization {
     id: number;
@@ -29,27 +28,30 @@ interface Organization {
     categories?: any[];
 }
 
-const props = defineProps<{
-    pending: Organization[];
-    recent: Organization[];
+const {
+    pending = [],
+    recent = []
+} = defineProps<{
+    pending?: Organization[];
+    recent?: Organization[];
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Tableau de Bord',
-        href: dashboard(),
+        href: dashboardIndex().url,
     },
     {
         title: 'Validation OSC',
-        href: '/admin/organizations',
+        href: orgsIndex().url,
     },
 ];
 
 const searchQuery = ref('');
 
 const filteredPending = computed(() => {
-    if (!searchQuery.value) return props.pending;
-    return props.pending.filter(org =>
+    if (!searchQuery.value) return pending;
+    return pending.filter(org =>
         org.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
         org.city?.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
