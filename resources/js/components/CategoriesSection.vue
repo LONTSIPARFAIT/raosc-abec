@@ -54,20 +54,66 @@ const getDefaultColors = (index: number) => {
                 </Link>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-                <Link
-                    v-for="(cat, index) in categories"
-                    :key="cat.id"
-                    :href="`/rao?category=${cat.slug}`"
-                    class="group flex flex-col items-center p-6 bg-zinc-50 dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 hover:border-raosc-green/30 hover:shadow-md transition-all duration-200"
-                >
-                    <div :class="['w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200', getDefaultColors(index).bgColor]">
-                        <component :is="getDefaultIcon(cat.slug)" :class="['w-7 h-7', getDefaultColors(index).color]" />
+            <!-- Conteneur global du défilement avec masque pour effet de fondu aux bords -->
+            <div class="relative w-full overflow-hidden mask-edges mt-8">
+                <div class="flex marquee-content w-max">
+                    <!-- Groupe original -->
+                    <div class="flex gap-6 pr-6">
+                        <Link
+                            v-for="(cat, index) in categories"
+                            :key="`orig-${cat.id}`"
+                            :href="`/rao?category=${cat.slug}`"
+                            class="shrink-0 w-48 group flex flex-col items-center p-6 bg-zinc-50 dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 hover:border-raosc-green/30 hover:shadow-md transition-all duration-200"
+                        >
+                            <div :class="['w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200', getDefaultColors(index).bgColor]">
+                                <component :is="getDefaultIcon(cat.slug)" :class="['w-7 h-7', getDefaultColors(index).color]" />
+                            </div>
+                            <span class="text-sm font-semibold text-zinc-900 dark:text-white tracking-tight break-words text-center">{{ cat.name }}</span>
+                            <span class="text-[10px] font-medium text-raosc-green mt-3 bg-raosc-green/10 px-3 py-1.5 rounded-full">Explorer</span>
+                        </Link>
                     </div>
-                    <span class="text-sm font-semibold text-zinc-900 dark:text-white tracking-tight">{{ cat.name }}</span>
-                    <span class="text-[10px] font-medium text-raosc-green mt-2 bg-raosc-green/10 px-2.5 py-1 rounded-full">Explorer</span>
-                </Link>
+
+                    <!-- Groupe cloné pour le défilement infini effectif -->
+                    <div class="flex gap-6 pr-6" aria-hidden="true">
+                        <Link
+                            v-for="(cat, index) in categories"
+                            :key="`clone-${cat.id}`"
+                            :href="`/rao?category=${cat.slug}`"
+                            class="shrink-0 w-48 group flex flex-col items-center p-6 bg-zinc-50 dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 hover:border-raosc-green/30 hover:shadow-md transition-all duration-200"
+                        >
+                            <div :class="['w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200', getDefaultColors(index).bgColor]">
+                                <component :is="getDefaultIcon(cat.slug)" :class="['w-7 h-7', getDefaultColors(index).color]" />
+                            </div>
+                            <span class="text-sm font-semibold text-zinc-900 dark:text-white tracking-tight break-words text-center">{{ cat.name }}</span>
+                            <span class="text-[10px] font-medium text-raosc-green mt-3 bg-raosc-green/10 px-3 py-1.5 rounded-full">Explorer</span>
+                        </Link>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
+
+<style scoped>
+.mask-edges {
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.marquee-content {
+    animation: scroll 30s linear infinite;
+}
+
+.marquee-content:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+</style>
