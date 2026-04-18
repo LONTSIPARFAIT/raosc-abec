@@ -14,8 +14,12 @@ class ProjectController extends Controller
         $projects = $organization ? $organization->projects()->latest()->get() : [];
 
         return inertia('Dashboard/Projects', [
-            'projects' => $projects,
-            'organization' => $organization
+            'projects' => \App\Http\Resources\ProjectResource::collection($projects)->resolve(),
+            'organization' => $organization ? [
+                'id' => $organization->id,
+                'name' => $organization->name,
+                'slug' => $organization->slug
+            ] : null
         ]);
     }
 

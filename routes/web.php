@@ -6,15 +6,15 @@ use Laravel\Fortify\Features;
 Route::get('/', function () {
     return inertia('Welcome', [
         'canRegister' => Features::enabled(Features::registration()),
-        'categories' => \App\Models\OrganizationCategory::all(),
-        'organizations' => \App\Models\Organization::with('categories')->where('status', 'approved')->latest()->take(4)->get(),
+        'categories' => \App\Http\Resources\OrganizationCategoryResource::collection(\App\Models\OrganizationCategory::all())->resolve(),
+        'organizations' => \App\Http\Resources\OrganizationResource::collection(\App\Models\Organization::with('categories')->where('status', 'approved')->latest()->take(4)->get())->resolve(),
         'stats' => [
             'organizations_count' => \App\Models\Organization::where('status', 'approved')->count(),
             'categories_count' => \App\Models\OrganizationCategory::count(),
             'projects_count' => \App\Models\Project::count(),
             'countries_count' => \App\Models\Organization::where('status', 'approved')->distinct('country')->count('country'),
         ],
-        'recentNews' => \App\Models\Post::with('organization:id,name,logo,slug')->latest()->take(3)->get()
+        'recentNews' => \App\Http\Resources\PostResource::collection(\App\Models\Post::with('organization')->latest()->take(3)->get())->resolve()
     ]);
 })->name('home');
 

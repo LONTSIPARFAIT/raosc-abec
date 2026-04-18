@@ -39,7 +39,7 @@ const {
             <div class="relative h-40 sm:h-48 bg-zinc-100 dark:bg-zinc-800 overflow-hidden shrink-0">
                 <img 
                     v-if="org.cover_image" 
-                    :src="org.cover_image.startsWith('http') ? org.cover_image : '/storage/' + org.cover_image" 
+                    :src="org.cover_image" 
                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                     :alt="org.name"
                 />
@@ -48,7 +48,7 @@ const {
                 <!-- Logo flottant -->
                 <div class="absolute -bottom-4 left-5 h-12 w-12 rounded-xl bg-white dark:bg-zinc-900 p-1 shadow-md ring-1 ring-black/5 z-10">
                     <div class="h-full w-full rounded-lg bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center overflow-hidden border border-zinc-100 dark:border-zinc-700">
-                        <img v-if="org.logo" :src="org.logo.startsWith('http') ? org.logo : '/storage/' + org.logo" class="w-full h-full object-cover" :alt="`Logo de ${org.name}`" />
+                        <img v-if="org.logo" :src="org.logo" class="w-full h-full object-cover" :alt="`Logo de ${org.name}`" />
                         <Building2 v-else class="h-6 w-6 text-raosc-green" />
                     </div>
                 </div>
