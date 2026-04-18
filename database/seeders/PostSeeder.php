@@ -15,7 +15,7 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         $orgPosts = [
-            'fonds-de-sante-panafricain' => [
+            'fonds-panafricain-sante' => [
                 [
                     'title' => 'Lancement du programme d\'accès à l\'eau potable en zone rurale',
                     'summary' => 'De nombreuses ONG se sont réunies pour initier ce grand projet visant à fournir de l\'eau potable à plus de 50 villages grâce aux forages.',
@@ -33,7 +33,7 @@ class PostSeeder extends Seeder
 
                 ]
             ],
-            'tech-for-africa' => [
+            'tech-africa' => [
                 [
                     'title' => 'Nouvelle convention de partenariat pour la scolarisation',
                     'summary' => 'Un accord historique a été signé aujourd\'hui pour soutenir financièrement les familles et encourager la scolarisation continuelle.',
@@ -43,7 +43,7 @@ class PostSeeder extends Seeder
 
                 ]
             ],
-            'african-wildlife-foundation' => [
+            'conservation-nature' => [
                 [
                     'title' => 'Succès de la préservation côtière : 5000 tortues remises à l\'eau',
                     'summary' => 'Retour sur notre semaine de nettoyage des plages et la nidification des tortues marines.',
@@ -53,7 +53,7 @@ class PostSeeder extends Seeder
 
                 ]
             ],
-            'voix-des-femmes-africaines' => [
+            'justice-sociale' => [
                 [
                     'title' => 'Inauguration du Centre d\'Écoute et de Soutien',
                     'summary' => 'Un nouveau refuge pour l\'accompagnement psychologique des victimes.',

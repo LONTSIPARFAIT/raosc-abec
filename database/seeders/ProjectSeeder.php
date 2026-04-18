@@ -14,7 +14,7 @@ class ProjectSeeder extends Seeder
     public function run(): void
     {
         $orgProjects = [
-            'african-wildlife-foundation' => [
+            'conservation-nature' => [
                 [
                     'title' => 'Campagne de reboisement et création d\'espaces verts',
                     'type' => 'projet',
@@ -51,7 +51,7 @@ class ProjectSeeder extends Seeder
                     'status' => 'completed',
                 ]
             ],
-            'tech-for-africa' => [
+            'tech-africa' => [
                 [
                     'title' => 'Bootcamp de Programmation pour les Jeunes',
                     'type' => 'projet',
@@ -75,7 +75,7 @@ class ProjectSeeder extends Seeder
                     'status' => 'completed',
                 ]
             ],
-            'fonds-de-sante-panafricain' => [
+            'fonds-panafricain-sante' => [
                 [
                     'title' => 'Campagne de Vaccination en Zone Rurale',
                     'type' => 'projet',
@@ -99,7 +99,7 @@ class ProjectSeeder extends Seeder
                     'status' => 'active',
                 ]
             ],
-            'agrinov-cote-d-ivoire' => [
+            'agri-innovation' => [
                 [
                     'title' => 'Irrigation Solaire pour les Coopératives',
                     'type' => 'projet',
@@ -112,7 +112,7 @@ class ProjectSeeder extends Seeder
                     'status' => 'active',
                 ]
             ],
-            'voix-des-femmes-africaines' => [
+            'justice-sociale' => [
                 [
                     'title' => 'Atelier d\'Empowerment Féminin',
                     'type' => 'projet',
