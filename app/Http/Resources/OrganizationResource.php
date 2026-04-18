@@ -45,7 +45,8 @@ class OrganizationResource extends JsonResource
                 'description' => $p->description,
                 'type' => $p->type,
                 'status' => $p->status,
-                'cover_image' => $p->cover_image ? asset('storage/' . $p->cover_image) : null,
+                'cover_image' => $p->cover_image ? (str_starts_with($p->cover_image, 'http') ? $p->cover_image : asset('storage/' . $p->cover_image)) : null,
+                'gallery' => $p->gallery ? collect($p->gallery)->map(fn($img) => str_starts_with($img, 'http') ? $img : asset('storage/' . $img))->toArray() : [],
             ])->values()),
         ];
     }

@@ -12,7 +12,12 @@ class Project extends Model
         'type',
         'description',
         'cover_image',
+        'gallery',
         'status',
+    ];
+
+    protected $casts = [
+        'gallery' => 'array',
     ];
 
     public function organization()

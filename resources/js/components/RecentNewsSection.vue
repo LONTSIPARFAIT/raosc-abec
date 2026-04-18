@@ -2,53 +2,23 @@
 import { Link } from '@inertiajs/vue3';
 import { ArrowRight } from 'lucide-vue-next';
 
-// Exemple de données statiques pour l'instant (à dynamiser plus tard avec la DB)
-const news = [
-    {
-        id: 1,
-        title: "Lancement du programme d'accès à l'eau potable en zone rurale",
-        summary: "De nombreuses ONG se sont réunies pour initier ce grand projet visant à fournir de l'eau potable à plus de 50 villages...",
-        category: "Solidarité",
-        color: "raosc-green",
-        date: "4 Avril 2026",
-        image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: 2,
-        title: "Nouvelle convention de partenariat pour la scolarisation",
-        summary: "Un accord historique a été signé aujourd'hui pour soutenir financièrement les familles et encourager la scolarisation continuelle.",
-        category: "Éducation",
-        color: "raosc-yellow",
-        date: "2 Avril 2026",
-        image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: 3,
-        title: "Campagne de vaccination gratuite et de prévention",
-        summary: "Les équipes médicales bénévoles se déploient dans plusieurs régions pour des consultations gratuites et de la prévention médicale.",
-        category: "Santé",
-        color: "raosc-red",
-        date: "30 Mars 2026",
-        image: "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=600&auto=format&fit=crop"
-    }
-];
+defineProps<{
+    news?: any[];
+}>();
 
-const getColorClass = (color: string) => {
-    if (color === 'raosc-yellow') return 'bg-raosc-yellow text-zinc-900';
-    if (color === 'raosc-red') return 'bg-raosc-red text-white';
-    return 'bg-raosc-green text-white';
+const getColorClass = (index: number) => {
+    const colors = ['bg-raosc-green text-white', 'bg-raosc-yellow text-zinc-900', 'bg-raosc-red text-white'];
+    return colors[index % colors.length];
 };
 
-const getHoverColor = (color: string) => {
-    if (color === 'raosc-yellow') return 'hover:text-raosc-yellow';
-    if (color === 'raosc-red') return 'hover:text-raosc-red';
-    return 'hover:text-raosc-green';
+const getHoverColor = (index: number) => {
+    const colors = ['hover:text-raosc-green', 'hover:text-raosc-yellow', 'hover:text-raosc-red'];
+    return colors[index % colors.length];
 };
 
-const getTextColor = (color: string) => {
-    if (color === 'raosc-yellow') return 'text-raosc-yellow';
-    if (color === 'raosc-red') return 'text-raosc-red';
-    return 'text-raosc-green';
+const getTextColor = (index: number) => {
+    const colors = ['text-raosc-green', 'text-raosc-yellow', 'text-raosc-red'];
+    return colors[index % colors.length];
 };
 </script>
 
@@ -70,36 +40,38 @@ const getTextColor = (color: string) => {
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div 
-                    v-for="item in news" 
+                    v-for="(item, index) in news" 
                     :key="item.id"
                     class="group bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden shadow-xl shadow-zinc-200/40 dark:shadow-none hover:-translate-y-2 transition-all duration-300"
                 >
                     <div class="h-56 relative overflow-hidden">
                         <img 
-                            :src="item.image" 
+                            v-if="item.cover_image"
+                            :src="'/storage/' + item.cover_image" 
                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                             :alt="item.title" 
                         />
+                        <div v-else class="w-full h-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
+                            <span class="text-zinc-400">Pas d'image</span>
+                        </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80"></div>
-                        <div :class="['absolute top-4 left-4 text-xs font-bold px-4 py-1.5 rounded-full shadow-sm', getColorClass(item.color)]">
-                            {{ item.category }}
+                        <div :class="['absolute top-4 left-4 text-xs font-bold px-4 py-1.5 rounded-full shadow-sm', getColorClass(index)]">
+                            Actualité
                         </div>
                         <div class="absolute bottom-4 left-4 right-4">
-                            <p class="text-xs font-semibold text-white/90 mb-1 drop-shadow-md">{{ item.date }}</p>
+                            <p class="text-xs font-semibold text-white/90 mb-1 drop-shadow-md">{{ new Date(item.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) }}</p>
                         </div>
                     </div>
                     
                     <div class="p-6">
-                        <h3 :class="['text-xl font-bold text-zinc-900 dark:text-white mb-3 line-clamp-2 transition-colors cursor-pointer', getHoverColor(item.color)]">
+                        <h3 :class="['text-xl font-bold text-zinc-900 dark:text-white mb-3 line-clamp-2 transition-colors cursor-pointer', getHoverColor(index)]">
                             {{ item.title }}
                         </h3>
-                        <p class="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 mb-5 leading-relaxed">
-                            {{ item.summary }}
-                        </p>
+                        <p class="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 mb-5 leading-relaxed" v-html="item.content.replace(/\n/g, '<br>').substring(0, 150) + '...'"></p>
                         
                         <Link 
-                            :href="`/posts`" 
-                            :class="['font-bold text-sm inline-flex items-center gap-1.5 group/link', getTextColor(item.color)]"
+                            :href="`/posts/${item.slug}`" 
+                            :class="['font-bold text-sm inline-flex items-center gap-1.5 group/link', getTextColor(index)]"
                         >
                             Lire la suite 
                             <ArrowRight class="w-4 h-4 transition-transform group-hover/link:translate-x-1" />

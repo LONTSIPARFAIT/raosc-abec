@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             OrganizationCategorySeeder::class,
             OrganizationSeeder::class,
+            ProjectSeeder::class,
+            PostSeeder::class,
         ]);
     }
 }

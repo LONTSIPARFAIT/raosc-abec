@@ -18,6 +18,12 @@ defineProps<{
             name: string;
             slug: string;
             logo: string | null;
+            projects?: {
+                id: number;
+                title: string;
+                type: string;
+                cover_image: string | null;
+            }[];
         } | null;
     };
 }>();
@@ -102,6 +108,27 @@ defineProps<{
                     <Link v-if="post.organization" :href="`/rao/orga/${post.organization.slug}`" class="text-sm font-bold text-raosc-green hover:underline">
                         Découvrir {{ post.organization.name }} →
                     </Link>
+                </div>
+
+                <!-- Autres Projets -->
+                <div v-if="post.organization && post.organization.projects && post.organization.projects.length > 0" class="mt-16 pt-8 border-t border-zinc-100 dark:border-zinc-800">
+                    <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-6">Projets & Bénévolat de {{ post.organization.name }}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <Link v-for="project in post.organization.projects" :key="project.id" :href="`/rao/orga/${post.organization.slug}`" class="group block border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden hover:border-raosc-green transition-colors">
+                            <div class="h-32 bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
+                                <img v-if="project.cover_image" :src="project.cover_image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div v-else class="w-full h-full flex items-center justify-center text-zinc-400">
+                                    <Building2 class="w-8 h-8" />
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <span class="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 mb-2 inline-block">
+                                    {{ project.type }}
+                                </span>
+                                <h4 class="font-bold text-sm text-zinc-900 dark:text-white line-clamp-2 group-hover:text-raosc-green transition-colors">{{ project.title }}</h4>
+                            </div>
+                        </Link>
+                    </div>
                 </div>
             </div>
 

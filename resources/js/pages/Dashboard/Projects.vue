@@ -37,7 +37,46 @@ const projectFormData = reactive({
     type: 'projet' as 'projet' | 'benevolat',
     description: '',
     status: 'active' as 'active' | 'completed',
+    cover_image: null as File | null,
+    gallery: [] as File[],
 });
+
+const coverPreview = ref<string | null>(null);
+const galleryPreviews = ref<string[]>([]);
+
+const handleImageUpload = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+        projectFormData.cover_image = target.files[0];
+        coverPreview.value = URL.createObjectURL(target.files[0]);
+    } else {
+        projectFormData.cover_image = null;
+        coverPreview.value = null;
+    }
+};
+
+const handleGalleryUpload = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files) {
+        projectFormData.gallery = Array.from(target.files);
+        galleryPreviews.value = projectFormData.gallery.map(file => URL.createObjectURL(file));
+    }
+};
+
+const removeGalleryImage = (index: number) => {
+    projectFormData.gallery.splice(index, 1);
+    galleryPreviews.value.splice(index, 1);
+};
+
+const resetForm = () => {
+    isFormOpen.value = false;
+    coverPreview.value = null;
+    galleryPreviews.value = [];
+    projectFormData.cover_image = null;
+    projectFormData.gallery = [];
+    projectFormData.title = '';
+    projectFormData.description = '';
+};
 
 const deleteProject = (id: number) => {
     if (confirm('Êtes-vous sûr de vouloir retirer cet engagement public ?')) {
@@ -131,7 +170,7 @@ const formatDate = (date?: string) => {
                             :data="projectFormData"
                             v-slot="{ errors, processing }"
                             preserve-scroll
-                            @success="isFormOpen = false"
+                            @success="resetForm"
                             class="space-y-6 relative z-10"
                         >
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -194,6 +233,50 @@ const formatDate = (date?: string) => {
 
                                 <div class="lg:col-span-2">
                                     <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
+                                        Image de couverture (Optionnelle)
+                                    </label>
+                                    <div class="flex items-center gap-4">
+                                        <div v-if="coverPreview" class="h-16 w-16 rounded-xl overflow-hidden shrink-0 border border-zinc-200 dark:border-zinc-700">
+                                            <img :src="coverPreview" class="h-full w-full object-cover" />
+                                        </div>
+                                        <input 
+                                            type="file" 
+                                            @change="handleImageUpload" 
+                                            accept="image/*"
+                                            class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-zinc-100 file:text-zinc-700 hover:file:bg-zinc-200 dark:file:bg-zinc-800 dark:file:text-zinc-300 dark:hover:file:bg-zinc-700 transition-all duration-300"
+                                        />
+                                    </div>
+                                    <Transition name="slide-down">
+                                        <p v-if="errors.cover_image" class="text-raosc-red text-xs mt-2">{{ errors.cover_image }}</p>
+                                    </Transition>
+                                </div>
+
+                                <div class="lg:col-span-2">
+                                    <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
+                                        Galerie Photos (Optionnelle, jusqu'à 10 images)
+                                    </label>
+                                    <input 
+                                        type="file" 
+                                        @change="handleGalleryUpload" 
+                                        accept="image/*"
+                                        multiple
+                                        class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-zinc-100 file:text-zinc-700 hover:file:bg-zinc-200 dark:file:bg-zinc-800 dark:file:text-zinc-300 dark:hover:file:bg-zinc-700 transition-all duration-300"
+                                    />
+                                    <div v-if="galleryPreviews.length > 0" class="mt-4 grid grid-cols-4 sm:grid-cols-6 gap-3">
+                                        <div v-for="(preview, index) in galleryPreviews" :key="index" class="relative group h-20 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-700">
+                                            <img :src="preview" class="h-full w-full object-cover">
+                                            <button type="button" @click.prevent="removeGalleryImage(index)" class="absolute inset-0 bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <X class="w-5 h-5" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <Transition name="slide-down">
+                                        <p v-if="errors.gallery" class="text-raosc-red text-xs mt-2">{{ errors.gallery }}</p>
+                                    </Transition>
+                                </div>
+
+                                <div class="lg:col-span-2">
+                                    <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
                                         Description détaillée <span class="text-raosc-red">*</span>
                                     </label>
                                     <textarea 
@@ -211,7 +294,7 @@ const formatDate = (date?: string) => {
                             </div>
 
                             <div class="flex gap-4 justify-end pt-6 border-t-2 border-zinc-200 dark:border-zinc-800">
-                                <button type="button" @click="isFormOpen = false" 
+                                <button type="button" @click="resetForm" 
                                     class="px-6 py-2.5 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-2xl text-sm font-semibold transition-all duration-300 hover:scale-105">
                                     Annuler
                                 </button>

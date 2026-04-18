@@ -26,7 +26,7 @@ class PostController extends Controller
                 'slug'         => $post->slug,
                 'title'        => $post->title,
                 'summary'      => $post->summary,
-                'cover_image'  => $post->cover_image ? asset('storage/' . $post->cover_image) : null,
+                'cover_image'  => $post->cover_image ? (str_starts_with($post->cover_image, 'http') ? $post->cover_image : asset('storage/' . $post->cover_image)) : null,
                 'category'     => $post->category,
                 'read_time'    => $post->read_time,
                 'created_at'   => $post->created_at->translatedFormat('j F Y'),
@@ -53,7 +53,7 @@ class PostController extends Controller
                 'title'        => $post->title,
                 'summary'      => $post->summary,
                 'content'      => $post->content,
-                'cover_image'  => $post->cover_image ? asset('storage/' . $post->cover_image) : null,
+                'cover_image'  => $post->cover_image ? (str_starts_with($post->cover_image, 'http') ? $post->cover_image : asset('storage/' . $post->cover_image)) : null,
                 'category'     => $post->category,
                 'read_time'    => $post->read_time,
                 'created_at'   => $post->created_at->translatedFormat('j F Y'),
@@ -61,6 +61,14 @@ class PostController extends Controller
                     'name' => $post->organization->name,
                     'slug' => $post->organization->slug,
                     'logo' => $post->organization->logo ? asset('storage/' . $post->organization->logo) : null,
+                    'projects' => $post->organization->projects()->where('status', 'active')->take(3)->get()->map(function($project) {
+                        return [
+                            'id' => $project->id,
+                            'title' => $project->title,
+                            'type' => $project->type,
+                            'cover_image' => $project->cover_image ? (str_starts_with($project->cover_image, 'http') ? $project->cover_image : asset('storage/' . $project->cover_image)) : null,
+                        ];
+                    }),
                 ] : null,
             ],
         ]);

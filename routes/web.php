@@ -12,7 +12,8 @@ Route::get('/', function () {
             'categories_count' => \App\Models\OrganizationCategory::count(),
             'projects_count' => \App\Models\Project::count(),
             'countries_count' => \App\Models\Organization::where('status', 'approved')->distinct('country')->count('country'),
-        ]
+        ],
+        'recentNews' => \App\Models\Post::with('organization:id,name,logo,slug')->latest()->take(3)->get()
     ]);
 })->name('home');
 

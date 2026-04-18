@@ -32,8 +32,22 @@ class ProjectController extends Controller
             'type' => 'required|in:projet,benevolat',
             'description' => 'required|string',
             'status' => 'required|in:active,completed',
-            // cover_image handling can be added later if needed
+            'cover_image' => 'nullable|image|max:2048',
+            'gallery' => 'nullable|array|max:10',
+            'gallery.*' => 'image|max:2048',
         ]);
+
+        if ($request->hasFile('cover_image')) {
+            $validated['cover_image'] = $request->file('cover_image')->store('projects/covers', 'public');
+        }
+
+        if ($request->hasFile('gallery')) {
+            $galleryPaths = [];
+            foreach ($request->file('gallery') as $image) {
+                $galleryPaths[] = $image->store('projects/gallery', 'public');
+            }
+            $validated['gallery'] = $galleryPaths;
+        }
 
         $organization->projects()->create($validated);
 

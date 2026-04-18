@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import { Check, X, Eye, Building2, MapPin, Mail, Globe, PhoneCall, Calendar } from 'lucide-vue-next';
 import { ref, reactive } from 'vue';
 import { updateStatus as updateStatusAction } from '@/actions/App/Http/Controllers/Admin/OrganizationManagementController';
@@ -70,19 +70,17 @@ const onSuccess = () => {
                     <Eye class="w-4 h-4" />
                 </button>
                 
-                <Form 
-                    :action="updateStatusAction(organization.id)" 
+                <Link 
+                    :href="updateStatusAction(organization.id).url" 
+                    method="post"
                     :data="{ status: 'approved' }"
                     @success="onSuccess"
+                    as="button"
+                    class="h-8 w-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 flex items-center justify-center hover:bg-emerald-100 transition-all"
+                    title="Approuver"
                 >
-                    <button 
-                        type="submit"
-                        class="h-8 w-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 flex items-center justify-center hover:bg-emerald-100 transition-all"
-                        title="Approuver"
-                    >
-                        <Check class="w-4 h-4" />
-                    </button>
-                </Form>
+                    <Check class="w-4 h-4" />
+                </Link>
 
                 <button 
                     @click="showingRejectInput = !showingRejectInput"
@@ -96,11 +94,8 @@ const onSuccess = () => {
         </div>
 
         <div v-if="showingRejectInput" class="animate-in fade-in slide-in-from-top-2 mt-2 border-t border-zinc-100 dark:border-zinc-800 pt-4">
-            <Form 
-                :action="updateStatusAction(organization.id)" 
-                :data="rejectionData"
-                v-slot="{ processing }"
-                @success="onSuccess"
+            <form 
+                @submit.prevent="router.post(updateStatusAction(organization.id).url, rejectionData, { onSuccess })"
                 class="space-y-3"
             >
                 <textarea 
@@ -113,13 +108,12 @@ const onSuccess = () => {
                     <button @click="showingRejectInput = false" type="button" class="text-[10px] font-bold text-zinc-500 px-3 py-1.5 hover:text-zinc-700 transition">Annuler</button>
                     <button 
                         type="submit"
-                        :disabled="processing"
-                        class="bg-red-600 text-white text-[10px] font-bold px-4 py-1.5 rounded-lg hover:bg-red-700 transition-all disabled:opacity-50"
+                        class="bg-red-600 text-white text-[10px] font-bold px-4 py-1.5 rounded-lg hover:bg-red-700 transition-all"
                     >
-                        {{ processing ? 'Envoi...' : 'Confirmer le rejet' }}
+                        Confirmer le rejet
                     </button>
                 </div>
-            </Form>
+            </form>
         </div>
 
         <!-- Details Modal Overlay -->
@@ -217,18 +211,16 @@ const onSuccess = () => {
                             <X class="w-4 h-4" /> Rejeter
                         </button>
                         
-                        <Form 
-                            :action="updateStatusAction(organization.id)" 
+                        <Link 
+                            :href="updateStatusAction(organization.id).url" 
+                            method="post"
                             :data="{ status: 'approved' }"
                             @success="onSuccess"
+                            as="button"
+                            class="px-6 py-2 rounded-xl bg-raosc-green text-white font-bold hover:bg-emerald-600 text-sm shadow-md transition-all flex items-center gap-2"
                         >
-                            <button 
-                                type="submit"
-                                class="px-6 py-2 rounded-xl bg-raosc-green text-white font-bold hover:bg-emerald-600 text-sm shadow-md transition-all flex items-center gap-2"
-                            >
-                                <Check class="w-4 h-4" /> Approuver l'OSC
-                            </button>
-                        </Form>
+                            <Check class="w-4 h-4" /> Approuver l'OSC
+                        </Link>
                     </div>
                 </div>
             </div>

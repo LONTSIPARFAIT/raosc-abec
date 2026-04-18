@@ -202,15 +202,20 @@ const backUrl = computed(() => isPublic ? raoIndex().url : dashboardIndex().url)
                             <h2 class="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-5 flex items-center gap-1.5">
                                 <Target class="w-3.5 h-3.5" /> Projets & Bénévolat
                             </h2>
-                            <div class="space-y-3">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div
                                     v-for="project in org.projects"
                                     :key="project.id"
-                                    class="border border-zinc-100 dark:border-zinc-800 rounded-xl p-5 hover:border-zinc-200 dark:hover:border-zinc-700 transition-colors"
+                                    class="border border-zinc-100 dark:border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-200 dark:hover:border-zinc-700 transition-colors flex flex-col"
                                 >
-                                    <div class="flex items-start justify-between gap-4 mb-2">
-                                        <h3 class="text-base font-bold text-zinc-900 dark:text-white">{{ project.title }}</h3>
-                                        <div class="flex gap-1.5 shrink-0">
+                                    <div v-if="project.cover_image" class="h-32 bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
+                                        <img :src="project.cover_image" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                                    </div>
+                                    <div class="p-5 flex flex-col flex-grow">
+                                        <div class="flex items-start justify-between gap-4 mb-2">
+                                            <h3 class="text-base font-bold text-zinc-900 dark:text-white">{{ project.title }}</h3>
+                                        </div>
+                                        <div class="flex gap-1.5 shrink-0 mb-3">
                                             <span :class="['px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide', project.type === 'benevolat' ? 'bg-raosc-green/10 text-raosc-green' : 'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400']">
                                                 {{ project.type === 'benevolat' ? 'Bénévolat' : 'Projet' }}
                                             </span>
@@ -218,8 +223,17 @@ const backUrl = computed(() => isPublic ? raoIndex().url : dashboardIndex().url)
                                                 {{ project.status === 'active' ? 'En cours' : 'Clôturé' }}
                                             </span>
                                         </div>
+                                        <div v-if="project.gallery && project.gallery.length > 0" class="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+                                            <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-3 flex items-center gap-1"><ImageIcon class="w-3 h-3" /> Galerie du projet</p>
+                                            <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-zinc-200 dark:scrollbar-thumb-zinc-700">
+                                                <div v-for="(img, idx) in project.gallery" :key="idx" class="h-16 w-16 shrink-0 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 hover:scale-110 transition-transform duration-300">
+                                                    <a :href="img" target="_blank" rel="noopener">
+                                                        <img :src="img" class="h-full w-full object-cover" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="text-sm text-zinc-500 leading-relaxed">{{ project.description }}</p>
                                 </div>
                             </div>
                         </section>
