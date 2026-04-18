@@ -1,60 +1,41 @@
-<!-- components/CategoriesSection.vue -->
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { ArrowRight, GraduationCap, Heart, Leaf, Scale, Building, Users } from 'lucide-vue-next';
 
 interface Category {
+    id: number;
     name: string;
-    icon: any;
-    count: string;
-    color: string;
-    bgColor: string;
+    slug: string;
+    description: string | null;
 }
 
-const categories: Category[] = [
-    {
-        name: 'Éducation',
-        icon: GraduationCap,
-        count: '45+',
-        color: 'text-blue-600',
-        bgColor: 'bg-blue-50 dark:bg-blue-950/30'
-    },
-    {
-        name: 'Santé',
-        icon: Heart,
-        count: '32+',
-        color: 'text-red-600',
-        bgColor: 'bg-red-50 dark:bg-red-950/30'
-    },
-    {
-        name: 'Environnement',
-        icon: Leaf,
-        count: '28+',
-        color: 'text-green-600',
-        bgColor: 'bg-green-50 dark:bg-green-950/30'
-    },
-    {
-        name: 'Droits de l\'Homme',
-        icon: Scale,
-        count: '19+',
-        color: 'text-purple-600',
-        bgColor: 'bg-purple-50 dark:bg-purple-950/30'
-    },
-    {
-        name: 'Développement',
-        icon: Building,
-        count: '54+',
-        color: 'text-orange-600',
-        bgColor: 'bg-orange-50 dark:bg-orange-950/30'
-    },
-    {
-        name: 'Jeunesse',
-        icon: Users,
-        count: '37+',
-        color: 'text-pink-600',
-        bgColor: 'bg-pink-50 dark:bg-pink-950/30'
+defineProps<{
+    categories?: Category[];
+}>();
+
+const getDefaultIcon = (slug: string) => {
+    switch (slug) {
+        case 'education-formation': return GraduationCap;
+        case 'sante-publique': return Heart;
+        case 'environnement-ecologie': return Leaf;
+        case 'droits-humains': return Scale;
+        case 'developpement-durable': return Building;
+        case 'jeunesse-sports': return Users;
+        default: return Building;
     }
-];
+};
+
+const getDefaultColors = (index: number) => {
+    const list = [
+        { color: 'text-blue-600', bgColor: 'bg-blue-50 dark:bg-blue-950/30' },
+        { color: 'text-red-600', bgColor: 'bg-red-50 dark:bg-red-950/30' },
+        { color: 'text-green-600', bgColor: 'bg-green-50 dark:bg-green-950/30' },
+        { color: 'text-purple-600', bgColor: 'bg-purple-50 dark:bg-purple-950/30' },
+        { color: 'text-orange-600', bgColor: 'bg-orange-50 dark:bg-orange-950/30' },
+        { color: 'text-pink-600', bgColor: 'bg-pink-50 dark:bg-pink-950/30' },
+    ];
+    return list[index % list.length];
+};
 </script>
 
 <template>
@@ -75,16 +56,16 @@ const categories: Category[] = [
 
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
                 <Link
-                    v-for="cat in categories"
-                    :key="cat.name"
-                    :href="`/rao?category=${cat.name.toLowerCase()}`"
+                    v-for="(cat, index) in categories"
+                    :key="cat.id"
+                    :href="`/rao?category=${cat.slug}`"
                     class="group flex flex-col items-center p-6 bg-zinc-50 dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 hover:border-raosc-green/30 hover:shadow-md transition-all duration-200"
                 >
-                    <div :class="['w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200', cat.bgColor]">
-                        <component :is="cat.icon" :class="['w-7 h-7', cat.color]" />
+                    <div :class="['w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200', getDefaultColors(index).bgColor]">
+                        <component :is="getDefaultIcon(cat.slug)" :class="['w-7 h-7', getDefaultColors(index).color]" />
                     </div>
                     <span class="text-sm font-semibold text-zinc-900 dark:text-white tracking-tight">{{ cat.name }}</span>
-                    <span class="text-[10px] font-medium text-raosc-green mt-2 bg-raosc-green/10 px-2.5 py-1 rounded-full">{{ cat.count }}</span>
+                    <span class="text-[10px] font-medium text-raosc-green mt-2 bg-raosc-green/10 px-2.5 py-1 rounded-full">Explorer</span>
                 </Link>
             </div>
         </div>

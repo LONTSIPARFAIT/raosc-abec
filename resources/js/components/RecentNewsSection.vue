@@ -47,7 +47,7 @@ const getTextColor = (index: number) => {
                     <div class="h-56 relative overflow-hidden">
                         <img 
                             v-if="item.cover_image"
-                            :src="'/storage/' + item.cover_image" 
+                            :src="item.cover_image.startsWith('http') ? item.cover_image : '/storage/' + item.cover_image" 
                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                             :alt="item.title" 
                         />

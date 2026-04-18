@@ -32,6 +32,7 @@ interface Organization {
 const props = withDefaults(
     defineProps<{
         canRegister?: boolean;
+        categories?: any[];
         organizations?: Organization[];
         recentNews?: any[];
         stats?: {
@@ -127,7 +128,7 @@ const overlayOpacity = 0.35;
 
             <!-- Categories Section -->
             <div class="animate-on-scroll stagger-delay-2">
-                <CategoriesSection />
+                <CategoriesSection :categories="categories" />
             </div>
 
             <!-- Organizations Section -->
