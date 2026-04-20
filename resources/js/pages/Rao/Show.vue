@@ -358,7 +358,7 @@ const stats = {
                                     class="h-12 w-16 shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-300"
                                     :class="galleryIndex === idx ? 'border-raosc-green opacity-100' : 'border-transparent opacity-50 hover:opacity-100'"
                                 >
-                                    <img :src="img" class="h-ful w-full object-cover" />
+                                    <img :src="img" class="h-full w-full object-cover" />
                                 </button>
                             </div>
                         </section>
