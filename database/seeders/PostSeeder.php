@@ -84,5 +84,25 @@ class PostSeeder extends Seeder
                 );
             }
         }
+
+        // Assurer que CHAQUE organisation a au moins une actualité
+        $organizations = Organization::all();
+        foreach ($organizations as $org) {
+            if ($org->posts()->count() === 0) {
+                $title = "Impact et Perspectives : {$org->name} s'engage pour {$org->country}";
+                $content = "{$org->name} continue son expansion et renforce ses actions à {$org->city}. Nous sommes fiers de partager nos dernières avancées avec la communauté du RAOSC.";
+                
+                Post::create([
+                    'organization_id' => $org->id,
+                    'title' => $title,
+                    'slug' => Str::slug($title) . '-' . uniqid(),
+                    'summary' => "Découvrez les dernières nouvelles et l'impact social de {$org->name} au {$org->country}.",
+                    'content' => $content,
+                    'category' => 'Impact',
+                    'cover_image' => 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=800',
+                    'read_time' => 2
+                ]);
+            }
+        }
     }
 }

@@ -57,9 +57,9 @@ const props = withDefaults(
 
 const resolvedStats = [
     { id: 1, name: 'Organisations Approuvées', value: props.stats?.organizations_count + '+', icon: Users, color: 'text-raosc-green', bg: 'bg-raosc-green/10' },
-    { id: 2, name: "Domaines d'Action", value: props.stats?.categories_count + '', icon: Trophy, color: 'text-raosc-yellow', bg: 'bg-raosc-yellow/10' },
-    { id: 3, name: 'Projets Actifs', value: props.stats?.projects_count + '', icon: Globe, color: 'text-raosc-red', bg: 'bg-raosc-red/10' },
-    { id: 4, name: 'Pays Couverts', value: props.stats?.countries_count + '', icon: ShieldCheck, color: 'text-zinc-600 dark:text-zinc-400', bg: 'bg-zinc-100 dark:bg-zinc-800' },
+    { id: 2, name: "Domaines d'Action", value: props.stats?.categories_count + '+', icon: Trophy, color: 'text-raosc-yellow', bg: 'bg-raosc-yellow/10' },
+    { id: 3, name: 'Projets Actifs', value: props.stats?.projects_count + '+', icon: Globe, color: 'text-raosc-red', bg: 'bg-raosc-red/10' },
+    { id: 4, name: 'Pays Couverts', value: props.stats?.countries_count + '+', icon: ShieldCheck, color: 'text-zinc-600 dark:text-zinc-400', bg: 'bg-zinc-100 dark:bg-zinc-800' },
 ];
 
 const features = [

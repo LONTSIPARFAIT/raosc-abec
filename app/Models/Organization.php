@@ -83,4 +83,37 @@ class Organization extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * Accesseur pour le logo.
+     */
+    protected function logoUrl(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn () => $this->logo 
+                ? (str_starts_with($this->logo, 'http') ? $this->logo : asset('storage/' . $this->logo)) 
+                : null,
+        );
+    }
+
+    /**
+     * Accesseur pour l'image de couverture.
+     */
+    protected function coverImageUrl(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: function () {
+                if ($this->cover_image) {
+                    return str_starts_with($this->cover_image, 'http') ? $this->cover_image : asset('storage/' . $this->cover_image);
+                }
+                
+                if (!empty($this->gallery) && is_array($this->gallery) && count($this->gallery) > 0) {
+                    $first = $this->gallery[0];
+                    return str_starts_with($first, 'http') ? $first : asset('storage/' . $first);
+                }
+
+                return null;
+            }
+        );
+    }
 }

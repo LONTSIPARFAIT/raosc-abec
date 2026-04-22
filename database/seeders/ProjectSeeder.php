@@ -143,5 +143,31 @@ class ProjectSeeder extends Seeder
                 );
             }
         }
+
+        // Assurer que CHAQUE organisation a au moins un projet et un bénévolat
+        $organizations = Organization::all();
+        foreach ($organizations as $org) {
+            if ($org->projects()->count() === 0) {
+                // Créer un projet générique
+                Project::create([
+                    'organization_id' => $org->id,
+                    'title' => "Programme de Soutien Communautaire - " . $org->city,
+                    'type' => 'projet',
+                    'description' => "Ce projet vise à renforcer l'impact de {$org->name} dans la ville de {$org->city} à travers des actions de proximité et de sensibilisation.",
+                    'cover_image' => 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=800',
+                    'status' => 'active',
+                ]);
+
+                // Créer un bénévolat générique
+                Project::create([
+                    'organization_id' => $org->id,
+                    'title' => "Campagne de Bénévolat : Agir ensemble pour " . $org->country,
+                    'type' => 'benevolat',
+                    'description' => "Nous recherchons des volontaires passionnés pour nous aider dans nos missions quotidiennes et apporter un changement positif au {$org->country}.",
+                    'cover_image' => 'https://images.unsplash.com/photo-1559027615-cd9402761514?q=80&w=800',
+                    'status' => 'active',
+                ]);
+            }
+        }
     }
 }

@@ -237,7 +237,7 @@ const stats = {
                             <div class="space-y-3">
                                 <div v-for="member in org.members" :key="member.id" class="flex items-center gap-3">
                                     <div class="h-8 w-8 rounded-full bg-raosc-green/10 text-raosc-green flex items-center justify-center font-bold text-sm shrink-0 select-none">
-                                        {{ member.user ? member.user.name.charAt(0).toUpperCase() : '?' }}
+                                        {{ member.user?.name?.charAt(0).toUpperCase() || '?' }}
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <p class="text-sm font-semibold text-zinc-900 dark:text-white leading-tight truncate">
@@ -277,36 +277,67 @@ const stats = {
 
                         <!-- Section Projets & Bénévolat -->
                         <section v-if="org.projects && org.projects.length > 0">
-                            <h2 class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-4 flex items-center gap-2">
-                                <div class="h-px w-4 bg-raosc-green"></div>
-                                <Target class="w-3.5 h-3.5" /> Projets & Bénévolat
-                            </h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
+                                    <div class="h-px w-4 bg-raosc-green"></div>
+                                    <Target class="w-3.5 h-3.5" /> Projets & Bénévolat
+                                </h2>
+                                <span class="text-[10px] font-bold text-raosc-green bg-raosc-green/10 px-2 py-0.5 rounded-full">
+                                    {{ org.projects.length }} action<span v-if="org.projects.length > 1">s</span>
+                                </span>
+                            </div>
+
+                            <div class="space-y-4">
                                 <div
                                     v-for="project in org.projects"
                                     :key="project.id"
-                                    class="group bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden hover:shadow-md transition-all duration-300 hover:scale-[1.02]"
+                                    class="group relative bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-zinc-200/50 dark:hover:shadow-none transition-all duration-500"
                                 >
-                                    <div v-if="project.cover_image" class="h-32 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
-                                        <img :src="project.cover_image" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                                    </div>
-                                    <div class="p-4">
-                                        <div class="flex flex-wrap items-center gap-2 mb-2">
-                                            <span :class="['px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide', 
-                                                project.type === 'benevolat' ? 'bg-raosc-green/10 text-raosc-green' : 'bg-raosc-yellow/10 text-raosc-yellow']">
-                                                {{ project.type === 'benevolat' ? 'Bénévolat' : 'Projet' }}
-                                            </span>
-                                            <span :class="['px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide', 
-                                                project.status === 'active' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800']">
-                                                {{ project.status === 'active' ? 'En cours' : 'Terminé' }}
-                                            </span>
+                                    <div class="flex flex-col md:flex-row">
+                                        <!-- Image du projet -->
+                                        <div class="w-full md:w-48 h-32 md:h-auto shrink-0 overflow-hidden bg-zinc-100 dark:bg-zinc-800 relative">
+                                            <img v-if="project.cover_image" :src="project.cover_image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                            <div v-else class="w-full h-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-zinc-300">
+                                                <ImageIcon class="w-8 h-8" />
+                                            </div>
+                                            <!-- Type Badge -->
+                                            <div class="absolute top-3 left-3">
+                                                <span :class="['px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider shadow-sm backdrop-blur-md', 
+                                                    project.type === 'benevolat' ? 'bg-raosc-green/90 text-white' : 'bg-raosc-yellow/90 text-zinc-900']">
+                                                    {{ project.type === 'benevolat' ? 'Bénévolat' : 'Projet' }}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <h3 class="text-sm font-bold text-zinc-900 dark:text-white mb-2 line-clamp-2">
-                                            {{ project.title }}
-                                        </h3>
-                                        <p class="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-3">
-                                            {{ project.description }}
-                                        </p>
+
+                                        <!-- Détails du projet -->
+                                        <div class="p-5 flex-1 flex flex-col justify-between">
+                                            <div>
+                                                <div class="flex items-center gap-2 mb-2">
+                                                    <span :class="['flex items-center gap-1 text-[10px] font-bold', 
+                                                        project.status === 'active' ? 'text-emerald-500' : 'text-zinc-400']">
+                                                        <Clock class="w-3 h-3" />
+                                                        {{ project.status === 'active' ? 'En cours' : 'Terminé' }}
+                                                    </span>
+                                                </div>
+                                                <h3 class="text-base font-black text-zinc-900 dark:text-white mb-2 group-hover:text-raosc-green transition-colors">
+                                                    {{ project.title }}
+                                                </h3>
+                                                <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed line-clamp-2">
+                                                    {{ project.description }}
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+                                                <button class="text-[10px] font-bold text-zinc-400 hover:text-raosc-green transition-colors flex items-center gap-1 uppercase tracking-widest">
+                                                    Détails <ArrowRight class="w-3 h-3" />
+                                                </button>
+                                                <div class="flex -space-x-2">
+                                                    <div v-for="i in 3" :key="i" class="h-6 w-6 rounded-full border-2 border-white dark:border-zinc-900 bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-[8px] font-bold text-zinc-400 overflow-hidden">
+                                                        <Users class="w-3 h-3" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

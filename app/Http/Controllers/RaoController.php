@@ -30,12 +30,12 @@ class RaoController extends Controller
 
         // Filtre par Pays
         if ($request->filled('country')) {
-            $query->where('country', $request->get('country'));
+            $query->where('country', 'like', "%{$request->get('country')}%");
         }
 
         // Filtre par Ville
         if ($request->filled('city')) {
-            $query->where('city', $request->get('city'));
+            $query->where('city', 'like', "%{$request->get('city')}%");
         }
 
         // Filtre par catégorie
@@ -125,6 +125,11 @@ class RaoController extends Controller
                 $galleryPaths[] = $image->store('organizations/gallery', 'public');
             }
             $organization->gallery = $galleryPaths;
+            
+            // On définit la première image de la galerie comme image de couverture par défaut
+            if (count($galleryPaths) > 0) {
+                $organization->cover_image = $galleryPaths[0];
+            }
         }
 
         $organization->save();
@@ -211,6 +216,11 @@ class RaoController extends Controller
                 $galleryPaths[] = $image->store('organizations/gallery', 'public');
             }
             $organizationData['gallery'] = $galleryPaths;
+
+            // Si aucune image de couverture n'existe encore, on prend la première de la nouvelle galerie
+            if (!$organization->cover_image && count($galleryPaths) > 0) {
+                $organizationData['cover_image'] = $galleryPaths[0];
+            }
         }
 
         $organization->update($organizationData);

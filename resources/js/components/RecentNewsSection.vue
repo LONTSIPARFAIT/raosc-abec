@@ -73,6 +73,17 @@ const getTextColor = (index: number) => {
                     </div>
                     
                     <div class="p-6">
+                        <!-- Organization Info -->
+                        <div v-if="item.organization" class="flex items-center gap-2.5 mb-4 p-2 rounded-2xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-100 dark:border-zinc-800/50">
+                            <div class="h-8 w-8 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-white">
+                                <img v-if="item.organization.logo" :src="item.organization.logo" class="w-full h-full object-cover" :alt="item.organization.name" />
+                                <div v-else class="w-full h-full flex items-center justify-center bg-raosc-green/10 text-raosc-green">
+                                    <span class="text-[10px] font-bold">{{ item.organization?.name?.charAt(0) || '?' }}</span>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold text-zinc-700 dark:text-zinc-300 truncate">{{ item.organization.name }}</span>
+                        </div>
+
                         <h3 :class="['text-xl font-bold text-zinc-900 dark:text-white mb-3 line-clamp-2 transition-colors cursor-pointer', getHoverColor(index)]">
                             {{ item.title }}
                         </h3>
