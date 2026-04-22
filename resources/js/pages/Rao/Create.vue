@@ -480,7 +480,7 @@ const resetForm = () => {
 }
 
 .slide-down-leave-to {
-    transform: translateY(-5px)
+    transform: translateY(-5px);
     opacity: 0;
 }
 </style>
