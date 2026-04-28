@@ -6,14 +6,16 @@ import {
     ShieldAlert,
     Search,
     SearchX,
-    Clock
+    Clock,
+    Trash2
 } from 'lucide-vue-next';
 import AdminApprovalCard from '@/components/AdminApprovalCard.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { ref, computed } from 'vue';
 import { index as dashboardIndex } from '@/actions/App/Http/Controllers/DashboardController';
-import { index as orgsIndex } from '@/actions/App/Http/Controllers/Admin/OrganizationManagementController';
+import { index as orgsIndex, destroy as destroyAction } from '@/actions/App/Http/Controllers/Admin/OrganizationManagementController';
+import { router } from '@inertiajs/vue3';
 
 interface Organization {
     id: number;
@@ -62,6 +64,12 @@ const getStatusClass = (status: string) => {
         case 'approved': return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400';
         case 'rejected': return 'bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400';
         default: return 'bg-zinc-100 text-zinc-700 dark:bg-zinc-500/10 dark:text-zinc-400';
+    }
+};
+
+const deleteOrganization = (id: number) => {
+    if (window.confirm('Voulez-vous vraiment supprimer définitivement cette organisation ?')) {
+        router.delete(destroyAction(id).url);
     }
 };
 </script>
@@ -150,7 +158,7 @@ const getStatusClass = (status: string) => {
                     <div class="space-y-6">
                         <div v-for="org in recent" :key="org.id" class="flex items-start gap-4">
                             <div class="h-10 w-10 rounded-xl bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center shrink-0 border border-zinc-100 dark:border-zinc-700 overflow-hidden">
-                                <img v-if="org.logo" :src="org.logo" class="h-full w-full object-cover" />
+                                <img v-if="org.logo" :src="org.logo.startsWith('http') ? org.logo : '/storage/' + org.logo" class="h-full w-full object-cover" />
                                 <Building2 v-else class="h-5 w-5 text-zinc-400" />
                             </div>
                             <div class="flex-1 min-w-0">
@@ -162,6 +170,14 @@ const getStatusClass = (status: string) => {
                                     <span class="text-[9px] text-zinc-400 font-bold uppercase">{{ new Date(org.created_at).toLocaleDateString() }}</span>
                                 </div>
                             </div>
+                            <button 
+                                @click="deleteOrganization(org.id)"
+                                type="button"
+                                class="h-8 w-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-400 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all shrink-0 self-center"
+                                title="Supprimer"
+                            >
+                                <Trash2 class="w-3.5 h-3.5" />
+                            </button>
                         </div>
 
                         <div v-if="recent.length === 0" class="text-center py-6 text-zinc-400 text-sm">

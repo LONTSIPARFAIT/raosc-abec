@@ -23,8 +23,8 @@ class OrganizationManagementController extends Controller
             ->get();
 
         return inertia('Admin/Organizations', [
-            'pending' => $pendingOrganizations,
-            'recent' => $recentOrganizations
+            'pending' => \App\Http\Resources\OrganizationResource::collection($pendingOrganizations)->resolve(),
+            'recent' => \App\Http\Resources\OrganizationResource::collection($recentOrganizations)->resolve()
         ]);
     }
 
@@ -51,5 +51,11 @@ class OrganizationManagementController extends Controller
         }
 
         return back()->with('success', 'Le statut de l\'organisation a été mis à jour.');
+    }
+    
+    public function destroy(Organization $organization)
+    {
+        $organization->delete();
+        return back()->with('success', 'L\'organisation a été supprimée définitivement.');
     }
 }

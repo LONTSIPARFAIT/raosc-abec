@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Link, router } from '@inertiajs/vue3';
-import { Check, X, Eye, Building2, MapPin, Mail, Globe, PhoneCall, Calendar } from 'lucide-vue-next';
+import { Check, X, Eye, Trash2, Building2, MapPin, Mail, Globe, PhoneCall, Calendar } from 'lucide-vue-next';
 import { ref, reactive } from 'vue';
-import { updateStatus as updateStatusAction } from '@/actions/App/Http/Controllers/Admin/OrganizationManagementController';
+import { updateStatus as updateStatusAction, destroy as destroyAction } from '@/actions/App/Http/Controllers/Admin/OrganizationManagementController';
 
 interface Organization {
     id: number;
@@ -43,6 +43,12 @@ const onSuccess = () => {
     showingDetailsModal.value = false;
     rejectionData.rejection_reason = '';
 };
+
+const confirmDelete = () => {
+    if (window.confirm('Êtes-vous sûr de vouloir supprimer définitivement cette organisation ?')) {
+        router.delete(destroyAction(organization.id).url);
+    }
+};
 </script>
 
 <template>
@@ -50,7 +56,7 @@ const onSuccess = () => {
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div v-if="organization.logo" class="h-10 w-10 border border-zinc-200 dark:border-zinc-700 rounded-xl overflow-hidden shrink-0">
-                    <img :src="'/storage/' + organization.logo" class="w-full h-full object-cover" />
+                    <img :src="organization.logo.startsWith('http') ? organization.logo : '/storage/' + organization.logo" class="w-full h-full object-cover" />
                 </div>
                 <div v-else class="h-10 w-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center font-bold text-raosc-green overflow-hidden shrink-0">
                     {{ organization.name.charAt(0) }}
@@ -90,6 +96,15 @@ const onSuccess = () => {
                 >
                     <X class="w-4 h-4" />
                 </button>
+
+                <button 
+                    @click="confirmDelete"
+                    type="button"
+                    class="h-8 w-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all"
+                    title="Supprimer définitivement"
+                >
+                    <Trash2 class="w-4 h-4" />
+                </button>
             </div>
         </div>
 
@@ -123,7 +138,7 @@ const onSuccess = () => {
                     <div class="p-5 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50">
                         <div class="flex items-center gap-3">
                             <div v-if="organization.logo" class="h-10 w-10 rounded-lg overflow-hidden shrink-0 border border-zinc-200 dark:border-zinc-800">
-                                <img :src="'/storage/' + organization.logo" class="h-full w-full object-cover">
+                                <img :src="organization.logo.startsWith('http') ? organization.logo : '/storage/' + organization.logo" class="h-full w-full object-cover">
                             </div>
                             <div v-else class="h-10 w-10 rounded-lg bg-raosc-green/10 text-raosc-green flex items-center justify-center">
                                 <Building2 class="h-5 w-5" />
@@ -196,7 +211,7 @@ const onSuccess = () => {
                             <h4 class="text-sm font-bold text-zinc-900 dark:text-white mb-3">Images et Actions</h4>
                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                                 <div v-for="(img, idx) in organization.gallery" :key="idx" class="h-32 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800">
-                                    <img :src="'/storage/' + img" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                                    <img :src="img.startsWith('http') ? img : '/storage/' + img" class="w-full h-full object-cover hover:scale-105 transition duration-500">
                                 </div>
                             </div>
                         </div>
