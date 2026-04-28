@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Building2, Info, ArrowRight, CheckCircle2, Save, X, Calendar, MapPin, Phone, Mail, Globe, FileText, Briefcase, AlertCircle } from 'lucide-vue-next';
+import { Building2, Info, ArrowRight, CheckCircle2, Save, X, Calendar, MapPin, Phone, Mail, Globe, FileText, Briefcase, AlertCircle, Upload } from 'lucide-vue-next';
 import CountryPhoneInput from '@/components/CountryPhoneInput.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -54,7 +54,66 @@ const formData = useForm({
     registration_number: org.registration_number || '',
     founded_date: org.founded_date || '',
     categories: (org.categories || []).map((c: any) => c.id),
+    logo: null as File | null,
+    gallery: [] as File[],
 });
+
+const logoPreview = ref<string | null>(org.logo ? (org.logo.startsWith('http') ? org.logo : `/storage/${org.logo}`) : null);
+const galleryPreviews = ref<{file: File | null, url: string}[]>([]);
+const isDragging = ref(false);
+const logoInput = ref<HTMLInputElement | null>(null);
+
+const triggerLogoUpload = () => {
+    logoInput.value?.click();
+};
+
+const handleLogoUpload = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+        formData.logo = target.files[0];
+        logoPreview.value = URL.createObjectURL(target.files[0]);
+    }
+};
+
+const handleLogoDrop = (e: DragEvent) => {
+    e.preventDefault();
+    isDragging.value = false;
+    const files = e.dataTransfer?.files;
+    if (files && files.length > 0) {
+        formData.logo = files[0];
+        logoPreview.value = URL.createObjectURL(files[0]);
+    }
+};
+
+const removeLogo = () => {
+    formData.logo = null;
+    if (logoPreview.value && logoPreview.value.startsWith('blob:')) {
+        URL.revokeObjectURL(logoPreview.value);
+    }
+    logoPreview.value = null;
+    if (logoInput.value) logoInput.value.value = '';
+};
+
+const handleGalleryUpload = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+        const newFiles = Array.from(target.files);
+        for(const file of newFiles) {
+            formData.gallery.push(file);
+            galleryPreviews.value.push({ file, url: URL.createObjectURL(file) });
+        }
+        target.value = '';
+    }
+};
+
+const removeGalleryImage = (index: number) => {
+    const preview = galleryPreviews.value[index];
+    if (preview.url.startsWith('blob:')) {
+        URL.revokeObjectURL(preview.url);
+    }
+    formData.gallery.splice(index, 1);
+    galleryPreviews.value.splice(index, 1);
+};
 
 const toggleCategory = (id: number) => {
     const index = formData.categories.indexOf(id);
@@ -227,6 +286,67 @@ const hasChanges = () => {
                                                 type="date" 
                                                 class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
                                             />
+                                        </div>
+                                    </div>
+
+                                    <!-- Logo et Galerie -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5">
+                                        <!-- Logo -->
+                                        <div>
+                                            <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
+                                                <Upload class="w-3 h-3 inline mr-1" /> Logo
+                                            </label>
+                                            <div 
+                                                @dragover.prevent="isDragging = true"
+                                                @dragleave.prevent="isDragging = false"
+                                                @drop.prevent="handleLogoDrop"
+                                                :class="['border-2 border-dashed rounded-xl p-4 text-center transition-all duration-300 cursor-pointer',
+                                                    logoPreview ? 'border-raosc-green bg-raosc-green/5' : 'border-zinc-300 dark:border-zinc-600 hover:border-raosc-green hover:bg-raosc-green/5',
+                                                    isDragging ? 'border-raosc-green bg-raosc-green/10 scale-[0.99]' : '']"
+                                                @click="triggerLogoUpload">
+                                                <div v-if="logoPreview" class="relative inline-block">
+                                                    <img :src="logoPreview" class="h-24 w-full object-cover rounded-lg" />
+                                                    <button type="button" @click.stop="removeLogo" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors">
+                                                        <X class="w-3 h-3" />
+                                                    </button>
+                                                </div>
+                                                <div v-else class="flex flex-col items-center gap-2">
+                                                    <Upload class="w-6 h-6 text-zinc-400" />
+                                                    <p class="text-xs text-zinc-500">Glissez ou cliquez</p>
+                                                    <p class="text-[10px] text-zinc-400">PNG, JPG, WEBP</p>
+                                                </div>
+                                                <input ref="logoInput" type="file" accept="image/jpeg, image/png, image/webp" @change="handleLogoUpload" class="hidden" />
+                                            </div>
+                                            <Transition name="slide-down">
+                                                <p v-if="formData.errors.logo" class="text-raosc-red text-xs mt-1">{{ formData.errors.logo }}</p>
+                                            </Transition>
+                                        </div>
+
+                                        <!-- Galerie -->
+                                        <div>
+                                            <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
+                                                <Upload class="w-3 h-3 inline mr-1" /> Ajouter à la galerie
+                                            </label>
+                                            <input
+                                                id="gallery-upload"
+                                                type="file"
+                                                accept="image/jpeg, image/png, image/webp"
+                                                multiple
+                                                @change="handleGalleryUpload"
+                                                class="w-full text-xs text-zinc-500 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-raosc-green/10 file:text-raosc-green hover:file:bg-raosc-green/20 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800"
+                                            />
+                                            <div v-if="galleryPreviews.length > 0" class="flex flex-wrap gap-2 mt-3">
+                                                <div v-for="(preview, idx) in galleryPreviews" :key="idx" class="relative w-14 h-14 group">
+                                                    <img :src="preview.url" class="w-full h-full object-cover rounded-lg border border-zinc-200 dark:border-zinc-700" />
+                                                    <button type="button" @click="removeGalleryImage(idx)" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600">
+                                                        <X class="w-2.5 h-2.5" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <p class="text-[10px] text-zinc-400 mt-1">Nouvelles images à ajouter</p>
+                                            <Transition name="slide-down">
+                                                <p v-if="formData.errors.gallery" class="text-raosc-red text-xs mt-1">{{ formData.errors.gallery }}</p>
+                                            </Transition>
                                         </div>
                                     </div>
                                 </div>

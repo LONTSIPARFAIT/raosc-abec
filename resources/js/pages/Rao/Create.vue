@@ -26,6 +26,11 @@ const {
 const logoPreview = ref<string | null>(null);
 const galleryPreviews = ref<{file: File, url: string}[]>([]);
 const isDragging = ref(false);
+const logoInput = ref<HTMLInputElement | null>(null);
+
+const triggerLogoUpload = () => {
+    logoInput.value?.click();
+};
 
 const formData = useForm({
     name: '',
@@ -68,8 +73,7 @@ const removeLogo = () => {
         URL.revokeObjectURL(logoPreview.value);
         logoPreview.value = null;
     }
-    const input = document.getElementById('logo-upload') as HTMLInputElement;
-    if (input) input.value = '';
+    if (logoInput.value) logoInput.value.value = '';
 };
 
 const handleGalleryUpload = (event: Event) => {
@@ -285,7 +289,7 @@ const resetForm = () => {
                                                 :class="['border-2 border-dashed rounded-xl p-4 text-center transition-all duration-300 cursor-pointer',
                                                     logoPreview ? 'border-raosc-green bg-raosc-green/5' : 'border-zinc-300 dark:border-zinc-600 hover:border-raosc-green hover:bg-raosc-green/5',
                                                     isDragging ? 'border-raosc-green bg-raosc-green/10 scale-[0.99]' : '']"
-                                                @click="() => document.getElementById('logo-upload')?.click()">
+                                                @click="triggerLogoUpload">
                                                 <div v-if="logoPreview" class="relative inline-block">
                                                     <img :src="logoPreview" class="h-24 w-full object-cover rounded-lg" />
                                                     <button type="button" @click.stop="removeLogo" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors">
@@ -297,7 +301,7 @@ const resetForm = () => {
                                                     <p class="text-xs text-zinc-500">Glissez ou cliquez</p>
                                                     <p class="text-[10px] text-zinc-400">PNG, JPG, WEBP</p>
                                                 </div>
-                                                <input id="logo-upload" type="file" accept="image/jpeg, image/png, image/webp" :required="formData.logo === null" @change="handleLogoUpload" class="hidden" />
+                                                <input ref="logoInput" type="file" accept="image/jpeg, image/png, image/webp" @change="handleLogoUpload" class="hidden" />
                                             </div>
                                             <Transition name="slide-down">
                                                 <p v-if="formData.errors.logo" class="text-raosc-red text-xs mt-1">{{ formData.errors.logo }}</p>
