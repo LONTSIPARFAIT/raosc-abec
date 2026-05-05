@@ -29,6 +29,19 @@ class CategoryController extends Controller
         return back()->with('success', 'Catégorie créée avec succès');
     }
 
+    public function update(Request $request, OrganizationCategory $category)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:organization_categories,name,' . $category->id,
+            'description' => 'required|string'
+        ]);
+        
+        $validated['slug'] = \Illuminate\Support\Str::slug($validated['name']);
+        
+        $category->update($validated);
+        return back()->with('success', 'Catégorie mise à jour avec succès');
+    }
+
     public function destroy(OrganizationCategory $category)
     {
         if ($category->organizations()->count() > 0) {

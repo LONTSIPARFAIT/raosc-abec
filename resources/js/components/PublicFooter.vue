@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
 </script>
 
 <template>
-    <footer class="bg-zinc-100 dark:bg-zinc-950 pt-16 pb-12 text-zinc-600 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-800">
+    <footer class="bg-white dark:bg-zinc-950 pt-16 pb-12 text-zinc-600 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-800 relative z-10">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
                 <!-- Brand Column -->
@@ -105,7 +105,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
 
             <!-- Bottom Footer - Version améliorée -->
             <div
-                class="pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+                class="pt-8 border-t border-zinc-200 dark:border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
                 <!-- Left side - Copyright and credits -->
                 <div class="text-center md:text-left space-y-1">
                     <p class="text-zinc-600 text-[11px]">

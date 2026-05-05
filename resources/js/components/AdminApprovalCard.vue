@@ -18,8 +18,8 @@ interface Organization {
     email?: string;
     phone?: string;
     website?: string;
-    address?: string;
     registration_number?: string;
+    founded_date?: string;
     member_count?: number;
     presentation_doc?: string;
     legal_docs?: string[];
@@ -28,6 +28,11 @@ interface Organization {
     responsible_phone?: string;
     responsible_photo?: string;
     responsible_id_doc?: string;
+    vice_responsible_name?: string;
+    vice_responsible_email?: string;
+    vice_responsible_phone?: string;
+    vice_responsible_photo?: string;
+    vice_responsible_id_doc?: string;
     categories?: { id: number, name: string }[];
     members?: { user: { name: string, email: string } }[];
     gallery?: string[];
@@ -193,26 +198,64 @@ const confirmDelete = () => {
                                     </div>
                                 </div>
 
-                                <!-- Responsible Info -->
-                                <div>
-                                    <h4 class="text-xs font-black text-zinc-400 uppercase tracking-widest mb-4">Responsable de l'organisation</h4>
-                                    <div class="flex items-start gap-6 p-5 bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border border-zinc-100 dark:border-zinc-800">
-                                        <div class="h-24 w-24 rounded-2xl overflow-hidden bg-zinc-200 dark:bg-zinc-800 shrink-0 border border-zinc-200 dark:border-zinc-700">
-                                            <img v-if="organization.responsible_photo" :src="organization.responsible_photo" class="w-full h-full object-cover">
-                                            <div v-else class="w-full h-full flex items-center justify-center text-zinc-400">Photo</div>
+                                <!-- Leadership Info -->
+                                <div class="space-y-6">
+                                    <h4 class="text-xs font-black text-zinc-400 uppercase tracking-widest mb-4">Leadership de l'organisation</h4>
+                                    
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                        <!-- Responsible -->
+                                        <div class="p-5 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm">
+                                            <p class="text-[10px] font-black text-raosc-green uppercase tracking-widest mb-4">Responsable Principal</p>
+                                            <div class="flex items-center gap-4 mb-4">
+                                                <div class="h-16 w-16 rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shrink-0">
+                                                    <img v-if="organization.responsible_photo" :src="organization.responsible_photo" class="w-full h-full object-cover">
+                                                    <User v-else class="w-full h-full text-zinc-300 p-3" />
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <p class="text-base font-black text-zinc-900 dark:text-white truncate">{{ organization.responsible_name || 'Non renseigné' }}</p>
+                                                    <p class="text-xs text-zinc-500">Directeur / Président</p>
+                                                </div>
+                                            </div>
+                                            <div class="space-y-2">
+                                                <div class="flex items-center gap-3 text-xs text-zinc-600 dark:text-zinc-400">
+                                                    <Mail class="w-3.5 h-3.5 text-raosc-green" /> {{ organization.responsible_email }}
+                                                </div>
+                                                <div class="flex items-center gap-3 text-xs text-zinc-600 dark:text-zinc-400">
+                                                    <PhoneCall class="w-3.5 h-3.5 text-raosc-green" /> {{ organization.responsible_phone }}
+                                                </div>
+                                                <div v-if="organization.responsible_id_doc" class="pt-2 border-t border-zinc-50 dark:border-zinc-800 mt-2">
+                                                    <a :href="organization.responsible_id_doc" target="_blank" class="text-[10px] font-black text-raosc-green hover:underline flex items-center gap-1.5">
+                                                        <Eye class="w-3 h-3" /> VOIR PIÈCE D'IDENTITÉ
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="flex-1 space-y-2">
-                                            <p class="text-lg font-bold text-zinc-900 dark:text-white">{{ organization.responsible_name || 'Non renseigné' }}</p>
-                                            <div class="flex items-center gap-3 text-sm text-zinc-500">
-                                                <Mail class="w-4 h-4" /> {{ organization.responsible_email }}
+
+                                        <!-- Vice Responsible -->
+                                        <div class="p-5 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm">
+                                            <p class="text-[10px] font-black text-raosc-green uppercase tracking-widest mb-4">Vice-Responsable / Adjoint</p>
+                                            <div class="flex items-center gap-4 mb-4">
+                                                <div class="h-16 w-16 rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shrink-0">
+                                                    <img v-if="organization.vice_responsible_photo" :src="organization.vice_responsible_photo" class="w-full h-full object-cover">
+                                                    <User v-else class="w-full h-full text-zinc-300 p-3" />
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <p class="text-base font-black text-zinc-900 dark:text-white truncate">{{ organization.vice_responsible_name || 'Non renseigné' }}</p>
+                                                    <p class="text-xs text-zinc-500">Adjoint / Secrétaire</p>
+                                                </div>
                                             </div>
-                                            <div class="flex items-center gap-3 text-sm text-zinc-500">
-                                                <PhoneCall class="w-4 h-4" /> {{ organization.responsible_phone }}
-                                            </div>
-                                            <div v-if="organization.responsible_id_doc" class="pt-2">
-                                                <a :href="organization.responsible_id_doc" target="_blank" class="text-xs font-bold text-raosc-green hover:underline flex items-center gap-1.5">
-                                                    <Eye class="w-3 h-3" /> Voir la pièce d'identité
-                                                </a>
+                                            <div class="space-y-2">
+                                                <div class="flex items-center gap-3 text-xs text-zinc-600 dark:text-zinc-400">
+                                                    <Mail class="w-3.5 h-3.5 text-raosc-green" /> {{ organization.vice_responsible_email || 'N/A' }}
+                                                </div>
+                                                <div class="flex items-center gap-3 text-xs text-zinc-600 dark:text-zinc-400">
+                                                    <PhoneCall class="w-3.5 h-3.5 text-raosc-green" /> {{ organization.vice_responsible_phone || 'N/A' }}
+                                                </div>
+                                                <div v-if="organization.vice_responsible_id_doc" class="pt-2 border-t border-zinc-50 dark:border-zinc-800 mt-2">
+                                                    <a :href="organization.vice_responsible_id_doc" target="_blank" class="text-[10px] font-black text-raosc-green hover:underline flex items-center gap-1.5">
+                                                        <Eye class="w-3 h-3" /> VOIR PIÈCE D'IDENTITÉ
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

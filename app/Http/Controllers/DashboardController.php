@@ -76,10 +76,12 @@ class DashboardController extends Controller
         ];
 
         if ($user->role === 'admin') {
+            $pendingOrgsList = Organization::where('status', 'pending')->latest()->get();
             return Inertia::render('AdminDashboard', [
                 'stats' => $stats,
                 'userOrganization' => $userOrganization,
                 'recentOrgs' => $recentOrgs,
+                'pendingOrgsList' => \App\Http\Resources\OrganizationResource::collection($pendingOrgsList)->resolve(),
                 'chartData' => $chartData
             ]);
         }

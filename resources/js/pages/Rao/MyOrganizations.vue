@@ -1,4 +1,4 @@
-<!-- MyOrganizations.vue - Refonte Full Width avec colonnes structurées -->
+<!-- MyOrganizations.vue - Refonte Full Width -->
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { 
@@ -13,10 +13,11 @@ import {
     MapPin,
     Calendar,
     FileText,
-    Users,
     TrendingUp,
+    Users,
     Award,
-    Shield
+    Shield,
+    HelpCircle
 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
@@ -96,20 +97,20 @@ const stats = {
             <!-- ============================================ -->
             <!-- HEADER SECTION - FULL WIDTH -->
             <!-- ============================================ -->
-            <div class="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-                <div class="container mx-auto px-6 lg:px-12 py-8">
-                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            <div class="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 sticky top-0 z-20">
+                <div class="container mx-auto px-6 lg:px-12 py-6">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5">
                         
                         <!-- Titre et description -->
                         <div>
-                            <div class="flex items-center gap-3 mb-2">
+                            <div class="flex items-center gap-3 mb-1">
                                 <div class="h-10 w-10 rounded-xl bg-raosc-green/10 flex items-center justify-center">
                                     <Building2 class="h-5 w-5 text-raosc-green" />
                                 </div>
-                                <h1 class="text-2xl lg:text-3xl font-black text-zinc-900 dark:text-white">
+                                <h1 class="text-xl lg:text-2xl font-bold text-zinc-900 dark:text-white">
                                     Mes Structures
                                 </h1>
-                                <span class="px-2.5 py-1 text-xs font-bold bg-raosc-green/10 text-raosc-green rounded-lg">
+                                <span class="px-2.5 py-0.5 text-xs font-bold bg-raosc-green/10 text-raosc-green rounded-full">
                                     {{ stats.total }}
                                 </span>
                             </div>
@@ -121,7 +122,7 @@ const stats = {
                         <!-- Bouton inscription -->
                         <Link 
                             :href="create().url" 
-                            class="group inline-flex items-center gap-2 bg-raosc-green text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+                            class="group shrink-0 inline-flex items-center gap-2 bg-raosc-green text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
                         >
                             <PlusCircle class="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
                             Inscrire une organisation
@@ -133,7 +134,7 @@ const stats = {
             <!-- ============================================ -->
             <!-- STATS CARDS - 4 COLONNES -->
             <!-- ============================================ -->
-            <div class="container mx-auto px-6 lg:px-12 py-8">
+            <div class="container mx-auto px-6 lg:px-12 pt-8">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     
                     <!-- Carte Total -->
@@ -187,36 +188,42 @@ const stats = {
             </div>
 
             <!-- ============================================ -->
+            <!-- FILTRES -->
+            <!-- ============================================ -->
+            <div class="container mx-auto px-6 lg:px-12 pt-6">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex flex-wrap gap-2">
+                        <button class="px-4 py-2 text-sm font-medium bg-raosc-green text-white rounded-lg shadow-sm hover:shadow-md transition-all">
+                            Toutes
+                        </button>
+                        <button class="px-4 py-2 text-sm font-medium bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg text-emerald-600 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 transition-all">
+                            Approuvées
+                        </button>
+                        <button class="px-4 py-2 text-sm font-medium bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg text-amber-600 hover:border-amber-500 hover:bg-amber-50 dark:hover:bg-amber-950/20 transition-all">
+                            En attente
+                        </button>
+                        <button class="px-4 py-2 text-sm font-medium bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg text-red-600 hover:border-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all">
+                            Rejetées
+                        </button>
+                    </div>
+                    
+                    <div class="text-sm text-zinc-500 dark:text-zinc-400">
+                        <span class="font-medium">{{ organizations.length }}</span> organisation(s) au total
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
             <!-- ORGANISATIONS GRID - 3 COLONNES -->
             <!-- ============================================ -->
             <div class="container mx-auto px-6 lg:px-12 py-8 pb-16">
                 
-                <!-- Header avec filtres -->
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-                        <span class="w-6 h-px bg-raosc-green"></span>
-                        Vos organisations
-                    </h2>
-                    
-                    <div class="flex gap-2">
-                        <button class="px-3 py-1.5 text-xs font-medium bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-600 dark:text-zinc-400 hover:border-raosc-green transition-colors">
-                            Toutes
-                        </button>
-                        <button class="px-3 py-1.5 text-xs font-medium bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-emerald-600 hover:border-emerald-500 transition-colors">
-                            Approuvées
-                        </button>
-                        <button class="px-3 py-1.5 text-xs font-medium bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-amber-600 hover:border-amber-500 transition-colors">
-                            En attente
-                        </button>
-                    </div>
-                </div>
-
                 <!-- Grille des cartes -->
                 <div v-if="organizations.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div 
                         v-for="org in organizations" 
                         :key="org.id"
-                        class="group bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-raosc-green/30"
+                        class="group relative bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                     >
                         <!-- En-tête de la carte -->
                         <div class="p-5 pb-3 border-b border-zinc-100 dark:border-zinc-800">
@@ -235,24 +242,24 @@ const stats = {
                             </h3>
                             
                             <div class="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
-                                <MapPin class="w-3.5 h-3.5" />
-                                <span>{{ org.city || 'Ville non renseignée' }}{{ org.country ? `, ${org.country}` : '' }}</span>
+                                <MapPin class="w-3.5 h-3.5 shrink-0" />
+                                <span class="truncate">{{ org.city || 'Ville non renseignée' }}{{ org.country ? `, ${org.country}` : '' }}</span>
                             </div>
                         </div>
                         
                         <!-- Corps de la carte -->
                         <div class="p-5 pt-3">
                             <div v-if="org.registration_number" class="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mb-2">
-                                <FileText class="w-3.5 h-3.5" />
-                                <span>N°: {{ org.registration_number }}</span>
+                                <FileText class="w-3.5 h-3.5 shrink-0" />
+                                <span class="truncate">N°: {{ org.registration_number }}</span>
                             </div>
                             
                             <div v-if="org.founded_date" class="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mb-3">
-                                <Calendar class="w-3.5 h-3.5" />
+                                <Calendar class="w-3.5 h-3.5 shrink-0" />
                                 <span>Fondée en {{ new Date(org.founded_date).getFullYear() }}</span>
                             </div>
                             
-                            <p class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2 mb-4">
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2 mb-4 min-h-[40px]">
                                 {{ org.short_description || 'Aucune description courte disponible.' }}
                             </p>
                             
@@ -276,7 +283,7 @@ const stats = {
                         </div>
                         
                         <!-- Effet de bordure au hover -->
-                        <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" 
+                        <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none border-2 border-raosc-green" 
                              style="box-shadow: inset 0 0 0 2px var(--raosc-green)"></div>
                     </div>
                 </div>
@@ -292,7 +299,7 @@ const stats = {
                     </p>
                     <Link 
                         :href="create().url" 
-                        class="group inline-flex items-center gap-2 bg-raosc-green text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:scale-105 hover:shadow-lg transition-all duration-300"
+                        class="group inline-flex items-center gap-2 bg-raosc-green text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:scale-105 hover:shadow-lg transition-all duration-300"
                     >
                         <PlusCircle class="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
                         Créer une organisation
@@ -301,21 +308,21 @@ const stats = {
             </div>
 
             <!-- ============================================ -->
-            <!-- SECTION CONSEILS - BANDE INFO -->
+            <!-- SECTION AIDE - BANDE INFO -->
             <!-- ============================================ -->
-            <div v-if="organizations.length > 0" class="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-                <div class="container mx-auto px-6 lg:px-12 py-8">
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div class="flex items-center gap-4">
-                            <div class="h-12 w-12 rounded-xl bg-raosc-green/10 flex items-center justify-center">
-                                <Award class="h-6 w-6 text-raosc-green" />
+            <div v-if="organizations.length > 0" class="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 sticky bottom-0">
+                <div class="container mx-auto px-6 lg:px-12 py-4">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-lg bg-raosc-green/10 flex items-center justify-center shrink-0">
+                                <HelpCircle class="h-5 w-5 text-raosc-green" />
                             </div>
                             <div>
-                                <p class="text-sm font-bold text-zinc-900 dark:text-white">Besoin d'aide ?</p>
+                                <p class="text-sm font-semibold text-zinc-900 dark:text-white">Besoin d'aide ?</p>
                                 <p class="text-xs text-zinc-500 dark:text-zinc-400">Contactez notre équipe pour toute question sur vos inscriptions</p>
                             </div>
                         </div>
-                        <Link href="/contact" class="text-sm font-semibold text-raosc-green hover:underline flex items-center gap-1">
+                        <Link href="/contact" class="text-sm font-semibold text-raosc-green hover:underline flex items-center gap-1 shrink-0">
                             Contacter le support
                             <ArrowRight class="w-3.5 h-3.5" />
                         </Link>

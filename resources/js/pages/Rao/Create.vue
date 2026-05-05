@@ -1,7 +1,13 @@
+<!-- OrganizationCreate.vue - Refonte Full Width -->
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Building2, Info, ArrowRight, CheckCircle2, X, Upload, Calendar, MapPin, Phone, Mail, Globe, FileText, Briefcase } from 'lucide-vue-next';
+import { 
+    Building2, Info, ArrowRight, CheckCircle2, X, Upload, 
+    Calendar, MapPin, Phone, Mail, Globe, FileText, Briefcase,
+    Users, Shield, Award, AlertCircle, ChevronDown, ChevronUp,
+    Camera, Image as ImageIcon, Trash2, Plus
+} from 'lucide-vue-next';
 import CountryPhoneInput from '@/components/CountryPhoneInput.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -23,11 +29,23 @@ const {
     isPublic?: boolean;
 }>();
 
+// États
 const logoPreview = ref<string | null>(null);
 const galleryPreviews = ref<{file: File, url: string}[]>([]);
 const isDragging = ref(false);
 const showOtherCategory = ref(false);
 const logoInput = ref<HTMLInputElement | null>(null);
+const activeSection = ref('general');
+const isSubmitting = ref(false);
+
+// Scroll vers une section
+const scrollToSection = (sectionId: string) => {
+    activeSection.value = sectionId;
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+};
 
 const triggerLogoUpload = () => {
     logoInput.value?.click();
@@ -128,97 +146,186 @@ const resetForm = () => {
     galleryPreviews.value = [];
     formData.categories = [];
 };
+
+const onSubmit = () => {
+    isSubmitting.value = true;
+    formData.post(store().url, {
+        onFinish: () => {
+            isSubmitting.value = false;
+        }
+    });
+};
+
+const sections = [
+    { id: 'general', label: 'Informations générales', icon: Building2 },
+    { id: 'documents', label: 'Documents officiels', icon: FileText },
+    { id: 'leadership', label: 'Équipe dirigeante', icon: Briefcase },
+    { id: 'contact', label: 'Localisation & contact', icon: MapPin }
+];
 </script>
 
 <template>
     <component :is="isPublic ? PublicLayout : AppLayout">
         <Head title="Enregistrer une organisation - RAOSC" />
 
-        <div class="min-h-screen bg-zinc-50 dark:bg-zinc-950 pb-24">
+        <div class="min-h-screen bg-zinc-50 dark:bg-zinc-950">
             
-            <!-- Effets de fond subtils -->
-            <div class="fixed inset-0 pointer-events-none opacity-20 dark:opacity-5">
-                <div class="absolute top-20 -left-20 w-96 h-96 rounded-full blur-[120px]" style="background-color: var(--raosc-green)"></div>
-                <div class="absolute bottom-20 -right-20 w-96 h-96 rounded-full blur-[120px]" style="background-color: var(--raosc-yellow)"></div>
-            </div>
-
-            <!-- Header Section -->
-            <div class="relative bg-zinc-950 py-16 sm:py-20 lg:py-24 px-6 overflow-hidden">
-                <div class="absolute inset-0 z-0">
-                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-10 rounded-full blur-[100px]"></div>
+            <!-- ============================================ -->
+            <!-- HEADER SECTION - MODERNE -->
+            <!-- ============================================ -->
+            <div class="relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 py-16 lg:py-20 overflow-hidden">
+                <!-- Effets de fond -->
+                <div class="absolute inset-0">
+                    <div class="absolute top-0 left-1/4 w-96 h-96 bg-raosc-green opacity-20 rounded-full blur-[120px]"></div>
+                    <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-raosc-yellow opacity-10 rounded-full blur-[120px]"></div>
                 </div>
 
-                <div class="mx-auto max-w-4xl relative z-10 text-center">
-                    <div class="mb-6 flex justify-center">
-                        <div class="flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-sm px-4 py-2 border border-white/20">
-                            <span class="text-[10px] font-bold tracking-[0.2em] text-raosc-yellow uppercase">Adhésion Réseau</span>
+                <div class="container mx-auto px-6 lg:px-12 relative z-10">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                            <Award class="w-4 h-4 text-raosc-yellow" />
+                            <span class="text-[10px] font-bold tracking-wider text-raosc-yellow uppercase">Adhésion réseau</span>
                         </div>
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-4">
+                            Inscrire votre <span class="text-raosc-yellow">Organisation</span>
+                        </h1>
+                        <p class="text-sm sm:text-base text-zinc-300 max-w-2xl mx-auto">
+                            Rejoignez le Réseau Africain des Organisations de la Société Civile pour amplifier votre impact et accéder à des partenariats stratégiques.
+                        </p>
                     </div>
-                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight mb-4">
-                        Inscrire votre <span class="text-raosc-yellow">Organisation</span>
-                    </h1>
-                    <p class="text-sm sm:text-base text-zinc-400 max-w-2xl mx-auto font-medium">
-                        Rejoignez le Réseau Africain pour amplifier votre impact et accéder à des partenariats stratégiques.
-                    </p>
                 </div>
             </div>
 
-            <div class="mx-auto max-w-4xl px-4 sm:px-6 -mt-8 sm:-mt-10 relative z-20">
-                <Card class="shadow-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-2xl sm:rounded-3xl overflow-hidden">
-                    <CardContent class="p-6 sm:p-8 lg:p-10">
-                        <form @submit.prevent="formData.post(store().url)" class="space-y-8 sm:space-y-10">
-                            
-                            <!-- Erreurs globales -->
-                            <div v-if="Object.keys(formData.errors).length > 0" class="p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl">
-                                <div class="flex items-center gap-2 text-raosc-red font-semibold text-sm mb-2">
-                                    <span class="text-base">⚠️</span>
-                                    Veuillez corriger les erreurs
-                                </div>
-                                <ul class="text-xs text-raosc-red/80 space-y-1 ml-6 list-disc">
-                                    <li v-for="(error, field) in formData.errors" :key="field">{{ error }}</li>
-                                </ul>
+            <!-- ============================================ -->
+            <!-- NAVIGATION PAR SECTIONS (STICKY) -->
+            <!-- ============================================ -->
+            <div class="sticky top-0 z-30 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 shadow-sm">
+                <div class="container mx-auto px-6 lg:px-12">
+                    <div class="flex items-center justify-between overflow-x-auto py-3 gap-2">
+                        <button
+                            v-for="section in sections"
+                            :key="section.id"
+                            @click="scrollToSection(section.id)"
+                            :class="[
+                                'flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 whitespace-nowrap',
+                                activeSection === section.id 
+                                    ? 'bg-raosc-green text-white shadow-md' 
+                                    : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                            ]"
+                        >
+                            <component :is="section.icon" class="w-4 h-4" />
+                            {{ section.label }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- FORMULAIRE PRINCIPAL -->
+            <!-- ============================================ -->
+            <div class="container mx-auto px-6 lg:px-12 py-10 pb-20">
+                <div class="max-w-4xl mx-auto">
+                    
+                    <form @submit.prevent="onSubmit" class="space-y-8">
+                        
+                        <!-- Erreurs globales -->
+                        <div v-if="Object.keys(formData.errors).length > 0" class="p-5 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-2xl">
+                            <div class="flex items-center gap-2 text-red-600 font-semibold text-sm mb-3">
+                                <AlertCircle class="w-5 h-5" />
+                                Veuillez corriger les erreurs suivantes
                             </div>
+                            <ul class="text-sm text-red-600/80 space-y-1 ml-6 list-disc">
+                                <li v-for="(error, field) in formData.errors" :key="field">{{ error }}</li>
+                            </ul>
+                        </div>
 
-                            <!-- Informations Générales -->
-                            <section>
-                                <div class="flex items-center gap-3 mb-6 pb-3 border-b border-zinc-200 dark:border-zinc-800">
-                                    <div class="h-9 w-9 rounded-lg bg-raosc-green/10 flex items-center justify-center text-raosc-green">
-                                        <Building2 class="h-4 w-4" />
+                        <!-- ======================================== -->
+                        <!-- SECTION 1: INFORMATIONS GÉNÉRALES -->
+                        <!-- ======================================== -->
+                        <section id="general" class="scroll-mt-20">
+                            <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm">
+                                <div class="px-6 py-4 bg-gradient-to-r from-raosc-green/5 to-transparent border-b border-zinc-200 dark:border-zinc-800">
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-10 w-10 rounded-xl bg-raosc-green/10 flex items-center justify-center">
+                                            <Building2 class="h-5 w-5 text-raosc-green" />
+                                        </div>
+                                        <div>
+                                            <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Informations générales</h2>
+                                            <p class="text-xs text-zinc-500">Identité et présentation de votre organisation</p>
+                                        </div>
                                     </div>
-                                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Identité de l'OSC</h2>
                                 </div>
-
-                                <div class="space-y-5">
+                                
+                                <div class="p-6 space-y-5">
                                     <!-- Nom -->
                                     <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            Nom officiel <span class="text-raosc-red">*</span>
+                                        <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                            Nom officiel <span class="text-red-500">*</span>
                                         </label>
                                         <input
                                             v-model="formData.name"
                                             type="text"
                                             required
                                             placeholder="Ex: Développement Pour Tous"
-                                            class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
-                                            :class="{ 'border-raosc-red': formData.errors.name }"
+                                            class="w-full h-12 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all"
+                                            :class="{ 'border-red-500': formData.errors.name }"
                                         />
-                                        <Transition name="slide-down">
-                                            <p v-if="formData.errors.name" class="text-raosc-red text-xs mt-1">{{ formData.errors.name }}</p>
-                                        </Transition>
+                                        <p v-if="formData.errors.name" class="text-red-500 text-xs mt-1">{{ formData.errors.name }}</p>
+                                    </div>
+
+                                    <!-- Grille 2 colonnes -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                        <!-- N° enregistrement -->
+                                        <div>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                N° Enregistrement
+                                            </label>
+                                            <input
+                                                v-model="formData.registration_number"
+                                                type="text"
+                                                placeholder="Ex: 2024/001/MISP"
+                                                class="w-full h-12 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all"
+                                            />
+                                        </div>
+
+                                        <!-- Date de fondation -->
+                                        <div>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                <Calendar class="w-4 h-4 inline mr-1" /> Date de fondation
+                                            </label>
+                                            <input
+                                                v-model="formData.founded_date"
+                                                type="date"
+                                                class="w-full h-12 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all"
+                                            />
+                                        </div>
+
+                                        <!-- Nombre de membres -->
+                                        <div>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                <Users class="w-4 h-4 inline mr-1" /> Nombre de membres
+                                            </label>
+                                            <input
+                                                v-model="formData.member_count"
+                                                type="number"
+                                                placeholder="Ex: 25"
+                                                class="w-full h-12 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all"
+                                            />
+                                        </div>
                                     </div>
 
                                     <!-- Domaines d'intervention -->
                                     <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            Domaines d'intervention <span class="text-raosc-red">*</span>
+                                        <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
+                                            Domaines d'intervention <span class="text-red-500">*</span>
                                         </label>
-                                        <div class="flex flex-wrap gap-2 p-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700">
+                                        <div class="flex flex-wrap gap-2 p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-zinc-200 dark:border-zinc-700">
                                             <button
                                                 v-for="cat in categories"
                                                 :key="cat.id"
                                                 type="button"
                                                 @click="toggleCategory(cat.id)"
-                                                class="px-3 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-300 border"
+                                                class="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 border"
                                                 :class="formData.categories.includes(cat.id) 
                                                     ? 'bg-raosc-green text-white border-raosc-green shadow-sm' 
                                                     : 'bg-white dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-600 hover:border-raosc-green/50 hover:scale-105'"
@@ -228,402 +335,393 @@ const resetForm = () => {
                                             <button
                                                 type="button"
                                                 @click="showOtherCategory = !showOtherCategory"
-                                                class="px-3 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-300 border"
+                                                class="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 border"
                                                 :class="showOtherCategory 
                                                     ? 'bg-raosc-yellow text-zinc-900 border-raosc-yellow shadow-sm' 
                                                     : 'bg-white dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-600 hover:border-raosc-yellow/50 hover:scale-105'"
                                             >
-                                                Autre +
+                                                Autre <Plus v-if="!showOtherCategory" class="w-3 h-3 inline ml-1" />
                                             </button>
                                         </div>
-                                        <Transition name="slide-down">
-                                            <div v-if="showOtherCategory" class="mt-3">
-                                                <input
-                                                    v-model="formData.other_category"
-                                                    type="text"
-                                                    placeholder="Saisissez votre catégorie..."
-                                                    class="w-full h-10 px-4 rounded-xl border-2 border-raosc-yellow/30 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-yellow outline-none transition-all"
-                                                />
-                                            </div>
-                                        </Transition>
-                                        <Transition name="slide-down">
-                                            <p v-if="formData.errors.categories" class="text-raosc-red text-xs mt-1">{{ formData.errors.categories }}</p>
-                                        </Transition>
-                                    </div>
-
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                        <!-- Membres -->
-                                        <div>
-                                            <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                                Nombre de membres
-                                            </label>
+                                        <div v-if="showOtherCategory" class="mt-3">
                                             <input
-                                                v-model="formData.member_count"
-                                                type="number"
-                                                placeholder="Ex: 25"
-                                                class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
+                                                v-model="formData.other_category"
+                                                type="text"
+                                                placeholder="Saisissez votre catégorie..."
+                                                class="w-full h-10 px-4 rounded-xl border-2 border-raosc-yellow/30 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-yellow outline-none transition-all"
                                             />
                                         </div>
+                                        <p v-if="formData.errors.categories" class="text-red-500 text-xs mt-1">{{ formData.errors.categories }}</p>
                                     </div>
 
                                     <!-- Résumé -->
                                     <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            Résumé de mission <span class="text-raosc-red">*</span>
+                                        <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                            Résumé de mission <span class="text-red-500">*</span>
                                         </label>
                                         <textarea
                                             v-model="formData.short_description"
                                             required
                                             rows="2"
                                             placeholder="Décrivez en quelques mots l'essence de votre engagement..."
-                                            class="w-full px-4 py-2.5 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300 resize-none"
-                                            :class="{ 'border-raosc-red': formData.errors.short_description }"
+                                            class="w-full px-4 py-3 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all resize-none"
+                                            :class="{ 'border-red-500': formData.errors.short_description }"
                                         ></textarea>
-                                        <Transition name="slide-down">
-                                            <p v-if="formData.errors.short_description" class="text-raosc-red text-xs mt-1">{{ formData.errors.short_description }}</p>
-                                        </Transition>
+                                        <p v-if="formData.errors.short_description" class="text-red-500 text-xs mt-1">{{ formData.errors.short_description }}</p>
                                     </div>
 
                                     <!-- Description détaillée -->
                                     <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            <FileText class="w-3 h-3 inline mr-1" /> Description détaillée
+                                        <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                            <FileText class="w-4 h-4 inline mr-1" /> Description détaillée
                                         </label>
                                         <textarea
                                             v-model="formData.description"
                                             rows="4"
                                             placeholder="Objectifs, historique, réalisations majeures..."
-                                            class="w-full px-4 py-2.5 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300 resize-y"
+                                            class="w-full px-4 py-3 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all resize-y"
                                         ></textarea>
-                                        <Transition name="slide-down">
-                                            <p v-if="formData.errors.description" class="text-raosc-red text-xs mt-1">{{ formData.errors.description }}</p>
-                                        </Transition>
                                     </div>
 
-                                    <!-- Enregistrement et Date -->
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                        <div>
-                                            <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                                N° Enregistrement Officiel
-                                            </label>
-                                            <input
-                                                v-model="formData.registration_number"
-                                                type="text"
-                                                placeholder="Ex: 2024/001/MISP/..."
-                                                class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                                <Calendar class="w-3 h-3 inline mr-1" /> Date de Fondation
-                                            </label>
-                                            <input
-                                                v-model="formData.founded_date"
-                                                type="date"
-                                                class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <!-- Logo et Galerie -->
+                                    <!-- Logo et galerie -->
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                         <!-- Logo -->
                                         <div>
-                                            <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                                <Upload class="w-3 h-3 inline mr-1" /> Logo <span class="text-raosc-red">*</span>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                <Camera class="w-4 h-4 inline mr-1" /> Logo <span class="text-red-500">*</span>
                                             </label>
                                             <div 
                                                 @dragover.prevent="isDragging = true"
                                                 @dragleave.prevent="isDragging = false"
                                                 @drop.prevent="handleLogoDrop"
-                                                :class="['border-2 border-dashed rounded-xl p-4 text-center transition-all duration-300 cursor-pointer',
+                                                @click="triggerLogoUpload"
+                                                :class="[
+                                                    'border-2 border-dashed rounded-xl p-4 text-center transition-all duration-300 cursor-pointer',
                                                     logoPreview ? 'border-raosc-green bg-raosc-green/5' : 'border-zinc-300 dark:border-zinc-600 hover:border-raosc-green hover:bg-raosc-green/5',
-                                                    isDragging ? 'border-raosc-green bg-raosc-green/10 scale-[0.99]' : '']"
-                                                @click="triggerLogoUpload">
+                                                    isDragging ? 'border-raosc-green bg-raosc-green/10 scale-[0.99]' : ''
+                                                ]"
+                                            >
                                                 <div v-if="logoPreview" class="relative inline-block">
-                                                    <img :src="logoPreview" class="h-24 w-full object-cover rounded-lg" />
+                                                    <img :src="logoPreview" class="h-24 w-auto max-w-full object-contain rounded-lg mx-auto" />
                                                     <button type="button" @click.stop="removeLogo" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors">
-                                                        <X class="w-3 h-3" />
+                                                        <Trash2 class="w-3 h-3" />
                                                     </button>
                                                 </div>
                                                 <div v-else class="flex flex-col items-center gap-2">
-                                                    <Upload class="w-6 h-6 text-zinc-400" />
+                                                    <Upload class="w-8 h-8 text-zinc-400" />
                                                     <p class="text-xs text-zinc-500">Glissez ou cliquez</p>
-                                                    <p class="text-[10px] text-zinc-400">PNG, JPG, WEBP</p>
+                                                    <p class="text-[10px] text-zinc-400">PNG, JPG, WEBP (max 2MB)</p>
                                                 </div>
                                                 <input ref="logoInput" type="file" accept="image/jpeg, image/png, image/webp" @change="handleLogoUpload" class="hidden" />
                                             </div>
-                                            <Transition name="slide-down">
-                                                <p v-if="formData.errors.logo" class="text-raosc-red text-xs mt-1">{{ formData.errors.logo }}</p>
-                                            </Transition>
+                                            <p v-if="formData.errors.logo" class="text-red-500 text-xs mt-1">{{ formData.errors.logo }}</p>
                                         </div>
 
                                         <!-- Galerie -->
                                         <div>
-                                            <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                                <Upload class="w-3 h-3 inline mr-1" /> Galerie photos <span class="text-raosc-red">*</span>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                <ImageIcon class="w-4 h-4 inline mr-1" /> Galerie photos <span class="text-red-500">*</span>
                                             </label>
                                             <input
-                                                id="gallery-upload"
                                                 type="file"
                                                 accept="image/jpeg, image/png, image/webp"
                                                 multiple
                                                 :required="formData.gallery.length === 0"
                                                 @change="handleGalleryUpload"
-                                                class="w-full text-xs text-zinc-500 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-raosc-green/10 file:text-raosc-green hover:file:bg-raosc-green/20 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800"
+                                                class="w-full text-sm text-zinc-500 dark:text-zinc-400 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-raosc-green/10 file:text-raosc-green hover:file:bg-raosc-green/20 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800 p-2"
                                             />
                                             <div v-if="galleryPreviews.length > 0" class="flex flex-wrap gap-2 mt-3">
-                                                <div v-for="(preview, idx) in galleryPreviews" :key="idx" class="relative w-14 h-14 group">
+                                                <div v-for="(preview, idx) in galleryPreviews.slice(0, 8)" :key="idx" class="relative w-16 h-16 group">
                                                     <img :src="preview.url" class="w-full h-full object-cover rounded-lg border border-zinc-200 dark:border-zinc-700" />
                                                     <button type="button" @click="removeGalleryImage(idx)" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600">
-                                                        <X class="w-2.5 h-2.5" />
+                                                        <Trash2 class="w-2.5 h-2.5" />
                                                     </button>
                                                 </div>
+                                                <div v-if="galleryPreviews.length > 8" class="w-16 h-16 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-xs text-zinc-500">
+                                                    +{{ galleryPreviews.length - 8 }}
+                                                </div>
                                             </div>
-                                            <p class="text-[10px] text-zinc-400 mt-1">Jusqu'à 10 images</p>
-                                            <Transition name="slide-down">
-                                                <p v-if="formData.errors.gallery" class="text-raosc-red text-xs mt-1">{{ formData.errors.gallery }}</p>
-                                            </Transition>
+                                            <p class="text-xs text-zinc-400 mt-1">Jusqu'à 10 images</p>
+                                            <p v-if="formData.errors.gallery" class="text-red-500 text-xs mt-1">{{ formData.errors.gallery }}</p>
                                         </div>
                                     </div>
                                 </div>
-                            </section>
-
-                            <!-- Documents Officiels -->
-                            <section>
-                                <div class="flex items-center gap-3 mb-6 pb-3 border-b border-zinc-200 dark:border-zinc-800">
-                                    <div class="h-9 w-9 rounded-lg bg-blue-600/10 flex items-center justify-center text-blue-600">
-                                        <FileText class="h-4 w-4" />
-                                    </div>
-                                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Documents Officiels</h2>
-                                </div>
-
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                    <!-- Document de présentation -->
-                                    <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            Document de présentation (PDF/Doc)
-                                        </label>
-                                        <input
-                                            type="file"
-                                            accept=".pdf,.doc,.docx"
-                                            @input="formData.presentation_doc = ($event.target as HTMLInputElement).files?.[0] || null"
-                                            class="w-full text-xs text-zinc-500 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600/10 file:text-blue-600 hover:file:bg-blue-600/20 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800"
-                                        />
-                                        <p class="text-[10px] text-zinc-400 mt-1">Visible par le public sur votre profil</p>
-                                    </div>
-
-                                    <!-- Documents de légalisation -->
-                                    <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            Preuves d'existence (Statuts, Règlements...)
-                                        </label>
-                                        <input
-                                            type="file"
-                                            multiple
-                                            accept=".pdf,.doc,.docx,image/*"
-                                            @input="formData.legal_docs = Array.from(($event.target as HTMLInputElement).files || [])"
-                                            class="w-full text-xs text-zinc-500 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-zinc-600/10 file:text-zinc-600 hover:file:bg-zinc-600/20 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800"
-                                        />
-                                        <p class="text-[10px] text-zinc-400 mt-1">🔒 Privé : Uniquement pour les admins et vous</p>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <!-- Équipe Dirigeante -->
-                            <section>
-                                <div class="flex items-center gap-3 mb-6 pb-3 border-b border-zinc-200 dark:border-zinc-800">
-                                    <div class="h-9 w-9 rounded-lg bg-raosc-red/10 flex items-center justify-center text-raosc-red">
-                                        <Briefcase class="h-4 w-4" />
-                                    </div>
-                                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Équipe Dirigeante</h2>
-                                </div>
-
-                                <div class="space-y-8">
-                                    <!-- Responsable -->
-                                    <div class="p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-zinc-200 dark:border-zinc-700">
-                                        <h3 class="text-sm font-bold text-raosc-green mb-4 flex items-center gap-2">
-                                            <span class="h-2 w-2 rounded-full bg-raosc-green"></span> Responsable (Président/Directeur) <span class="text-raosc-red">*</span>
-                                        </h3>
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                            <div>
-                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Nom Complet</label>
-                                                <input v-model="formData.responsible_name" type="text" required class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
-                                            </div>
-                                            <div>
-                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Email (Privé)</label>
-                                                <input v-model="formData.responsible_email" type="email" required class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
-                                            </div>
-                                            <div>
-                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Téléphone (Privé)</label>
-                                                <input v-model="formData.responsible_phone" type="tel" required class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
-                                            </div>
-                                            <div>
-                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Photo (Publique) <span class="text-raosc-red">*</span></label>
-                                                <input type="file" required accept="image/*" @input="formData.responsible_photo = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-xs border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
-                                            </div>
-                                            <div class="sm:col-span-2">
-                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Pièce d'Identité / Passeport (Privé) <span class="text-raosc-red">*</span></label>
-                                                <input type="file" required accept=".pdf,image/*" @input="formData.responsible_id_doc = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-xs border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Vice-Responsable -->
-                                    <div class="p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-zinc-200 dark:border-zinc-700">
-                                        <h3 class="text-sm font-bold text-zinc-500 mb-4 flex items-center gap-2">
-                                            <span class="h-2 w-2 rounded-full bg-zinc-400"></span> Vice-Responsable (Optionnel)
-                                        </h3>
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                            <div>
-                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Nom Complet</label>
-                                                <input v-model="formData.vice_responsible_name" type="text" class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
-                                            </div>
-                                            <div>
-                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Email (Privé)</label>
-                                                <input v-model="formData.vice_responsible_email" type="email" class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
-                                            </div>
-                                            <div>
-                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Téléphone (Privé)</label>
-                                                <input v-model="formData.vice_responsible_phone" type="tel" class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
-                                            </div>
-                                            <div>
-                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Photo (Publique)</label>
-                                                <input type="file" accept="image/*" @input="formData.vice_responsible_photo = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-xs border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
-                                            </div>
-                                            <div class="sm:col-span-2">
-                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Pièce d'Identité / Passeport (Privé)</label>
-                                                <input type="file" accept=".pdf,image/*" @input="formData.vice_responsible_id_doc = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-xs border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <!-- Coordonnées -->
-                            <section>
-                                <div class="flex items-center gap-3 mb-6 pb-3 border-b border-zinc-200 dark:border-zinc-800">
-                                    <div class="h-9 w-9 rounded-lg bg-raosc-yellow/10 flex items-center justify-center text-raosc-yellow">
-                                        <Info class="h-4 w-4" />
-                                    </div>
-                                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Localisation & Contact</h2>
-                                </div>
-
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                    <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            <Mail class="w-3 h-3 inline mr-1" /> Email <span class="text-raosc-red">*</span>
-                                        </label>
-                                        <input
-                                            v-model="formData.email"
-                                            type="email"
-                                            required
-                                            placeholder="contact@votre-ong.org"
-                                            class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
-                                            :class="{ 'border-raosc-red': formData.errors.email }"
-                                        />
-                                        <Transition name="slide-down">
-                                            <p v-if="formData.errors.email" class="text-raosc-red text-xs mt-1">{{ formData.errors.email }}</p>
-                                        </Transition>
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            <Phone class="w-3 h-3 inline mr-1" /> Téléphone
-                                        </label>
-                                        <CountryPhoneInput v-model="formData.phone" />
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            <Globe class="w-3 h-3 inline mr-1" /> Site Web
-                                        </label>
-                                        <input
-                                            v-model="formData.website"
-                                            type="url"
-                                            placeholder="https://www.mon-ong.org"
-                                            class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
-                                        />
-                                        <Transition name="slide-down">
-                                            <p v-if="formData.errors.website" class="text-raosc-red text-xs mt-1">{{ formData.errors.website }}</p>
-                                        </Transition>
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            <MapPin class="w-3 h-3 inline mr-1" /> Pays <span class="text-raosc-red">*</span>
-                                        </label>
-                                        <input
-                                            v-model="formData.country"
-                                            type="text"
-                                            required
-                                            placeholder="Cameroun"
-                                            class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
-                                            :class="{ 'border-raosc-red': formData.errors.country }"
-                                        />
-                                        <Transition name="slide-down">
-                                            <p v-if="formData.errors.country" class="text-raosc-red text-xs mt-1">{{ formData.errors.country }}</p>
-                                        </Transition>
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            Ville <span class="text-raosc-red">*</span>
-                                        </label>
-                                        <input
-                                            v-model="formData.city"
-                                            type="text"
-                                            required
-                                            placeholder="Yaoundé"
-                                            class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
-                                        />
-                                    </div>
-
-                                    <div class="sm:col-span-2">
-                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
-                                            <MapPin class="w-3 h-3 inline mr-1" /> Adresse détaillée
-                                        </label>
-                                        <input
-                                            v-model="formData.address"
-                                            type="text"
-                                            placeholder="Rue, Quartier, Porte..."
-                                            class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
-                                        />
-                                    </div>
-                                </div>
-                            </section>
-
-                            <!-- Actions -->
-                            <div class="pt-6 border-t-2 border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row justify-end gap-3">
-                                <Link :href="isPublic ? raoIndex().url : dashboardRao().url">
-                                    <Button type="button" variant="outline" class="w-full sm:w-auto rounded-xl px-6 py-2.5 text-xs font-semibold border-2 border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all duration-300">
-                                        Annuler
-                                    </Button>
-                                </Link>
-                                <Button
-                                    type="submit"
-                                    :disabled="formData.processing"
-                                    class="w-full sm:w-auto bg-raosc-green hover:bg-raosc-green/90 text-white rounded-xl px-8 py-2.5 text-xs font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-60 disabled:hover:scale-100"
-                                >
-                                    <span v-if="formData.processing" class="flex items-center gap-2">
-                                        <span class="animate-pulse">⏳</span> Traitement...
-                                    </span>
-                                    <span v-else class="flex items-center gap-2">
-                                        Soumettre <ArrowRight class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                                    </span>
-                                </Button>
                             </div>
-                        </form>
-                    </CardContent>
-                </Card>
+                        </section>
 
-                <!-- Charte -->
-                <div class="mt-10 text-center flex flex-col items-center">
-                    <div class="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-raosc-green mb-3">
-                        <CheckCircle2 class="h-4 w-4" />
+                        <!-- ======================================== -->
+                        <!-- SECTION 2: DOCUMENTS OFFICIELS -->
+                        <!-- ======================================== -->
+                        <section id="documents" class="scroll-mt-20">
+                            <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm">
+                                <div class="px-6 py-4 bg-gradient-to-r from-blue-500/5 to-transparent border-b border-zinc-200 dark:border-zinc-800">
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-10 w-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                                            <FileText class="h-5 w-5 text-blue-500" />
+                                        </div>
+                                        <div>
+                                            <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Documents officiels</h2>
+                                            <p class="text-xs text-zinc-500">Justificatifs de l'existence légale de votre organisation</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-6 space-y-5">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                        <!-- Document de présentation -->
+                                        <div>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                Document de présentation
+                                            </label>
+                                            <input
+                                                type="file"
+                                                accept=".pdf,.doc,.docx"
+                                                @input="formData.presentation_doc = ($event.target as HTMLInputElement).files?.[0] || null"
+                                                class="w-full text-sm text-zinc-500 dark:text-zinc-400 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500/10 file:text-blue-600 hover:file:bg-blue-500/20 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800 p-2"
+                                            />
+                                            <p class="text-xs text-zinc-400 mt-1">📄 Visible par le public sur votre profil</p>
+                                        </div>
+
+                                        <!-- Documents légaux -->
+                                        <div>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                Preuves d'existence légale <span class="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                type="file"
+                                                multiple
+                                                required
+                                                accept=".pdf,.doc,.docx,image/*"
+                                                @input="formData.legal_docs = Array.from(($event.target as HTMLInputElement).files || [])"
+                                                class="w-full text-sm text-zinc-500 dark:text-zinc-400 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-zinc-600/10 file:text-zinc-600 hover:file:bg-zinc-600/20 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800 p-2"
+                                            />
+                                            <p class="text-xs text-zinc-400 mt-1">🔒 Privé : Statuts, récépissé, etc.</p>
+                                            <p v-if="formData.errors.legal_docs" class="text-red-500 text-xs mt-1">{{ formData.errors.legal_docs }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- ======================================== -->
+                        <!-- SECTION 3: ÉQUIPE DIRIGEANTE -->
+                        <!-- ======================================== -->
+                        <section id="leadership" class="scroll-mt-20">
+                            <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm">
+                                <div class="px-6 py-4 bg-gradient-to-r from-red-500/5 to-transparent border-b border-zinc-200 dark:border-zinc-800">
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-10 w-10 rounded-xl bg-red-500/10 flex items-center justify-center">
+                                            <Briefcase class="h-5 w-5 text-red-500" />
+                                        </div>
+                                        <div>
+                                            <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Équipe dirigeante</h2>
+                                            <p class="text-xs text-zinc-500">Informations sur les responsables légaux</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-6 space-y-6">
+                                    <!-- Responsable principal -->
+                                    <div class="p-5 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-zinc-200 dark:border-zinc-700">
+                                        <h3 class="text-base font-bold text-raosc-green mb-4 flex items-center gap-2">
+                                            <Shield class="w-4 h-4" /> Responsable principal <span class="text-red-500 text-sm">*</span>
+                                        </h3>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Nom complet</label>
+                                                <input v-model="formData.responsible_name" type="text" required class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none transition-all" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Email (privé)</label>
+                                                <input v-model="formData.responsible_email" type="email" required class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none transition-all" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Téléphone (privé)</label>
+                                                <input v-model="formData.responsible_phone" type="tel" required class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none transition-all" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Photo (publique)</label>
+                                                <input type="file" required accept="image/*" @input="formData.responsible_photo = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-sm border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
+                                            </div>
+                                            <div class="sm:col-span-2">
+                                                <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Pièce d'identité (privé)</label>
+                                                <input type="file" required accept=".pdf,image/*" @input="formData.responsible_id_doc = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-sm border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Vice-responsable (optionnel) -->
+                                    <div class="p-5 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-zinc-200 dark:border-zinc-700">
+                                        <h3 class="text-base font-bold text-zinc-500 mb-4 flex items-center gap-2">
+                                            <Users class="w-4 h-4" /> Vice-responsable (optionnel)
+                                        </h3>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Nom complet</label>
+                                                <input v-model="formData.vice_responsible_name" type="text" class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none transition-all" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Email (privé)</label>
+                                                <input v-model="formData.vice_responsible_email" type="email" class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none transition-all" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Téléphone (privé)</label>
+                                                <input v-model="formData.vice_responsible_phone" type="tel" class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none transition-all" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Photo (publique)</label>
+                                                <input type="file" accept="image/*" @input="formData.vice_responsible_photo = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-sm border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
+                                            </div>
+                                            <div class="sm:col-span-2">
+                                                <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Pièce d'identité (privé)</label>
+                                                <input type="file" accept=".pdf,image/*" @input="formData.vice_responsible_id_doc = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-sm border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- ======================================== -->
+                        <!-- SECTION 4: LOCALISATION & CONTACT -->
+                        <!-- ======================================== -->
+                        <section id="contact" class="scroll-mt-20">
+                            <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm">
+                                <div class="px-6 py-4 bg-gradient-to-r from-yellow-500/5 to-transparent border-b border-zinc-200 dark:border-zinc-800">
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-10 w-10 rounded-xl bg-yellow-500/10 flex items-center justify-center">
+                                            <MapPin class="h-5 w-5 text-yellow-600" />
+                                        </div>
+                                        <div>
+                                            <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Localisation & contact</h2>
+                                            <p class="text-xs text-zinc-500">Coordonnées de votre organisation</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                        <!-- Email -->
+                                        <div>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                <Mail class="w-4 h-4 inline mr-1" /> Email <span class="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                v-model="formData.email"
+                                                type="email"
+                                                required
+                                                placeholder="contact@votre-ong.org"
+                                                class="w-full h-12 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all"
+                                                :class="{ 'border-red-500': formData.errors.email }"
+                                            />
+                                            <p v-if="formData.errors.email" class="text-red-500 text-xs mt-1">{{ formData.errors.email }}</p>
+                                        </div>
+
+                                        <!-- Téléphone -->
+                                        <div>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                <Phone class="w-4 h-4 inline mr-1" /> Téléphone
+                                            </label>
+                                            <CountryPhoneInput v-model="formData.phone" />
+                                        </div>
+
+                                        <!-- Site web -->
+                                        <div>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                <Globe class="w-4 h-4 inline mr-1" /> Site web
+                                            </label>
+                                            <input
+                                                v-model="formData.website"
+                                                type="url"
+                                                placeholder="https://www.mon-ong.org"
+                                                class="w-full h-12 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all"
+                                            />
+                                        </div>
+
+                                        <!-- Pays -->
+                                        <div>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                <MapPin class="w-4 h-4 inline mr-1" /> Pays <span class="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                v-model="formData.country"
+                                                type="text"
+                                                required
+                                                placeholder="Cameroun"
+                                                class="w-full h-12 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all"
+                                                :class="{ 'border-red-500': formData.errors.country }"
+                                            />
+                                            <p v-if="formData.errors.country" class="text-red-500 text-xs mt-1">{{ formData.errors.country }}</p>
+                                        </div>
+
+                                        <!-- Ville -->
+                                        <div>
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                Ville <span class="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                v-model="formData.city"
+                                                type="text"
+                                                required
+                                                placeholder="Yaoundé"
+                                                class="w-full h-12 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all"
+                                            />
+                                        </div>
+
+                                        <!-- Adresse -->
+                                        <div class="sm:col-span-2">
+                                            <label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                                                Adresse détaillée
+                                            </label>
+                                            <input
+                                                v-model="formData.address"
+                                                type="text"
+                                                placeholder="Rue, quartier, numéro..."
+                                                class="w-full h-12 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- ======================================== -->
+                        <!-- BOUTONS D'ACTION -->
+                        <!-- ======================================== -->
+                        <div class="flex flex-col sm:flex-row justify-between gap-4 pt-4">
+                            <Link :href="isPublic ? raoIndex().url : dashboardRao().url">
+                                <Button type="button" variant="outline" class="w-full sm:w-auto rounded-xl px-8 py-6 text-sm font-semibold border-2 border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all duration-300">
+                                    Annuler
+                                </Button>
+                            </Link>
+                            <Button
+                                type="submit"
+                                :disabled="formData.processing || isSubmitting"
+                                class="w-full sm:w-auto bg-raosc-green hover:bg-raosc-green/90 text-white rounded-xl px-10 py-6 text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-60 disabled:hover:scale-100"
+                            >
+                                <span v-if="formData.processing || isSubmitting" class="flex items-center gap-2">
+                                    <span class="animate-spin">⏳</span> Traitement...
+                                </span>
+                                <span v-else class="flex items-center gap-2">
+                                    Soumettre la demande
+                                    <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                </span>
+                            </Button>
+                        </div>
+                    </form>
+
+                    <!-- Charte de confiance -->
+                    <div class="mt-12 text-center">
+                        <div class="inline-flex items-center justify-center mb-4">
+                            <div class="h-12 w-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-raosc-green">
+                                <CheckCircle2 class="h-6 w-6" />
+                            </div>
+                        </div>
+                        <p class="text-[11px] font-bold tracking-[0.2em] text-zinc-400 uppercase mb-2">Charte de confiance</p>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-lg mx-auto leading-relaxed">
+                            En soumettant ce formulaire, vous certifiez que l'organisation existe légalement et que vous avez l'autorité pour l'inscrire au RAOSC. Toutes les informations fournies sont vérifiables.
+                        </p>
                     </div>
-                    <p class="text-[10px] font-bold tracking-[0.2em] text-zinc-400 uppercase mb-1">Charte de confiance</p>
-                    <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-lg leading-relaxed">En soumettant ce formulaire, vous certifiez que l'organisation existe légalement et que vous avez l'autorité pour l'inscrire au RAOSC.</p>
                 </div>
             </div>
         </div>
@@ -631,19 +729,21 @@ const resetForm = () => {
 </template>
 
 <style scoped>
+.scroll-mt-20 {
+    scroll-margin-top: 80px;
+}
+
+/* Animations */
 .slide-down-enter-active {
     transition: all 0.2s ease-out;
 }
-
 .slide-down-leave-active {
     transition: all 0.15s ease-in;
 }
-
 .slide-down-enter-from {
     transform: translateY(-10px);
     opacity: 0;
 }
-
 .slide-down-leave-to {
     transform: translateY(-5px);
     opacity: 0;

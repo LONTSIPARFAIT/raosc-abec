@@ -18,7 +18,7 @@ class OrganizationSeeder extends Seeder
         $user = User::where('role', 'admin')->first() ?: User::first();
 
         $organizationsData = [
-            // CAMEROUN (5)
+            // CAMEROUN
             [
                 'name' => 'Savoir Pour Tous Cameroun',
                 'city' => 'Yaoundé', 'country' => 'Cameroun', 'phone' => '+237 670 00 00 01',
@@ -33,29 +33,7 @@ class OrganizationSeeder extends Seeder
                 'short_description' => 'Réduction de la mortalité maternelle.',
                 'responsible_name' => 'Dr. Alice Nkodo', 'member_count' => 25, 'status' => 'approved'
             ],
-            [
-                'name' => 'Femmes Tech Cameroun',
-                'city' => 'Douala', 'country' => 'Cameroun', 'phone' => '+237 655 11 22 33',
-                'email' => 'contact@femmestech.cm', 'category_slugs' => ['entrepreneuriat-tech'],
-                'short_description' => 'Codage et IA pour les femmes.',
-                'responsible_name' => 'Grace Epondo', 'member_count' => 12, 'status' => 'approved'
-            ],
-            [
-                'name' => 'Cœur d\'Afrique Solidarité',
-                'city' => 'Maroua', 'country' => 'Cameroun', 'phone' => '+237 677 33 44 55',
-                'email' => 'coeur@afrique-solidarite.cm', 'category_slugs' => ['droits-hommes'],
-                'short_description' => 'Soutien aux orphelins du Grand Nord.',
-                'responsible_name' => 'Bello Bouba', 'member_count' => 40, 'status' => 'approved'
-            ],
-            [
-                'name' => 'Eco-Watch Littoral',
-                'city' => 'Kribi', 'country' => 'Cameroun', 'phone' => '+237 691 00 22 44',
-                'email' => 'ecowatch@littoral.cm', 'category_slugs' => ['environnement-ecologie'],
-                'short_description' => 'Protection des mangroves et du littoral.',
-                'responsible_name' => 'Marc Etoundi', 'member_count' => 18, 'status' => 'approved'
-            ],
-
-            // SÉNÉGAL (3)
+            // SÉNÉGAL
             [
                 'name' => 'Teranga Digital',
                 'city' => 'Dakar', 'country' => 'Sénégal', 'phone' => '+221 77 123 45 67',
@@ -64,21 +42,13 @@ class OrganizationSeeder extends Seeder
                 'responsible_name' => 'Abdoulaye Wade Jr', 'member_count' => 30, 'status' => 'approved'
             ],
             [
-                'name' => 'Griots Modernes',
-                'city' => 'Saint-Louis', 'country' => 'Sénégal', 'phone' => '+221 76 987 65 43',
-                'email' => 'culture@griots.sn', 'category_slugs' => ['culture-patrimoine'],
-                'short_description' => 'Préservation des contes et traditions orales.',
-                'responsible_name' => 'Fatou Diome', 'member_count' => 10, 'status' => 'approved'
-            ],
-            [
                 'name' => 'Sahel Vert',
                 'city' => 'Thiès', 'country' => 'Sénégal', 'phone' => '+221 70 555 44 33',
                 'email' => 'sahel@vert.sn', 'category_slugs' => ['environnement-ecologie'],
                 'short_description' => 'Lutte contre la désertification par le reboisement.',
                 'responsible_name' => 'Ibrahima Fall', 'member_count' => 50, 'status' => 'approved'
             ],
-
-            // CÔTE D'IVOIRE (3)
+            // CÔTE D'IVOIRE
             [
                 'name' => 'Ivoire Agro-Innov',
                 'city' => 'Abidjan', 'country' => 'Côte d\'Ivoire', 'phone' => '+225 07 11 22 33 44',
@@ -93,15 +63,7 @@ class OrganizationSeeder extends Seeder
                 'short_description' => 'Réinsertion sociale par le sport.',
                 'responsible_name' => 'Koffi Kouamé', 'member_count' => 45, 'status' => 'approved'
             ],
-            [
-                'name' => 'Santé Pour Elles',
-                'city' => 'Yamoussoukro', 'country' => 'Côte d\'Ivoire', 'phone' => '+225 01 44 55 66 77',
-                'email' => 'sante@elles.ci', 'category_slugs' => ['sante-publique'],
-                'short_description' => 'Dépistage précoce du cancer du sein.',
-                'responsible_name' => 'Dr. Mariam Ouattara', 'member_count' => 20, 'status' => 'approved'
-            ],
-
-            // BÉNIN (2)
+            // BÉNIN
             [
                 'name' => 'EduTech Benin',
                 'city' => 'Cotonou', 'country' => 'Bénin', 'phone' => '+229 61 00 00 00',
@@ -109,15 +71,7 @@ class OrganizationSeeder extends Seeder
                 'short_description' => 'Tablettes solaires pour les écoles rurales.',
                 'responsible_name' => 'Koffi Azon', 'member_count' => 14, 'status' => 'approved'
             ],
-            [
-                'name' => 'Patrimoine Dahomey',
-                'city' => 'Ouidah', 'country' => 'Bénin', 'phone' => '+229 66 11 22 33',
-                'email' => 'culture@dahomey.bj', 'category_slugs' => ['culture-patrimoine'],
-                'short_description' => 'Restauration des palais royaux.',
-                'responsible_name' => 'Toussaint Louverture', 'member_count' => 8, 'status' => 'approved'
-            ],
-
-            // MALI (2)
+            // MALI
             [
                 'name' => 'Bamako Code Hub',
                 'city' => 'Bamako', 'country' => 'Mali', 'phone' => '+223 70 11 22 33',
@@ -125,15 +79,7 @@ class OrganizationSeeder extends Seeder
                 'short_description' => 'Centre de formation aux métiers du web.',
                 'responsible_name' => 'Moussa Traoré', 'member_count' => 12, 'status' => 'approved'
             ],
-            [
-                'name' => 'Solidarité Nord Mali',
-                'city' => 'Mopti', 'country' => 'Mali', 'phone' => '+223 66 44 55 66',
-                'email' => 'solidarite@mali.ml', 'category_slugs' => ['droits-hommes'],
-                'short_description' => 'Aide humanitaire aux déplacés de guerre.',
-                'responsible_name' => 'Oumar Sylla', 'member_count' => 60, 'status' => 'approved'
-            ],
-
-            // TOGO (1)
+            // TOGO
             [
                 'name' => 'Lomé Green City',
                 'city' => 'Lomé', 'country' => 'Togo', 'phone' => '+228 90 11 22 33',
@@ -141,8 +87,7 @@ class OrganizationSeeder extends Seeder
                 'short_description' => 'Agriculture urbaine et compostage.',
                 'responsible_name' => 'Kodjo Agbeyome', 'member_count' => 15, 'status' => 'approved'
             ],
-
-            // GABON (1)
+            // GABON
             [
                 'name' => 'Forêt Précieuse',
                 'city' => 'Libreville', 'country' => 'Gabon', 'phone' => '+241 07 11 22 33',
@@ -150,8 +95,7 @@ class OrganizationSeeder extends Seeder
                 'short_description' => 'Protection des éléphants de forêt.',
                 'responsible_name' => 'Brice Oligui', 'member_count' => 22, 'status' => 'approved'
             ],
-
-            // BURKINA FASO (1)
+            // BURKINA FASO
             [
                 'name' => 'Savoir Faso',
                 'city' => 'Ouagadougou', 'country' => 'Burkina Faso', 'phone' => '+226 25 11 22 33',
@@ -159,35 +103,91 @@ class OrganizationSeeder extends Seeder
                 'short_description' => 'Alphabétisation en langues locales.',
                 'responsible_name' => 'Thomas Sankara Jr', 'member_count' => 35, 'status' => 'approved'
             ],
-
-            // CONGO (1)
+            // NIGER
             [
-                'name' => 'Brazza Tech',
+                'name' => 'Niger Solaire',
+                'city' => 'Niamey', 'country' => 'Niger', 'phone' => '+227 96 00 11 22',
+                'email' => 'contact@niger-solaire.ne', 'category_slugs' => ['environnement-ecologie'],
+                'short_description' => 'Énergie solaire pour les villages du désert.',
+                'responsible_name' => 'Ousmane Mahamane', 'member_count' => 10, 'status' => 'approved'
+            ],
+            // TCHAD
+            [
+                'name' => 'Eau Vive Tchad',
+                'city' => 'N\'Djaména', 'country' => 'Tchad', 'phone' => '+235 66 00 99 88',
+                'email' => 'eau@tchad-vive.td', 'category_slugs' => ['sante-publique'],
+                'short_description' => 'Accès à l\'eau potable dans le Sahel.',
+                'responsible_name' => 'Idriss Deby', 'member_count' => 40, 'status' => 'approved'
+            ],
+            // GUINÉE
+            [
+                'name' => 'Guinée Sante Plus',
+                'city' => 'Conakry', 'country' => 'Guinée', 'phone' => '+224 621 00 00 00',
+                'email' => 'sante@guinee-plus.gn', 'category_slugs' => ['sante-publique'],
+                'short_description' => 'Lutte contre les maladies tropicales.',
+                'responsible_name' => 'Mamadi Doumbouya', 'member_count' => 28, 'status' => 'approved'
+            ],
+            // CONGO (BRAZZA)
+            [
+                'name' => 'Brazza Tech Hub',
                 'city' => 'Brazzaville', 'country' => 'Congo', 'phone' => '+242 05 11 22 33',
-                'email' => 'tech@brazza.cg', 'category_slugs' => ['entrepreneuriat-tech'],
-                'short_description' => 'Promotion de l\'inclusion numérique.',
+                'email' => 'tech@brazza-hub.cg', 'category_slugs' => ['entrepreneuriat-tech'],
+                'short_description' => 'Promotion de l\'innovation numérique au Congo.',
                 'responsible_name' => 'Denis Sassou', 'member_count' => 18, 'status' => 'approved'
             ],
-
-            // GUINÉE (1)
+            // RCA
             [
-                'name' => 'Guinée Sante',
-                'city' => 'Conakry', 'country' => 'Guinée', 'phone' => '+224 621 00 00 00',
-                'email' => 'sante@guinee.gn', 'category_slugs' => ['sante-publique'],
-                'short_description' => 'Lutte contre le paludisme.',
-                'responsible_name' => 'Mamadi Doumbouya', 'member_count' => 28, 'status' => 'approved'
+                'name' => 'Paix et Solidarité RCA',
+                'city' => 'Bangui', 'country' => 'République Centrafricaine', 'phone' => '+236 75 00 11 22',
+                'email' => 'paix@rca-solidarite.cf', 'category_slugs' => ['droits-hommes'],
+                'short_description' => 'Réconciliation et soutien aux victimes.',
+                'responsible_name' => 'Faustin Touadéra', 'member_count' => 60, 'status' => 'approved'
+            ],
+            // BURUNDI
+            [
+                'name' => 'Agri-Futur Burundi',
+                'city' => 'Gitega', 'country' => 'Burundi', 'phone' => '+257 22 00 11 22',
+                'email' => 'agri@burundi-futur.bi', 'category_slugs' => ['developpement-agricole'],
+                'short_description' => 'Agriculture de montagne et permaculture.',
+                'responsible_name' => 'Evariste Ndayishimiye', 'member_count' => 32, 'status' => 'approved'
+            ],
+            // MADAGASCAR
+            [
+                'name' => 'Madagascar Biodiversité',
+                'city' => 'Antananarivo', 'country' => 'Madagascar', 'phone' => '+261 20 00 11 22',
+                'email' => 'bio@mada.mg', 'category_slugs' => ['environnement-ecologie'],
+                'short_description' => 'Protection de la faune endémique.',
+                'responsible_name' => 'Andry Rajoelina', 'member_count' => 45, 'status' => 'approved'
+            ],
+            // RWANDA
+            [
+                'name' => 'Kigali Women In Tech',
+                'city' => 'Kigali', 'country' => 'Rwanda', 'phone' => '+250 788 00 11 22',
+                'email' => 'tech@kigali-women.rw', 'category_slugs' => ['entrepreneuriat-tech'],
+                'short_description' => 'Formation des femmes aux métiers du numérique.',
+                'responsible_name' => 'Paul Kagame Jr', 'member_count' => 55, 'status' => 'approved'
+            ],
+            // MAURITANIE
+            [
+                'name' => 'Dunes Solidaires',
+                'city' => 'Nouakchott', 'country' => 'Mauritanie', 'phone' => '+222 45 00 11 22',
+                'email' => 'dunes@mauritanie.mr', 'category_slugs' => ['droits-hommes'],
+                'short_description' => 'Soutien aux populations nomades.',
+                'responsible_name' => 'Mohamed Ould Ghazouani', 'member_count' => 20, 'status' => 'approved'
             ],
         ];
 
         $stockImages = [
-            'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600',
-            'https://images.unsplash.com/photo-1542385151-efd9000785a0?w=600',
-            'https://images.unsplash.com/photo-1526285759904-71d1170ed2cd?w=600',
-            'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=600',
-            'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600',
-            'https://images.unsplash.com/photo-1489440543227-a6d3d9369952?w=600',
-            'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600',
-            'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=600'
+            'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800', // Laughing people
+            'https://images.unsplash.com/photo-1523240715639-963c9a0b4740?w=800', // Students
+            'https://images.unsplash.com/photo-1573497620053-ea5310f94f17?w=800', // Business woman
+            'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800', // Tech
+            'https://images.unsplash.com/photo-1531123897727-8f129e16fd3c?w=800', // Woman
+            'https://images.unsplash.com/photo-1509095056764-6720bf39baad?w=800', // Children
+            'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800', // Community
+            'https://images.unsplash.com/photo-1526285759904-71d1170ed2cd?w=800', // Meeting
+            'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=800', // Office
+            'https://images.unsplash.com/photo-1573164574572-cb89e39749b4?w=800'  // Workshop
         ];
 
         foreach ($organizationsData as $index => $data) {
@@ -196,7 +196,7 @@ class OrganizationSeeder extends Seeder
             
             $data['user_id'] = $user->id;
             $data['slug'] = Str::slug($data['name']);
-            $data['description'] = $data['short_description'] . " Cette organisation travaille activement à " . $data['city'] . " pour améliorer les conditions de vie des populations locales à travers divers programmes de développement durable.";
+            $data['description'] = $data['short_description'] . " Cette organisation travaille activement à " . $data['city'] . " pour améliorer les conditions de vie des populations locales à travers divers programmes de développement durable, d'innovation et de solidarité communautaire. Nous croyons en l'impact local pour un changement global.";
             $data['address'] = "Quartier Central, Rue " . ($index + 1);
             $data['registration_number'] = strtoupper(substr(Str::slug($data['country']), 0, 2)) . "/ONG/" . (2020 + ($index % 5)) . "/" . (100 + $index);
             $data['founded_date'] = (2010 + ($index % 10)) . "-01-01";
@@ -206,6 +206,20 @@ class OrganizationSeeder extends Seeder
             $data['responsible_phone'] = $data['phone'];
             $data['responsible_photo'] = "https://api.dicebear.com/7.x/avataaars/svg?seed=" . urlencode($data['responsible_name']) . "&skinColor=47281e,614335,ae5d29";
             $data['responsible_id_doc'] = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
+
+            // Vice-responsible
+            $data['vice_responsible_name'] = "Marie-Louise " . explode(' ', $data['responsible_name'])[1];
+            $data['vice_responsible_email'] = "vice." . Str::slug($data['vice_responsible_name']) . "@" . explode('@', $data['email'])[1];
+            $data['vice_responsible_phone'] = $data['phone'];
+            $data['vice_responsible_photo'] = "https://api.dicebear.com/7.x/avataaars/svg?seed=" . urlencode($data['vice_responsible_name']) . "&skinColor=47281e,614335,ae5d29";
+            $data['vice_responsible_id_doc'] = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
+
+            // Legal Docs
+            $data['legal_docs'] = json_encode([
+                "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+            ]);
+            $data['presentation_doc'] = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
             
             $organization = Organization::updateOrCreate(
                 ['slug' => $data['slug']],
@@ -214,7 +228,6 @@ class OrganizationSeeder extends Seeder
 
             $catIds = OrganizationCategory::whereIn('slug', $catSlugs)->pluck('id')->toArray();
             if (empty($catIds)) {
-                // Fallback to a valid category if slug is slightly different
                 $catIds = [OrganizationCategory::first()->id];
             }
             $organization->categories()->sync($catIds);
@@ -229,4 +242,5 @@ class OrganizationSeeder extends Seeder
             );
         }
     }
+
 }

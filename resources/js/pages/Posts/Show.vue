@@ -58,7 +58,7 @@ onUnmounted(() => {
     <PublicLayout>
         <Head :title="`${post.title} | RAOSC`" />
 
-        <article class="bg-white dark:bg-zinc-950">
+        <article class="bg-zinc-50 dark:bg-zinc-950 selection:bg-raosc-green/30">
             
             <!-- ============================================ -->
             <!-- BARRE DE PROGRESSION FIXE EN HAUT -->
@@ -70,60 +70,61 @@ onUnmounted(() => {
             <!-- ============================================ -->
             <!-- HERO SECTION FULL WIDTH -->
             <!-- ============================================ -->
-            <div class="relative w-full min-h-[70vh] lg:min-h-[80vh] overflow-hidden">
-                <!-- Image de fond -->
-                <div v-if="post.cover_image" class="absolute inset-0">
-                    <img :src="post.cover_image" :alt="post.title" class="w-full h-full object-cover" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20"></div>
+            <div class="relative w-full min-h-[60vh] lg:min-h-[75vh] overflow-hidden flex flex-col justify-end">
+                <!-- Image de fond avec parallaxe simulé -->
+                <div v-if="post.cover_image" class="absolute inset-0 z-0">
+                    <img :src="post.cover_image" :alt="post.title" class="w-full h-full object-cover scale-105" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-50 dark:from-zinc-950 via-black/60 to-transparent"></div>
                 </div>
                 <div v-else class="absolute inset-0 bg-gradient-to-br from-raosc-green via-raosc-green/80 to-raosc-yellow/40"></div>
                 
-                <!-- Contenu Hero - Structure en colonnes -->
-                <div class="relative z-10 container mx-auto px-6 lg:px-12 py-20 lg:py-32 min-h-[70vh] lg:min-h-[80vh] flex flex-col justify-end">
-                    <!-- Métadonnées en ligne -->
-                    <div class="max-w-4xl">
-                        <div class="flex flex-wrap items-center gap-3 mb-6">
-                            <span v-if="post.category" class="px-4 py-1.5 bg-raosc-green text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg">
+                <!-- Contenu Hero -->
+                <div class="relative z-10 container mx-auto px-6 lg:px-12 pb-12 lg:pb-20">
+                    <div class="max-w-5xl">
+                        <div class="flex flex-wrap items-center gap-4 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                            <span v-if="post.category" class="px-5 py-2 bg-raosc-green text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-xl shadow-raosc-green/20">
                                 {{ post.category }}
                             </span>
-                            <span class="flex items-center gap-1.5 text-white/80 text-sm">
-                                <Clock class="w-4 h-4" /> {{ post.read_time || 3 }} min de lecture
-                            </span>
-                            <span class="flex items-center gap-1.5 text-white/80 text-sm">
-                                <Calendar class="w-4 h-4" /> {{ new Date(post.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) }}
-                            </span>
+                            <div class="flex items-center gap-4 text-white/90 text-xs font-bold uppercase tracking-wider backdrop-blur-md bg-black/20 px-4 py-2 rounded-full border border-white/10">
+                                <span class="flex items-center gap-1.5"><Clock class="w-4 h-4 text-raosc-yellow" /> {{ post.read_time || 3 }} min</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-white/30"></span>
+                                <span class="flex items-center gap-1.5"><Calendar class="w-4 h-4 text-raosc-yellow" /> {{ new Date(post.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) }}</span>
+                            </div>
                         </div>
                         
-                        <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.15] tracking-tight mb-8">
+                        <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight mb-10 drop-shadow-2xl animate-in fade-in slide-in-from-bottom-6 duration-1000">
                             {{ post.title }}
                         </h1>
-                    </div>
-                    
-                    <!-- Info auteur -->
-                    <div class="flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-white/20 max-w-4xl">
-                        <Link v-if="post.organization" :href="`/rao/orga/${post.organization.slug}`" class="group flex items-center gap-4">
-                            <div class="h-14 w-14 rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm border-2 border-white/30">
-                                <img v-if="post.organization.logo" :src="post.organization.logo" class="h-full w-full object-contain p-1" />
-                                <Building2 v-else class="w-full h-full text-white/60 p-2" />
+
+                        <!-- Floating Actions -->
+                        <div class="flex flex-wrap items-center justify-between gap-8 pt-10 border-t border-white/10 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+                            <Link v-if="post.organization" :href="`/rao/orga/${post.organization.slug}`" class="group flex items-center gap-5">
+                                <div class="h-16 w-16 rounded-2xl overflow-hidden bg-white shadow-2xl border-2 border-white/20 transform group-hover:scale-110 transition-all duration-500">
+                                    <img v-if="post.organization.logo" :src="post.organization.logo" class="h-full w-full object-contain p-2" />
+                                    <Building2 v-else class="w-full h-full text-zinc-400 p-3" />
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-white/50 text-[10px] font-black uppercase tracking-widest">Une publication de</p>
+                                    <p class="text-white font-black text-xl group-hover:text-raosc-yellow transition-colors tracking-tight">
+                                        {{ post.organization.name }}
+                                    </p>
+                                </div>
+                            </Link>
+                            
+                            <div class="flex items-center gap-4">
+                                <button @click="isBookmarked = !isBookmarked" 
+                                        class="group flex items-center gap-2 px-5 py-3 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white hover:text-raosc-green transition-all duration-500">
+                                    <Bookmark :class="['w-5 h-5 transition-transform duration-500 group-hover:scale-110', isBookmarked ? 'text-raosc-yellow fill-raosc-yellow' : 'text-white group-hover:text-raosc-green']" />
+                                    <span class="text-xs font-black uppercase tracking-widest text-white group-hover:text-raosc-green">Sauvegarder</span>
+                                </button>
+                                <button @click="isLiked = !isLiked" 
+                                        class="p-4 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-red-500 transition-all duration-500 group">
+                                    <Heart :class="['w-5 h-5 transition-transform duration-500 group-hover:scale-125', isLiked ? 'text-white fill-white' : 'text-white']" />
+                                </button>
+                                <button class="p-4 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-raosc-green transition-all duration-500">
+                                    <Share2 class="w-5 h-5 text-white" />
+                                </button>
                             </div>
-                            <div>
-                                <p class="text-white/50 text-xs font-semibold uppercase tracking-wider">Publié par</p>
-                                <p class="text-white font-bold text-lg group-hover:text-raosc-yellow transition-colors">
-                                    {{ post.organization.name }}
-                                </p>
-                            </div>
-                        </Link>
-                        
-                        <div class="flex items-center gap-3">
-                            <button @click="isBookmarked = !isBookmarked" class="p-2.5 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all hover:scale-105">
-                                <Bookmark :class="['w-5 h-5', isBookmarked ? 'text-raosc-yellow fill-raosc-yellow' : 'text-white']" />
-                            </button>
-                            <button @click="isLiked = !isLiked" class="p-2.5 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all hover:scale-105">
-                                <Heart :class="['w-5 h-5', isLiked ? 'text-red-500 fill-red-500' : 'text-white']" />
-                            </button>
-                            <button class="p-2.5 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all hover:scale-105">
-                                <Share2 class="w-5 h-5 text-white" />
-                            </button>
                         </div>
                     </div>
                 </div>

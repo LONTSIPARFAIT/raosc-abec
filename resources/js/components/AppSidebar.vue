@@ -11,7 +11,8 @@ import {
     Settings2,
     PlusCircle,
     ShieldCheck,
-    Briefcase
+    Briefcase,
+    FileText
 } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -66,6 +67,11 @@ const adminNavItems: NavItem[] = [
         title: 'Validation OSC',
         href: '/admin/organizations',
         icon: ShieldCheck,
+    },
+    {
+        title: 'Gestion Catégories',
+        href: '/admin/categories',
+        icon: FileText,
     },
     {
         title: 'Gestion Utilisateurs',

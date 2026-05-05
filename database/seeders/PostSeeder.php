@@ -50,11 +50,11 @@ class PostSeeder extends Seeder
         ];
 
         $stockImages = [
-            'https://images.unsplash.com/photo-1542385151-efd9000785a0?q=80&w=800',
-            'https://images.unsplash.com/photo-1526285759904-71d1170ed2cd?q=80&w=800',
-            'https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=800',
-            'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=800',
-            'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800',
+            'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800',
+            'https://images.unsplash.com/photo-1523240715639-963c9a0b4740?w=800',
+            'https://images.unsplash.com/photo-1573497620053-ea5310f94f17?w=800',
+            'https://images.unsplash.com/photo-1531123897727-8f129e16fd3c?w=800',
+            'https://images.unsplash.com/photo-1509095056764-6720bf39baad?w=800',
             'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800'
         ];
 
