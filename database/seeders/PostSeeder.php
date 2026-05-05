@@ -14,95 +14,71 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        $orgPosts = [
-            'sante-pour-tous-congo' => [
-                [
-                    'title' => 'Lancement du programme d\'accès à l\'eau potable en zone rurale',
-                    'summary' => 'De nombreuses ONG se sont réunies pour initier ce grand projet visant à fournir de l\'eau potable à plus de 50 villages grâce aux forages.',
-                    'content' => "L'accès à l'eau potable reste un défi majeur dans de nombreuses de nos provinces. Aujourd'hui, en partenariat avec les leaders locaux, nous inaugurons un programme à grande échelle pour la construction de 50 forages manuels et solaires.\n\nCet effort permettra non seulement de réduire les maladies hydriques chez les enfants, mais aussi d'alléger le quotidien des femmes et jeunes filles, souvent responsables de la collecte de l'eau sur de longues distances.\n\nNous remercions nos bailleurs et bénévoles pour leur mobilisation sans faille.",
-                    'category' => 'Solidarité',
-                    'cover_image' => 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600&auto=format&fit=crop',
-
-                ],
-                [
-                    'title' => 'Campagne de vaccination gratuite et de prévention',
-                    'summary' => 'Les équipes médicales bénévoles se déploient dans plusieurs régions pour des consultations gratuites et de la prévention médicale.',
-                    'content' => "Dans le cadre de la semaine mondiale de la santé, le Fonds de Santé Panafricain lance une caravane médicale s'étendant sur 3 régions. Plus de 100 médecins, infirmiers et logisticiens sont déployés pour offrir des consultations pédiatriques, des soins bucco-dentaires et administrer les vaccins essentiels.\n\nL'objectif est d'atteindre 10 000 personnes en un mois. Les cliniques mobiles joueront un rôle clé pour atteindre les zones enclavées.",
-                    'category' => 'Santé',
-                    'cover_image' => 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=600&auto=format&fit=crop',
-
-                ]
+        $organizations = Organization::all();
+        
+        $postTemplates = [
+            'education-formation' => [
+                'title' => 'Rapport annuel sur l\'alphabétisation',
+                'summary' => 'Les progrès réalisés dans nos écoles partenaires cette année.',
+                'content' => "L'éducation est le socle de tout développement durable. Au cours de l'année écoulée, nous avons constaté une amélioration significative du taux de scolarisation dans les zones où nous intervenons. \n\nGrâce au soutien de nos partenaires et de la communauté RAOSC, nous continuons à fournir des kits scolaires et à former les enseignants aux nouvelles pédagogies."
             ],
-            'edutech-benin' => [
-                [
-                    'title' => 'Nouvelle convention de partenariat pour la scolarisation',
-                    'summary' => 'Un accord historique a été signé aujourd\'hui pour soutenir financièrement les familles et encourager la scolarisation continuelle.',
-                    'content' => "Aujourd'hui marque une étape décisive pour Tech For Africa et l'éducation numérique. Nous avons signé un MoU (Mémorandum d'entente) avec le Ministère de l'Éducation pour fournir des tablettes éducatives à 200 écoles primaires et former 500 professeurs aux outils numériques.\n\nCe partenariat s'étalera sur les trois prochaines années. La scolarisation ne suffit plus, l'acquisition de compétences techniques dès le jeune âge est indispensable aujourd'hui.",
-                    'category' => 'Éducation',
-                    'cover_image' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600&auto=format&fit=crop',
-
-                ]
+            'sante-publique' => [
+                'title' => 'Bilan de la caravane médicale',
+                'summary' => 'Plus de 1000 patients reçus en une semaine de consultations gratuites.',
+                'content' => "La santé est un droit fondamental. Notre dernière caravane médicale a permis de dépister de nombreuses pathologies et d'apporter des soins essentiels aux populations les plus reculées. \n\nLes sourires sur les visages des enfants et des mères sont notre plus belle récompense. Nous planifions déjà la prochaine intervention."
             ],
-            'eco-gardiens-du-kenya' => [
-                [
-                    'title' => 'Succès de la préservation côtière : 5000 tortues remises à l\'eau',
-                    'summary' => 'Retour sur notre semaine de nettoyage des plages et la nidification des tortues marines.',
-                    'content' => "Le bilan de ce mois est exceptionnel ! Grâce à l'aide de plus de 400 volontaires locaux, nos équipes ont nettoyé près de 15 kilomètres de plages servant de lieu de ponte pour les tortues marines.\n\nNous avons protégé ainsi des centaines de nids et facilité la remise à l'eau de milliers de bébés tortues. Cette action participe directement à la régénération de notre écosystème marin.",
-                    'category' => 'Environnement',
-                    'cover_image' => 'https://images.unsplash.com/photo-1520110300438-e6d246c24508?q=80&w=600&auto=format&fit=crop',
-
-                ]
+            'environnement-ecologie' => [
+                'title' => 'Agir pour la biodiversité locale',
+                'summary' => 'Pourquoi la préservation de nos forêts est vitale pour notre avenir.',
+                'content' => "La nature nous donne tout, et il est temps de lui rendre. Nos actions de reboisement et de sensibilisation à l'écologie visent à protéger les écosystèmes fragiles de notre région. \n\nChaque arbre planté est une promesse pour les générations futures. Rejoignez-nous dans ce combat pour une Afrique plus verte."
             ],
-            'justice-sans-frontieres' => [
-                [
-                    'title' => 'Inauguration du Centre d\'Écoute et de Soutien',
-                    'summary' => 'Un nouveau refuge pour l\'accompagnement psychologique des victimes.',
-                    'content' => "Le Centre offre une ligne d'assistance 24/7 et des professionnels de santé formés. C'est un espace sûr, anonyme, qui va permettre de briser le silence et d'offrir une porte de sortie sécurisée.",
-                    'category' => 'Social',
-                    'cover_image' => 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=600&auto=format&fit=crop',
-                ]
-            ]
+            'entrepreneuriat-tech' => [
+                'title' => 'L\'innovation au service du social',
+                'summary' => 'Comment la technologie transforme le quotidien des populations africaines.',
+                'content' => "Le numérique n'est pas un luxe, c'est un outil de développement puissant. À travers nos programmes d'incubation et de formation tech, nous voyons émerger des solutions locales à des défis globaux. \n\nL'Afrique de demain se construit aujourd'hui avec du code, de l'IA et beaucoup de créativité."
+            ],
+            'developpement-agricole' => [
+                'title' => 'Soutenir nos petits producteurs',
+                'summary' => 'Les clés d\'une agriculture durable et rentable pour les familles.',
+                'content' => "L'agriculture est le premier employeur en Afrique. En soutenant les techniques agroécologiques et l'accès au marché, nous renforçons l'autonomie financière des agriculteurs. \n\nLa sécurité alimentaire commence par le soutien aux producteurs locaux qui nourrissent nos cités."
+            ],
+            'culture-patrimoine' => [
+                'title' => 'Transmission de la mémoire vive',
+                'summary' => 'L\'importance de sauvegarder notre patrimoine oral et artistique.',
+                'content' => "Un peuple sans culture est un arbre sans racines. Nos projets de numérisation des contes et de soutien aux artistes locaux visent à célébrer la richesse de notre identité africaine. \n\nNous devons être fiers de notre héritage et le transmettre avec passion à la jeunesse connectée."
+            ],
         ];
 
-        foreach ($orgPosts as $slug => $posts) {
-            $organization = Organization::where('slug', 'like', $slug . '%')->first();
+        $stockImages = [
+            'https://images.unsplash.com/photo-1542385151-efd9000785a0?q=80&w=800',
+            'https://images.unsplash.com/photo-1526285759904-71d1170ed2cd?q=80&w=800',
+            'https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=800',
+            'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=800',
+            'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800',
+            'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800'
+        ];
 
-            if (!$organization) {
-                continue;
-            }
+        foreach ($organizations as $index => $org) {
+            $cat = $org->categories()->first();
+            $catSlug = $cat ? $cat->slug : 'education-formation';
+            
+            $template = $postTemplates[$catSlug] ?? $postTemplates['education-formation'];
+            
+            $title = $template['title'] . " à " . $org->city;
+            $slug = Str::slug($title);
 
-            foreach ($posts as $data) {
-                $data['organization_id'] = $organization->id;
-                $data['slug'] = Str::slug($data['title']);
-
-                $wordCount = str_word_count(strip_tags((string)$data['content']));
-                $data['read_time'] = max(1, (int)round($wordCount / 250));
-                
-                Post::firstOrCreate(
-                    ['slug' => $data['slug']],
-                    $data
-                );
-            }
-        }
-
-        // Assurer que CHAQUE organisation a au moins une actualité
-        $organizations = Organization::all();
-        foreach ($organizations as $org) {
-            if ($org->posts()->count() === 0) {
-                $title = "Impact et Perspectives : {$org->name} s'engage pour {$org->country}";
-                $content = "{$org->name} continue son expansion et renforce ses actions à {$org->city}. Nous sommes fiers de partager nos dernières avancées avec la communauté du RAOSC.";
-                
-                Post::create([
+            Post::updateOrCreate(
+                ['slug' => $slug],
+                [
                     'organization_id' => $org->id,
                     'title' => $title,
-                    'slug' => Str::slug($title) . '-' . uniqid(),
-                    'summary' => "Découvrez les dernières nouvelles et l'impact social de {$org->name} au {$org->country}.",
-                    'content' => $content,
-                    'category' => 'Impact',
-                    'cover_image' => 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=800',
-                    'read_time' => 2
-                ]);
-            }
+                    'summary' => $template['summary'],
+                    'content' => $template['content'] . "\n\nCet article est publié par " . $org->name . " pour partager l'impact de nos actions au " . $org->country . ".",
+                    'category' => $cat ? $cat->name : 'Général',
+                    'cover_image' => $stockImages[($index + 2) % count($stockImages)],
+                    'read_time' => 3
+                ]
+            );
         }
     }
 }

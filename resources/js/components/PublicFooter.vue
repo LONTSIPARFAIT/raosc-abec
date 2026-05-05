@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
 </script>
 
 <template>
-    <footer class="bg-zinc-950 pt-12 pb-8 text-zinc-400 border-t border-zinc-800">
+    <footer class="bg-zinc-100 dark:bg-zinc-950 pt-16 pb-12 text-zinc-600 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-800">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
                 <!-- Brand Column -->
@@ -15,7 +15,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
                                 class="h-full w-full object-contain transition-transform group-hover:scale-105" />
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-xl font-bold text-white leading-none">
+                            <span class="text-xl font-bold text-zinc-900 dark:text-white leading-none">
                                 RAOSC
                             </span>
                             <span class="text-[9px] font-medium text-raosc-green tracking-wide leading-none mt-1">
@@ -29,15 +29,15 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
                     </p>
                     <div class="flex gap-3">
                         <a href="#"
-                            class="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-raosc-green hover:text-white transition-colors">
+                            class="h-8 w-8 rounded-full bg-zinc-200 dark:bg-white/5 flex items-center justify-center hover:bg-raosc-green hover:text-white transition-colors">
                             <Facebook class="h-4 w-4" />
                         </a>
                         <a href="#"
-                            class="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-raosc-green hover:text-white transition-colors">
+                            class="h-8 w-8 rounded-full bg-zinc-200 dark:bg-white/5 flex items-center justify-center hover:bg-raosc-green hover:text-white transition-colors">
                             <Twitter class="h-4 w-4" />
                         </a>
                         <a href="#"
-                            class="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-raosc-red hover:text-white transition-colors">
+                            class="h-8 w-8 rounded-full bg-zinc-200 dark:bg-white/5 flex items-center justify-center hover:bg-raosc-red hover:text-white transition-colors">
                             <Linkedin class="h-4 w-4" />
                         </a>
                     </div>
@@ -45,7 +45,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
 
                 <!-- Links Column 1 -->
                 <div class="md:col-span-4 lg:col-span-2">
-                    <h3 class="text-white font-semibold text-xs tracking-wide mb-5">Navigation</h3>
+                    <h3 class="text-zinc-900 dark:text-white font-semibold text-xs tracking-wide mb-5">Navigation</h3>
                     <ul class="space-y-3 text-sm">
                         <li>
                             <Link href="/" class="hover:text-raosc-green transition-colors">Accueil</Link>
@@ -64,7 +64,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
 
                 <!-- Links Column 2 -->
                 <div class="md:col-span-4 lg:col-span-2">
-                    <h3 class="text-white font-semibold text-xs tracking-wide mb-5">L'Organisation</h3>
+                    <h3 class="text-zinc-900 dark:text-white font-semibold text-xs tracking-wide mb-5">L'Organisation</h3>
                     <ul class="space-y-3 text-sm">
                         <li>
                             <Link href="/about" class="hover:text-raosc-green transition-colors">Charte éthique</Link>
@@ -83,7 +83,7 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
 
                 <!-- Contact Column -->
                 <div class="md:col-span-4 lg:col-span-3">
-                    <h3 class="text-white font-semibold text-xs tracking-wide mb-5">Siège Global</h3>
+                    <h3 class="text-zinc-900 dark:text-white font-semibold text-xs tracking-wide mb-5">Siège Global</h3>
                     <ul class="space-y-4">
                         <li class="flex items-start gap-3">
                             <MapPin class="h-4 w-4 text-raosc-yellow shrink-0 mt-0.5" />
@@ -116,8 +116,8 @@ import { Mail, Phone, MapPin, Twitter, Instagram, Facebook, Linkedin } from 'luc
                         </a>
                         — Initiative portée et coordonnée par l'Association de Bien-Être Communautaire
                     </p>
-                    <p class="text-zinc-500">
-                        © {{ new Date().getFullYear() }} <span class="text-white font-medium">RAOSC</span>.
+                    <p class="text-zinc-500 dark:text-zinc-500">
+                        © {{ new Date().getFullYear() }} <span class="text-zinc-900 dark:text-white font-medium">RAOSC</span>.
                         Tous droits réservés.
                     </p>
                 </div>

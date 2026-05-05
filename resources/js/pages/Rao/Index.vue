@@ -104,21 +104,21 @@ const formatLabel = (label: string) => {
             </div>
 
             <!-- Header Section -->
-            <div class="relative bg-zinc-950 py-16 sm:py-20 lg:py-24 px-6 overflow-hidden">
+            <div class="relative bg-zinc-50 dark:bg-zinc-950 py-16 sm:py-20 lg:py-24 px-6 overflow-hidden border-b border-zinc-200 dark:border-zinc-800">
                 <div class="absolute inset-0 z-0">
-                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-10 rounded-full blur-[100px]"></div>
+                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-10 dark:opacity-20 rounded-full blur-[100px] animate-pulse"></div>
                 </div>
 
                 <div class="mx-auto max-w-4xl relative z-10 text-center">
                     <div class="mb-6 flex justify-center">
-                        <div class="flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-sm px-4 py-2 border border-white/20">
-                            <span class="text-[10px] font-bold tracking-[0.2em] text-raosc-yellow uppercase">Annuaire des OSC Africaines</span>
+                        <div class="flex items-center gap-3 rounded-full bg-zinc-100 dark:bg-white/10 backdrop-blur-sm px-4 py-2 border border-zinc-200 dark:border-white/20 hover:scale-105 transition-transform duration-300">
+                            <span class="text-[10px] font-bold tracking-[0.2em] text-raosc-green dark:text-raosc-yellow uppercase">Annuaire des OSC Africaines</span>
                         </div>
                     </div>
-                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight mb-4">
-                        Le Réseau du <span class="text-raosc-yellow">Changement</span>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 dark:text-white tracking-tight leading-tight mb-4">
+                        Le Réseau du <span class="text-raosc-green dark:text-raosc-yellow">Changement</span>
                     </h1>
-                    <p class="text-sm sm:text-base text-zinc-400 max-w-2xl mx-auto font-medium">
+                    <p class="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto font-medium">
                         Explorez l'annuaire interactif du RAOSC pour identifier et collaborer avec les organisations de la société civile.
                     </p>
                 </div>

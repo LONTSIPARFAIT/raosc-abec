@@ -10,22 +10,22 @@ defineProps<{
 
 const slides = [
     {
-        image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop',
-        title: 'Fédérer pour Bâtir un Avenir Africain',
-        description: 'Le RAOSC est une initiative de l\'ABEC visant à unir les forces de la société civile pour le développement durable du continent.',
-        badge: 'Initiative de l\'Association ABEC'
+        image: 'https://images.unsplash.com/photo-1542385151-efd9000785a0?q=80&w=2070&auto=format&fit=crop',
+        title: 'Bâtir l\'Avenir de l\'Afrique Ensemble',
+        description: 'Le RAOSC est une initiative de l\'ABEC (Cameroun) pour unir les forces de la société civile africaine.',
+        badge: 'Initiative ABEC Cameroun'
     },
     {
-        image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=2070&auto=format&fit=crop',
-        title: "L'ABEC : L'Éveil des Consciences",
-        description: "Découvrez les actions de l'Association Béninoise pour l'Éveil des Consciences à travers son réseau panafricain.",
-        badge: 'Impact Social'
-    },
-    {
-        image: 'https://images.unsplash.com/photo-1524069290683-0457abfe42c3?q=80&w=2070&auto=format&fit=crop',
-        title: 'Promotion de l\'Égalité et du Bien-être',
-        description: "Rejoignez-nous pour promouvoir l'équité et le développement communautaire au sein de nos nations.",
+        image: 'https://images.unsplash.com/photo-1509059852496-f3822ae057bf?q=80&w=2070&auto=format&fit=crop',
+        title: 'L\'Impact Social au Cœur du Continent',
+        description: 'Découvrez les actions concrètes menées par nos organisations membres à travers toute l\'Afrique.',
         badge: 'Solidarité Africaine'
+    },
+    {
+        image: 'https://images.unsplash.com/photo-1526285759904-71d1170ed2cd?q=80&w=2070&auto=format&fit=crop',
+        title: 'Le Réseau de l\'Éveil des Consciences',
+        description: 'Rejoignez une coalition dynamique dédiée au développement durable et à l\'équité sociale.',
+        badge: 'Engagement Citoyen'
     }
 ];
 

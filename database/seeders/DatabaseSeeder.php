@@ -14,12 +14,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Administrateur principal
-        User::factory()->create([
-            'name' => 'Admin RAOSC',
-            'email' => 'admin@raosc.org',
-            'password' => bcrypt('password'),
-            'role' => 'admin',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@raosc.org'],
+            [
+                'name' => 'Admin RAOSC',
+                'password' => bcrypt('password'),
+                'role' => 'admin',
+            ]
+        );
 
         // Création de 5 utilisateurs standards
         User::factory(5)->create();

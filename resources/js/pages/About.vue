@@ -13,32 +13,31 @@ defineProps<{
         <Head title="À Propos - RAOSC" />
 
         <main class="overflow-hidden">
-            <!-- Header Section avec effet glassmorphique -->
-            <div class="relative bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 py-20 sm:py-28 px-6 overflow-hidden">
+            <!-- Header Section avec effet theme-aware -->
+            <div class="relative bg-zinc-50 dark:bg-zinc-950 py-20 sm:py-28 px-6 overflow-hidden">
                 <!-- Effets de fond animés -->
                 <div class="absolute inset-0 z-0">
-                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-20 rounded-full blur-[120px] animate-pulse"></div>
-                    <div class="absolute bottom-0 left-1/4 w-80 h-80 bg-raosc-yellow opacity-10 rounded-full blur-[120px] animate-pulse delay-1000"></div>
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-raosc-brown opacity-5 rounded-full blur-[150px]"></div>
+                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-10 dark:opacity-20 rounded-full blur-[120px] animate-pulse"></div>
+                    <div class="absolute bottom-0 left-1/4 w-80 h-80 bg-raosc-yellow opacity-10 dark:opacity-20 rounded-full blur-[120px] animate-pulse delay-1000"></div>
                 </div>
 
                 <div class="mx-auto max-w-4xl relative z-10 text-center">
                     <div class="mb-8 flex justify-center">
-                        <div class="flex items-center gap-3 rounded-full bg-white/10 backdrop-blur-sm px-5 py-2 border border-white/20 hover:scale-105 transition-transform duration-300">
-                            <span class="text-[10px] font-bold tracking-[0.2em] text-raosc-yellow uppercase">Notre Vision Panafricaine</span>
+                        <div class="flex items-center gap-3 rounded-full bg-zinc-100 dark:bg-white/10 backdrop-blur-sm px-5 py-2 border border-zinc-200 dark:border-white/20 hover:scale-105 transition-transform duration-300">
+                            <span class="text-[10px] font-bold tracking-[0.2em] text-raosc-green dark:text-raosc-yellow uppercase">Notre Vision Panafricaine</span>
                         </div>
                     </div>
-                    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6 animate-fade-in">
-                        Fédérer pour <span class="text-raosc-yellow bg-gradient-to-r from-raosc-yellow to-raosc-green bg-clip-text text-transparent">Mieux Servir</span>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold text-zinc-900 dark:text-white tracking-tight leading-tight mb-6 animate-fade-in">
+                        Fédérer pour <span class="text-raosc-green dark:text-raosc-yellow bg-gradient-to-r from-raosc-green to-raosc-yellow bg-clip-text text-transparent">Mieux Servir</span>
                     </h1>
-                    <p class="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto font-medium leading-relaxed animate-fade-in-up">
-                        Le Réseau Africain des Organisations de la Société Civile (RAOSC) est le pilier opérationnel de l'ONG <span class="text-raosc-yellow font-semibold">ABEC</span>, dédié à la cartographie et à la synergie des acteurs du changement en Afrique.
+                    <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto font-medium leading-relaxed animate-fade-in-up">
+                        Le Réseau Africain des Organisations de la Société Civile (RAOSC) est le pilier opérationnel de l'ONG <span class="text-raosc-green dark:text-raosc-yellow font-semibold">ABEC Cameroun</span>, dédié à la cartographie et à la synergie des acteurs du changement en Afrique.
                     </p>
                     
                     <!-- Indicateur de scroll -->
                     <div class="absolute bottom-[-40px] left-1/2 -translate-x-1/2 animate-bounce">
-                        <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-                            <div class="w-1 h-2 bg-white/50 rounded-full mt-2 animate-scroll"></div>
+                        <div class="w-6 h-10 border-2 border-zinc-300 dark:border-white/30 rounded-full flex justify-center">
+                            <div class="w-1 h-2 bg-zinc-400 dark:bg-white/50 rounded-full mt-2 animate-scroll"></div>
                         </div>
                     </div>
                 </div>

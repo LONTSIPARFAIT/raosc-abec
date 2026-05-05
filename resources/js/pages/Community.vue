@@ -14,30 +14,32 @@ defineProps<{
 
         <main class="bg-zinc-50 dark:bg-zinc-950 min-h-screen pb-24">
             <!-- Header Section -->
-            <div class="bg-zinc-950 py-20 sm:py-28 px-6 overflow-hidden relative">
+            <div class="bg-zinc-50 dark:bg-zinc-950 py-20 sm:py-28 px-6 overflow-hidden relative">
                 <div class="absolute inset-0 z-0">
-                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-5 rounded-full blur-[100px]"></div>
+                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-10 dark:opacity-20 rounded-full blur-[100px] animate-pulse"></div>
+                    <div class="absolute bottom-0 left-1/4 w-80 h-80 bg-raosc-yellow opacity-10 dark:opacity-20 rounded-full blur-[100px] animate-pulse delay-700"></div>
                 </div>
 
                 <div class="mx-auto max-w-4xl relative z-10 text-center">
                     <div class="mb-8 flex justify-center">
-                        <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 border border-white/20">
-                            <Sparkles class="h-4 w-4 text-raosc-yellow" />
-                            <span class="text-[10px] font-bold tracking-[0.2em] text-white uppercase">Espace de Synergie</span>
+                        <div class="inline-flex items-center gap-2 rounded-full bg-zinc-100 dark:bg-white/10 px-4 py-2 border border-zinc-200 dark:border-white/20 hover:scale-105 transition-transform duration-300">
+                            <Sparkles class="h-4 w-4 text-raosc-green dark:text-raosc-yellow" />
+                            <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-600 dark:text-white uppercase">Espace de Synergie</span>
                         </div>
                     </div>
-                    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
-                        L'Union fait notre <span class="text-raosc-yellow">Force</span>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold text-zinc-900 dark:text-white tracking-tight leading-tight mb-6">
+                        L'Union fait notre <span class="text-raosc-green dark:text-raosc-yellow">Force</span>
                     </h1>
-                    <p class="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto font-medium mb-8">
+                    <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto font-medium mb-8">
                         Rejoignez le mouvement, partagez vos défis et bâtissez des partenariats durables avec la communauté RAOSC.
                     </p>
                     <div class="flex justify-center">
                         <div class="flex -space-x-2">
-                            <div v-for="i in 5" :key="i" class="h-10 w-10 rounded-full border-2 border-zinc-950 bg-zinc-800 flex items-center justify-center overflow-hidden">
-                                <img :src="`https://i.pravatar.cc/150?u=${i}`" alt="Avatar" class="h-full w-full object-cover" />
+                            <!-- Avatars africains placeholders -->
+                            <div v-for="i in 5" :key="i" class="h-10 w-10 rounded-full border-2 border-white dark:border-zinc-950 bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center overflow-hidden">
+                                <img :src="`https://api.dicebear.com/7.x/avataaars/svg?seed=Africa${i}&skinColor=614335,47281e,ae5d29`" alt="Avatar" class="h-full w-full object-cover" />
                             </div>
-                            <div class="h-10 w-10 rounded-full border-2 border-zinc-950 bg-zinc-900 flex items-center justify-center text-[9px] font-bold text-zinc-400">
+                            <div class="h-10 w-10 rounded-full border-2 border-white dark:border-zinc-950 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-[9px] font-bold text-zinc-500 dark:text-zinc-400">
                                 +500
                             </div>
                         </div>

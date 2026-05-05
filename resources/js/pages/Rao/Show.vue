@@ -79,13 +79,13 @@ const stats = {
         <div class="bg-white dark:bg-zinc-950 min-h-screen">
 
             <!-- COVER IMAGE - sans superposition de contenu -->
-            <div class="relative w-full h-48 sm:h-56 md:h-64 bg-gradient-to-r from-zinc-800 to-zinc-900 overflow-hidden">
+            <div class="relative w-full h-48 sm:h-56 md:h-64 bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
                 <img 
                     v-if="org.cover_image" 
                     :src="org.cover_image" 
                     class="absolute inset-0 w-full h-full object-cover" 
                 />
-                <div class="absolute inset-0 bg-black/50"></div>
+                <div class="absolute inset-0 bg-black/10 dark:bg-black/50"></div>
                 
                 <!-- Bouton retour -->
                 <Link

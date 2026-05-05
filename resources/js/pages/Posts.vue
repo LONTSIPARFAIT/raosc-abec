@@ -36,7 +36,7 @@ const fallbackPosts: PostData[] = [
         summary: "De nombreuses ONG se sont réunies pour un grand projet d'eau potable via des forages solaires de dernière génération.",
         category: "Solidarité",
         created_at: "4 Avril 2026",
-        cover_image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600&auto=format&fit=crop",
+        cover_image: "https://images.unsplash.com/photo-1542385151-efd9000785a0?q=80&w=600&auto=format&fit=crop",
         read_time: 3,
         organization: null,
         colorKey: "green",
@@ -48,7 +48,7 @@ const fallbackPosts: PostData[] = [
         summary: "Un accord historique pour soutenir financièrement les familles et encourager la scolarisation continue.",
         category: "Éducation",
         created_at: "2 Avril 2026",
-        cover_image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600&auto=format&fit=crop",
+        cover_image: "https://images.unsplash.com/photo-1509059852496-f3822ae057bf?q=80&w=600&auto=format&fit=crop",
         read_time: 5,
         organization: null,
         colorKey: "yellow",
@@ -60,7 +60,7 @@ const fallbackPosts: PostData[] = [
         summary: "Des équipes médicales bénévoles se déploient dans plusieurs régions pour des consultations gratuites.",
         category: "Santé",
         created_at: "30 Mars 2026",
-        cover_image: "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=600&auto=format&fit=crop",
+        cover_image: "https://images.unsplash.com/photo-1526285759904-71d1170ed2cd?q=80&w=600&auto=format&fit=crop",
         read_time: 4,
         organization: null,
         colorKey: "red",
@@ -72,7 +72,7 @@ const fallbackPosts: PostData[] = [
         summary: "200 artisans formés aux métiers du bois, soudure et BTP grâce au consortium RAOSC.",
         category: "Emploi",
         created_at: "28 Mars 2026",
-        cover_image: "https://images.unsplash.com/photo-1541888081682-1ddc81604a1b?q=80&w=600&auto=format&fit=crop",
+        cover_image: "https://images.unsplash.com/photo-1489440543227-a6d3d9369952?q=80&w=600&auto=format&fit=crop",
         read_time: 2,
         organization: null,
         colorKey: "zinc",
@@ -84,7 +84,7 @@ const fallbackPosts: PostData[] = [
         summary: "Focus sur les initiatives de reboisement et d'assainissement pilotées par notre réseau.",
         category: "Environnement",
         created_at: "15 Mars 2026",
-        cover_image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=600&auto=format&fit=crop",
+        cover_image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600&auto=format&fit=crop",
         read_time: 6,
         organization: null,
         colorKey: "green",
@@ -96,7 +96,7 @@ const fallbackPosts: PostData[] = [
         summary: "Solidarité inter-religieuse avec plus de 5 tonnes de vivres distribuées par l'association Vivre Ensemble.",
         category: "Solidarité",
         created_at: "10 Mars 2026",
-        cover_image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600&auto=format&fit=crop",
+        cover_image: "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=600&auto=format&fit=crop",
         read_time: 3,
         organization: null,
         colorKey: "green",
@@ -129,22 +129,29 @@ const linkClass: Record<string, string> = {
 
         <main class="bg-zinc-50 dark:bg-zinc-950 min-h-screen pb-24">
 
-            <!-- En-tête sombre -->
-            <div class="bg-zinc-950 py-20 sm:py-24 px-6 relative overflow-hidden">
+            <!-- Premium News Header -->
+            <div class="relative bg-zinc-50 dark:bg-zinc-950 py-24 sm:py-32 px-6 overflow-hidden">
+                <!-- Background Accents -->
                 <div class="absolute inset-0 pointer-events-none">
-                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-5 rounded-full blur-[100px]"></div>
-                    <div class="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-raosc-yellow opacity-[0.03] rounded-full blur-[120px]"></div>
+                    <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-raosc-green/10 dark:bg-raosc-green/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
+                    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-raosc-yellow/10 dark:bg-raosc-yellow/5 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4"></div>
                 </div>
-                <div class="mx-auto max-w-3xl relative z-10 text-center">
-                    <div class="mb-5 inline-flex items-center gap-2.5 rounded-full bg-white/5 backdrop-blur-sm px-5 py-2 border border-white/10">
-                        <span class="w-2 h-2 rounded-full bg-raosc-yellow animate-pulse shrink-0"></span>
-                        <span class="text-xs font-bold tracking-[0.18em] text-raosc-yellow uppercase">Le Journal du Réseau</span>
+
+                <div class="mx-auto max-w-4xl relative z-10 text-center">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-2xl bg-white dark:bg-zinc-900 shadow-sm border border-zinc-100 dark:border-zinc-800 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-raosc-green opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-raosc-green"></span>
+                        </span>
+                        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">Le Journal de la Coalition</span>
                     </div>
-                    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight mb-5">
-                        Dernières <span class="text-transparent bg-clip-text bg-gradient-to-r from-raosc-green to-raosc-yellow">Actualités</span>
+                    
+                    <h1 class="text-5xl sm:text-7xl font-black text-zinc-900 dark:text-white leading-[1.1] tracking-tight mb-8 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+                        Impact & <span class="text-transparent bg-clip-text bg-gradient-to-r from-raosc-green via-raosc-green to-raosc-yellow">Récits</span>
                     </h1>
-                    <p class="text-base text-zinc-400 max-w-xl mx-auto">
-                        Actions d'impact, projets concrets et opportunités des organisations de la société civile.
+                    
+                    <p class="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+                        Découvrez les victoires quotidiennes et les initiatives concrètes portées par les organisations du réseau RAOSC à travers le continent.
                     </p>
                 </div>
             </div>

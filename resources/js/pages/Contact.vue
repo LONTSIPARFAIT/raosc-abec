@@ -14,21 +14,21 @@ defineProps<{
 
         <main class="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
             <!-- Header Section -->
-            <div class="bg-zinc-950 py-20 sm:py-28 px-6 overflow-hidden relative">
+            <div class="bg-zinc-50 dark:bg-zinc-950 py-20 sm:py-28 px-6 overflow-hidden relative border-b border-zinc-200 dark:border-zinc-800">
                 <div class="absolute inset-0 z-0">
-                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-5 rounded-full blur-[100px]"></div>
+                    <div class="absolute top-0 right-1/4 w-96 h-96 bg-raosc-green opacity-10 dark:opacity-20 rounded-full blur-[100px] animate-pulse"></div>
                 </div>
 
                 <div class="mx-auto max-w-4xl relative z-10 text-center">
                     <div class="mb-8 flex justify-center">
-                        <div class="flex items-center gap-3 rounded-full bg-white/10 px-4 py-2 border border-white/20">
-                            <span class="text-[10px] font-bold tracking-[0.2em] text-raosc-yellow uppercase">Contactez l'ABEC</span>
+                        <div class="flex items-center gap-3 rounded-full bg-zinc-100 dark:bg-white/10 px-4 py-2 border border-zinc-200 dark:border-white/20 hover:scale-105 transition-transform duration-300">
+                            <span class="text-[10px] font-bold tracking-[0.2em] text-raosc-green dark:text-raosc-yellow uppercase">Contactez l'ABEC Cameroun</span>
                         </div>
                     </div>
-                    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
-                        Une question ? Parlons-en <span class="text-raosc-yellow">ensemble</span>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold text-zinc-900 dark:text-white tracking-tight leading-tight mb-6">
+                        Une question ? Parlons-en <span class="text-raosc-green dark:text-raosc-yellow">ensemble</span>
                     </h1>
-                    <p class="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto font-medium">
+                    <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto font-medium">
                         Notre équipe est à votre disposition pour vous accompagner dans votre utilisation du réseau RAOSC.
                     </p>
                 </div>

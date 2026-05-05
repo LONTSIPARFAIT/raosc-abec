@@ -557,7 +557,7 @@ const resetForm = () => {
                                             v-model="formData.country"
                                             type="text"
                                             required
-                                            placeholder="Bénin"
+                                            placeholder="Cameroun"
                                             class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
                                             :class="{ 'border-raosc-red': formData.errors.country }"
                                         />
@@ -574,7 +574,7 @@ const resetForm = () => {
                                             v-model="formData.city"
                                             type="text"
                                             required
-                                            placeholder="Cotonou"
+                                            placeholder="Yaoundé"
                                             class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
                                         />
                                     </div>

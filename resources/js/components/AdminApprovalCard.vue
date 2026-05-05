@@ -12,6 +12,7 @@ interface Organization {
     city?: string;
     country?: string;
     logo?: string;
+    cover_image?: string;
     short_description?: string;
     description?: string;
     email?: string;
@@ -19,6 +20,14 @@ interface Organization {
     website?: string;
     address?: string;
     registration_number?: string;
+    member_count?: number;
+    presentation_doc?: string;
+    legal_docs?: string[];
+    responsible_name?: string;
+    responsible_email?: string;
+    responsible_phone?: string;
+    responsible_photo?: string;
+    responsible_id_doc?: string;
     categories?: { id: number, name: string }[];
     members?: { user: { name: string, email: string } }[];
     gallery?: string[];
@@ -71,7 +80,7 @@ const confirmDelete = () => {
                     @click="showingDetailsModal = true"
                     type="button"
                     class="h-8 w-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 text-blue-600 flex items-center justify-center hover:bg-blue-100 transition-all"
-                    title="Voir les détails"
+                    title="Voir les détails complets"
                 >
                     <Eye class="w-4 h-4" />
                 </button>
@@ -83,7 +92,7 @@ const confirmDelete = () => {
                     @success="onSuccess"
                     as="button"
                     class="h-8 w-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 flex items-center justify-center hover:bg-emerald-100 transition-all"
-                    title="Approuver"
+                    title="Approuver l'OSC"
                 >
                     <Check class="w-4 h-4" />
                 </Link>
@@ -92,7 +101,7 @@ const confirmDelete = () => {
                     @click="showingRejectInput = !showingRejectInput"
                     type="button"
                     class="h-8 w-8 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-600 flex items-center justify-center hover:bg-red-100 transition-all"
-                    title="Rejeter"
+                    title="Rejeter la demande"
                 >
                     <X class="w-4 h-4" />
                 </button>
@@ -115,7 +124,7 @@ const confirmDelete = () => {
             >
                 <textarea 
                     v-model="rejectionData.rejection_reason"
-                    placeholder="Motif du rejet..."
+                    placeholder="Précisez le motif du rejet pour informer l'organisation..."
                     required
                     class="w-full text-xs p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 focus:ring-1 focus:ring-red-500 outline-none min-h-[80px] dark:text-zinc-200"
                 ></textarea>
@@ -134,18 +143,18 @@ const confirmDelete = () => {
         <!-- Details Modal Overlay -->
         <teleport to="body">
             <div v-if="showingDetailsModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-                <div class="bg-white dark:bg-zinc-950 rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col border border-zinc-200 dark:border-zinc-800 animate-in zoom-in-95">
+                <div class="bg-white dark:bg-zinc-950 rounded-2xl shadow-xl w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col border border-zinc-200 dark:border-zinc-800 animate-in zoom-in-95">
                     <div class="p-5 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50">
                         <div class="flex items-center gap-3">
                             <div v-if="organization.logo" class="h-10 w-10 rounded-lg overflow-hidden shrink-0 border border-zinc-200 dark:border-zinc-800">
                                 <img :src="organization.logo.startsWith('http') ? organization.logo : '/storage/' + organization.logo" class="h-full w-full object-cover">
                             </div>
-                            <div v-else class="h-10 w-10 rounded-lg bg-raosc-green/10 text-raosc-green flex items-center justify-center">
-                                <Building2 class="h-5 w-5" />
+                            <div v-else class="h-10 w-10 rounded-lg bg-raosc-green/10 text-raosc-green flex items-center justify-center font-bold">
+                                {{ organization.name.charAt(0) }}
                             </div>
                             <div>
                                 <h3 class="font-bold text-zinc-900 dark:text-white">{{ organization.name }}</h3>
-                                <p class="text-xs text-zinc-500">Demande d'inscription</p>
+                                <p class="text-xs text-zinc-500">Validation de la demande d'adhésion</p>
                             </div>
                         </div>
                         <button @click="showingDetailsModal = false" class="h-8 w-8 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500">
@@ -153,65 +162,113 @@ const confirmDelete = () => {
                         </button>
                     </div>
                     
-                    <div class="p-6 overflow-y-auto flex-1 space-y-8">
+                    <div class="p-6 overflow-y-auto flex-1 space-y-10">
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <!-- Left Column (Infos) -->
-                            <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                            <!-- Left Column: Primary Info -->
+                            <div class="md:col-span-2 space-y-8">
                                 <div>
-                                    <h4 class="text-sm font-bold text-zinc-900 dark:text-white mb-3">À propos</h4>
-                                    <p class="text-sm text-zinc-600 dark:text-zinc-400 capitalize whitespace-pre-line">{{ organization.short_description || organization.description }}</p>
-                                </div>
-                                <div v-if="organization.categories && organization.categories.length > 0">
-                                    <h4 class="text-sm font-bold text-zinc-900 dark:text-white mb-3">Secteurs d'intervention</h4>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span v-for="cat in organization.categories" :key="cat.id" class="text-[10px] font-semibold bg-raosc-green/10 text-raosc-green px-2.5 py-1 rounded-full border border-raosc-green/20">
-                                            {{ cat.name }}
-                                        </span>
+                                    <h4 class="text-xs font-black text-zinc-400 uppercase tracking-widest mb-4">Présentation</h4>
+                                    <div class="p-5 bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border border-zinc-100 dark:border-zinc-800">
+                                        <p class="text-base text-zinc-700 dark:text-zinc-300 font-medium mb-4">{{ organization.short_description }}</p>
+                                        <p class="text-sm text-zinc-500 dark:text-zinc-400 whitespace-pre-line leading-relaxed">{{ organization.description }}</p>
                                     </div>
                                 </div>
-                                <div>
-                                    <h4 class="text-sm font-bold text-zinc-900 dark:text-white mb-3">Créateur du compte</h4>
-                                    <div v-if="organization.members && organization.members.length > 0" class="flex gap-2">
-                                        <div class="text-sm px-3 py-2 bg-zinc-50 dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                                            {{ organization.members[0].user?.name }} ({{ organization.members[0].user?.email }})
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div v-if="organization.categories && organization.categories.length > 0">
+                                        <h4 class="text-xs font-black text-zinc-400 uppercase tracking-widest mb-3">Secteurs</h4>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span v-for="cat in organization.categories" :key="cat.id" class="text-[10px] font-bold bg-raosc-green/10 text-raosc-green px-3 py-1 rounded-full border border-raosc-green/10">
+                                                {{ cat.name }}
+                                            </span>
                                         </div>
                                     </div>
-                                    <div v-else class="text-xs text-zinc-500">Inconnu</div>
+                                    <div>
+                                        <h4 class="text-xs font-black text-zinc-400 uppercase tracking-widest mb-3">Statistiques</h4>
+                                        <div class="text-sm font-bold text-zinc-700 dark:text-zinc-300 flex items-center gap-2">
+                                            <div class="h-2 w-2 rounded-full bg-raosc-green"></div>
+                                            {{ organization.member_count || '0' }} membres déclarés
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Responsible Info -->
+                                <div>
+                                    <h4 class="text-xs font-black text-zinc-400 uppercase tracking-widest mb-4">Responsable de l'organisation</h4>
+                                    <div class="flex items-start gap-6 p-5 bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border border-zinc-100 dark:border-zinc-800">
+                                        <div class="h-24 w-24 rounded-2xl overflow-hidden bg-zinc-200 dark:bg-zinc-800 shrink-0 border border-zinc-200 dark:border-zinc-700">
+                                            <img v-if="organization.responsible_photo" :src="organization.responsible_photo" class="w-full h-full object-cover">
+                                            <div v-else class="w-full h-full flex items-center justify-center text-zinc-400">Photo</div>
+                                        </div>
+                                        <div class="flex-1 space-y-2">
+                                            <p class="text-lg font-bold text-zinc-900 dark:text-white">{{ organization.responsible_name || 'Non renseigné' }}</p>
+                                            <div class="flex items-center gap-3 text-sm text-zinc-500">
+                                                <Mail class="w-4 h-4" /> {{ organization.responsible_email }}
+                                            </div>
+                                            <div class="flex items-center gap-3 text-sm text-zinc-500">
+                                                <PhoneCall class="w-4 h-4" /> {{ organization.responsible_phone }}
+                                            </div>
+                                            <div v-if="organization.responsible_id_doc" class="pt-2">
+                                                <a :href="organization.responsible_id_doc" target="_blank" class="text-xs font-bold text-raosc-green hover:underline flex items-center gap-1.5">
+                                                    <Eye class="w-3 h-3" /> Voir la pièce d'identité
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Right Column (Contact & Technique) -->
-                            <div class="space-y-6">
+                            <!-- Right Column: Contact & Docs -->
+                            <div class="space-y-8">
                                 <div>
-                                    <h4 class="text-sm font-bold text-zinc-900 dark:text-white mb-3">Contact & Localisation</h4>
-                                    <div class="space-y-3 p-4 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800">
-                                        <div class="flex items-center gap-3 text-sm">
-                                            <Mail class="w-4 h-4 text-zinc-400" /> <span class="text-zinc-700 dark:text-zinc-300">{{ organization.email }}</span>
+                                    <h4 class="text-xs font-black text-zinc-400 uppercase tracking-widest mb-4">Contact & Légal</h4>
+                                    <div class="space-y-4 p-5 bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border border-zinc-100 dark:border-zinc-800">
+                                        <div class="space-y-3">
+                                            <div class="flex items-center gap-3 text-sm">
+                                                <Mail class="w-4 h-4 text-zinc-400" /> <span class="text-zinc-700 dark:text-zinc-300 font-medium">{{ organization.email }}</span>
+                                            </div>
+                                            <div class="flex items-center gap-3 text-sm">
+                                                <Globe class="w-4 h-4 text-zinc-400" /> <span class="text-zinc-700 dark:text-zinc-300 truncate">{{ organization.website || 'Aucun site' }}</span>
+                                            </div>
+                                            <div class="flex items-start gap-3 text-sm">
+                                                <MapPin class="w-4 h-4 text-zinc-400 mt-0.5" /> 
+                                                <span class="text-zinc-700 dark:text-zinc-300">{{ organization.address || '' }}<br>{{ organization.city }}, {{ organization.country }}</span>
+                                            </div>
+                                            <div class="flex items-center gap-3 text-sm">
+                                                <Calendar class="w-4 h-4 text-zinc-400" /> 
+                                                <span class="text-zinc-700 dark:text-zinc-300">Enreg: {{ organization.registration_number || 'N/A' }}</span>
+                                            </div>
                                         </div>
-                                        <div class="flex items-center gap-3 text-sm">
-                                            <PhoneCall class="w-4 h-4 text-zinc-400" /> <span class="text-zinc-700 dark:text-zinc-300">{{ organization.phone || 'N/A' }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Documents -->
+                                <div>
+                                    <h4 class="text-xs font-black text-zinc-400 uppercase tracking-widest mb-4">Documents fournis</h4>
+                                    <div class="space-y-3">
+                                        <a v-if="organization.presentation_doc" :href="organization.presentation_doc" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-100 dark:border-zinc-800 hover:border-raosc-green transition-colors group">
+                                            <span class="text-xs font-bold text-zinc-700 dark:text-zinc-300">Document de présentation</span>
+                                            <Eye class="w-4 h-4 text-zinc-400 group-hover:text-raosc-green" />
+                                        </a>
+                                        <div v-if="organization.legal_docs && organization.legal_docs.length > 0" class="space-y-2">
+                                            <a v-for="(doc, i) in organization.legal_docs" :key="i" :href="doc" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-100 dark:border-zinc-800 hover:border-raosc-green transition-colors group">
+                                                <span class="text-xs font-bold text-zinc-700 dark:text-zinc-300">Statuts / Document Légal {{ i + 1 }}</span>
+                                                <Eye class="w-4 h-4 text-zinc-400 group-hover:text-raosc-green" />
+                                            </a>
                                         </div>
-                                        <div class="flex items-center gap-3 text-sm">
-                                            <Globe class="w-4 h-4 text-zinc-400" /> <span class="text-zinc-700 dark:text-zinc-300">{{ organization.website || 'N/A' }}</span>
-                                        </div>
-                                        <div class="flex items-center gap-3 text-sm border-t border-zinc-200 dark:border-zinc-800 pt-3">
-                                            <MapPin class="w-4 h-4 text-zinc-400" /> <span class="text-zinc-700 dark:text-zinc-300">{{ organization.address || '' }} {{ organization.city }}, {{ organization.country }}</span>
-                                        </div>
-                                        <div class="flex items-center gap-3 text-sm">
-                                            <Calendar class="w-4 h-4 text-zinc-400" /> <span class="text-zinc-700 dark:text-zinc-300">N° d'enreg: {{ organization.registration_number || 'N/A' }}</span>
-                                        </div>
+                                        <p v-else class="text-[10px] text-zinc-500 italic">Aucun document légal joint</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Gallery Photos -->
+                        <!-- Gallery -->
                         <div v-if="organization.gallery && organization.gallery.length > 0">
-                            <h4 class="text-sm font-bold text-zinc-900 dark:text-white mb-3">Images et Actions</h4>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                                <div v-for="(img, idx) in organization.gallery" :key="idx" class="h-32 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800">
-                                    <img :src="img.startsWith('http') ? img : '/storage/' + img" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                            <h4 class="text-xs font-black text-zinc-400 uppercase tracking-widest mb-4">Galerie photos</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4">
+                                <div v-for="(img, idx) in organization.gallery" :key="idx" class="aspect-square rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                                    <img :src="img.startsWith('http') ? img : '/storage/' + img" class="w-full h-full object-cover hover:scale-110 transition duration-700">
                                 </div>
                             </div>
                         </div>

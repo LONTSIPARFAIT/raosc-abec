@@ -10,7 +10,7 @@ defineProps<{
 </script>
 
 <template>
-    <div class="bg-zinc-950 py-12 sm:py-20">
+    <div class="bg-zinc-50 dark:bg-zinc-950 py-12 sm:py-20">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <!-- Section avec vidéo en arrière-plan -->
             <div class="relative overflow-hidden rounded-2xl text-center shadow-lg">
