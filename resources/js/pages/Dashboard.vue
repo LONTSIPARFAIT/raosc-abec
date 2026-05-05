@@ -14,7 +14,10 @@ import {
     Calendar,
     FileText,
     Clock,
-    Award
+    Award,
+    AlertCircle,
+    XCircle,
+    Edit
 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
@@ -25,6 +28,7 @@ interface Stats {
     pending_orgs: number;
     total_users: number;
     my_orgs: number;
+    rejected_orgs: number;
 }
 
 interface Organization {
@@ -124,6 +128,43 @@ const getStatusIcon = (status: string) => {
                             >
                                 <PlusCircle class="w-4 h-4" />
                                 Inscrire mon OSC
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- ALERTE REJET (ATTENTION) -->
+            <!-- ============================================ -->
+            <div v-if="stats.rejected_orgs > 0" class="container mx-auto px-6 lg:px-12 pt-8">
+                <div class="relative overflow-hidden bg-white dark:bg-zinc-900 border-2 border-red-500/30 rounded-3xl p-6 shadow-xl shadow-red-500/10">
+                    <!-- Décoration -->
+                    <div class="absolute -right-4 -top-4 opacity-5">
+                        <XCircle class="w-32 h-32 text-red-600" />
+                    </div>
+                    
+                    <div class="relative z-10 flex flex-col md:flex-row items-center gap-6">
+                        <div class="h-16 w-16 rounded-2xl bg-red-100 dark:bg-red-950/50 flex items-center justify-center shrink-0 animate-pulse">
+                            <AlertCircle class="h-8 w-8 text-red-600" />
+                        </div>
+                        
+                        <div class="flex-1 text-center md:text-left">
+                            <h2 class="text-xl font-black text-red-700 dark:text-red-400 mb-1">
+                                Action requise : {{ stats.rejected_orgs }} demande(s) rejetée(s)
+                            </h2>
+                            <p class="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed max-w-2xl">
+                                L'administration a examiné vos demandes d'inscription et certaines nécessitent des corrections avant d'être validées. Veuillez consulter les motifs de rejet pour soumettre à nouveau vos informations.
+                            </p>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+                            <Link 
+                                href="/rao/my-organizations" 
+                                class="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-2xl text-sm font-bold shadow-lg shadow-red-600/20 transition-all hover:scale-105"
+                            >
+                                <Edit class="w-4 h-4" />
+                                Voir et Corriger
                             </Link>
                         </div>
                     </div>
@@ -257,12 +298,29 @@ const getStatusIcon = (status: string) => {
                                                 <p class="text-sm font-medium text-zinc-900 dark:text-white">{{ userOrganization.founded_date || 'Inconnue' }}</p>
                                             </div>
                                         </div>
+
+                                        <div v-if="userOrganization.status === 'rejected' && userOrganization.rejection_reason" class="mb-4 p-4 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900 rounded-xl">
+                                            <p class="text-xs font-bold text-red-600 dark:text-red-400 uppercase tracking-wider mb-1 flex items-center gap-1">
+                                                <AlertCircle class="w-3.5 h-3.5" /> Motif du rejet :
+                                            </p>
+                                            <p class="text-sm text-red-700 dark:text-red-300 italic leading-relaxed">
+                                                "{{ userOrganization.rejection_reason }}"
+                                            </p>
+                                        </div>
                                         
                                         <div class="flex flex-wrap gap-3 pt-2">
-                                            <Link :href="`/rao/orga/${userOrganization.slug}/edit`" class="bg-raosc-green text-white px-5 py-2 rounded-xl text-xs font-semibold hover:bg-raosc-green/90 transition-all hover:scale-105 shadow-sm">
-                                                Éditer le profil
+                                            <Link 
+                                                :href="`/rao/orga/${userOrganization.slug}/edit`" 
+                                                :class="[
+                                                    'px-5 py-2 rounded-xl text-xs font-semibold transition-all hover:scale-105 shadow-sm',
+                                                    userOrganization.status === 'rejected' 
+                                                        ? 'bg-raosc-green text-white hover:bg-raosc-green/90' 
+                                                        : 'bg-raosc-green text-white hover:bg-raosc-green/90'
+                                                ]"
+                                            >
+                                                {{ userOrganization.status === 'rejected' ? 'Corriger & Renvoyer' : 'Éditer le profil' }}
                                             </Link>
-                                            <Link :href="`/dashboard/projects`" class="bg-indigo-600 dark:bg-indigo-500 text-white px-5 py-2 rounded-xl text-xs font-semibold hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all hover:scale-105 shadow-sm">
+                                            <Link v-if="userOrganization.status === 'approved'" :href="`/dashboard/projects`" class="bg-indigo-600 dark:bg-indigo-500 text-white px-5 py-2 rounded-xl text-xs font-semibold hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all hover:scale-105 shadow-sm">
                                                 Gérer Projets
                                             </Link>
                                             <button class="border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-5 py-2 rounded-xl text-xs font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all">

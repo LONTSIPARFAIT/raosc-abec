@@ -60,8 +60,22 @@ const {
 const org = ('data' in organization) ? organization.data : organization;
 
 // États
+const formatInitialDate = (dateStr: string | null) => {
+    if (!dateStr) return '';
+    try {
+        const d = new Date(dateStr);
+        return d.toISOString().split('T')[0];
+    } catch (e) {
+        return '';
+    }
+};
+
 const logoPreview = ref<string | null>(org.logo ? (org.logo.startsWith('http') ? org.logo : `/storage/${org.logo}`) : null);
-const galleryPreviews = ref<{file: File | null, url: string}[]>([]);
+const responsiblePhotoPreview = ref<string | null>(org.responsible_photo ? (org.responsible_photo.startsWith('http') ? org.responsible_photo : `/storage/${org.responsible_photo}`) : null);
+const viceResponsiblePhotoPreview = ref<string | null>(org.vice_responsible_photo ? (org.vice_responsible_photo.startsWith('http') ? org.vice_responsible_photo : `/storage/${org.vice_responsible_photo}`) : null);
+const galleryPreviews = ref<{file: File | null, url: string}[]>(
+    (org.gallery || []).map((url: string) => ({ file: null, url: url.startsWith('http') ? url : `/storage/${url}` }))
+);
 const isDragging = ref(false);
 const showOtherCategory = ref(false);
 const logoInput = ref<HTMLInputElement | null>(null);
@@ -97,7 +111,7 @@ const formData = useForm({
     city: org.city || '',
     address: org.address || '',
     registration_number: org.registration_number || '',
-    founded_date: org.founded_date || '',
+    founded_date: formatInitialDate(org.founded_date),
     categories: (org.categories || []).map((c: any) => c.id),
     other_category: '',
     logo: null as File | null,
@@ -262,6 +276,31 @@ const onSubmit = () => {
             <div class="container mx-auto px-6 lg:px-12 py-10 pb-20">
                 <div class="max-w-4xl mx-auto">
                     
+                    <!-- Rejection Reason Notice -->
+                    <div v-if="org.status === 'rejected'" class="mb-8 p-6 bg-red-50 dark:bg-red-950/20 border-2 border-red-200 dark:border-red-900 rounded-3xl shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10">
+                            <XCircle class="w-24 h-24 text-red-600" />
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="h-10 w-10 rounded-xl bg-red-100 dark:bg-red-900/50 flex items-center justify-center">
+                                    <AlertCircle class="h-5 w-5 text-red-600" />
+                                </div>
+                                <h2 class="text-xl font-bold text-red-700 dark:text-red-400">Demande rejetée par l'administration</h2>
+                            </div>
+                            <div class="space-y-3">
+                                <p class="text-sm text-red-600 dark:text-red-300 font-semibold uppercase tracking-wider">Motif du rejet :</p>
+                                <div class="p-4 bg-white/50 dark:bg-black/20 rounded-2xl border border-red-100 dark:border-red-900/50 text-zinc-700 dark:text-zinc-300 italic leading-relaxed">
+                                    "{{ org.rejection_reason || 'Aucun motif précisé.' }}"
+                                </div>
+                                <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-4 flex items-center gap-2">
+                                    <Info class="w-4 h-4 text-raosc-green" />
+                                    Veuillez corriger les informations mentionnées ci-dessus. Une fois le formulaire enregistré, votre demande sera automatiquement renvoyée pour une nouvelle validation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Indicateur de modifications non sauvegardées -->
                     <div v-if="hasChanges" class="sticky top-16 z-20 mb-6 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-xl flex items-center justify-between">
                         <div class="flex items-center gap-2 text-amber-700 dark:text-amber-400 text-sm">
@@ -595,8 +634,18 @@ const onSubmit = () => {
                                             </div>
                                             <div>
                                                 <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Photo (publique)</label>
-                                                <input type="file" accept="image/*" @input="formData.responsible_photo = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-sm border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
-                                                <p v-if="org.responsible_photo" class="text-[10px] text-raosc-green mt-1">Photo déjà présente</p>
+                                                <div v-if="responsiblePhotoPreview" class="mb-2 relative w-16 h-16">
+                                                    <img :src="responsiblePhotoPreview" class="w-full h-full object-cover rounded-lg border border-zinc-200" />
+                                                    <button type="button" @click="responsiblePhotoPreview = null; formData.responsible_photo = null" class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-0.5"><Trash2 class="w-2.5 h-2.5" /></button>
+                                                </div>
+                                                <input type="file" accept="image/*" @change="(e) => { 
+                                                    const file = (e.target as HTMLInputElement).files?.[0];
+                                                    if(file) {
+                                                        formData.responsible_photo = file;
+                                                        responsiblePhotoPreview = URL.createObjectURL(file);
+                                                    }
+                                                }" class="w-full text-sm border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
+                                                <p v-if="org.responsible_photo && !responsiblePhotoPreview" class="text-[10px] text-raosc-green mt-1">Photo actuelle conservée</p>
                                             </div>
                                             <div class="sm:col-span-2">
                                                 <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Pièce d'identité (privé)</label>
@@ -628,8 +677,18 @@ const onSubmit = () => {
                                             </div>
                                             <div>
                                                 <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Photo (publique)</label>
-                                                <input type="file" accept="image/*" @input="formData.vice_responsible_photo = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-sm border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
-                                                <p v-if="org.vice_responsible_photo" class="text-[10px] text-raosc-green mt-1">Photo déjà présente</p>
+                                                <div v-if="viceResponsiblePhotoPreview" class="mb-2 relative w-16 h-16">
+                                                    <img :src="viceResponsiblePhotoPreview" class="w-full h-full object-cover rounded-lg border border-zinc-200" />
+                                                    <button type="button" @click="viceResponsiblePhotoPreview = null; formData.vice_responsible_photo = null" class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-0.5"><Trash2 class="w-2.5 h-2.5" /></button>
+                                                </div>
+                                                <input type="file" accept="image/*" @change="(e) => { 
+                                                    const file = (e.target as HTMLInputElement).files?.[0];
+                                                    if(file) {
+                                                        formData.vice_responsible_photo = file;
+                                                        viceResponsiblePhotoPreview = URL.createObjectURL(file);
+                                                    }
+                                                }" class="w-full text-sm border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
+                                                <p v-if="org.vice_responsible_photo && !viceResponsiblePhotoPreview" class="text-[10px] text-raosc-green mt-1">Photo actuelle conservée</p>
                                             </div>
                                             <div class="sm:col-span-2">
                                                 <label class="block text-xs font-semibold text-zinc-500 uppercase mb-1">Pièce d'identité (privé)</label>

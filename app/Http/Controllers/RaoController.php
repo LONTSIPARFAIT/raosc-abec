@@ -234,7 +234,9 @@ class RaoController extends Controller
     {
         $organizations = Organization::whereHas('members', function($q) {
             $q->where('user_id', auth()->id());
-        })->orWhere('user_id', auth()->id())->get();
+        })->orWhere('user_id', auth()->id())
+        ->latest()
+        ->get();
 
         return Inertia::render('Rao/MyOrganizations', [
             'organizations' => OrganizationResource::collection($organizations)->resolve()
@@ -335,6 +337,11 @@ class RaoController extends Controller
             if (!$organization->cover_image && count($galleryPaths) > 0) {
                 $organizationData['cover_image'] = $galleryPaths[0];
             }
+        }
+
+        if ($organization->status === 'rejected') {
+            $organizationData['status'] = 'pending';
+            $organizationData['rejection_reason'] = null;
         }
 
         $organization->update($organizationData);

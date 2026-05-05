@@ -19,6 +19,7 @@ class DashboardController extends Controller
             'pending_orgs' => Organization::where('status', 'pending')->count(),
             'total_users' => User::count(),
             'my_orgs' => Organization::where('user_id', $user->id)->count(),
+            'rejected_orgs' => Organization::where('user_id', $user->id)->where('status', 'rejected')->count(),
         ];
 
         // L'organisation de l'utilisateur (s'il en a une)
@@ -79,7 +80,7 @@ class DashboardController extends Controller
             $pendingOrgsList = Organization::where('status', 'pending')->latest()->get();
             return Inertia::render('AdminDashboard', [
                 'stats' => $stats,
-                'userOrganization' => $userOrganization,
+                'userOrganization' => $userOrganization ? (new \App\Http\Resources\OrganizationResource($userOrganization))->resolve() : null,
                 'recentOrgs' => $recentOrgs,
                 'pendingOrgsList' => \App\Http\Resources\OrganizationResource::collection($pendingOrgsList)->resolve(),
                 'chartData' => $chartData
@@ -88,7 +89,7 @@ class DashboardController extends Controller
 
         return Inertia::render('Dashboard', [
             'stats' => $stats,
-            'userOrganization' => $userOrganization,
+            'userOrganization' => $userOrganization ? (new \App\Http\Resources\OrganizationResource($userOrganization))->resolve() : null,
             'recentOrgs' => $recentOrgs,
             'chartData' => $chartData
         ]);

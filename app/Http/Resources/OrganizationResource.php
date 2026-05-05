@@ -34,6 +34,7 @@ class OrganizationResource extends JsonResource
             'phone' => $this->phone,
             'website' => $this->website,
             'status' => $this->status,
+            'rejection_reason' => $this->rejection_reason,
             'is_featured' => $this->is_featured,
             
             // Nouvelles informations
@@ -44,8 +45,12 @@ class OrganizationResource extends JsonResource
             'vice_responsible_name' => $this->vice_responsible_name,
             'vice_responsible_photo' => $this->vice_responsible_photo_url,
 
-            // Informations privées (Admin ou Créateur uniquement)
-            $this->mergeWhen(auth()->check() && (auth()->user()->role === 'admin' || auth()->id() === $this->user_id), [
+            // Informations privées (Admin global ou Membre autorisé uniquement)
+            $this->mergeWhen(auth()->check() && (
+                auth()->user()->role === 'admin' || 
+                auth()->id() === $this->user_id || 
+                $this->members()->where('user_id', auth()->id())->exists()
+            ), [
                 'legal_docs' => $this->legal_docs ? collect($this->legal_docs)->map(fn($doc) => str_starts_with($doc, 'http') ? $doc : asset('storage/' . $doc))->toArray() : [],
                 'responsible_email' => $this->responsible_email,
                 'responsible_phone' => $this->responsible_phone,

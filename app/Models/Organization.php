@@ -45,6 +45,7 @@ class Organization extends Model
         'vice_responsible_phone',
         'vice_responsible_photo',
         'vice_responsible_id_doc',
+        'rejection_reason',
     ];
 
     protected $casts = [

@@ -263,22 +263,39 @@ const stats = {
                                 {{ org.short_description || 'Aucune description courte disponible.' }}
                             </p>
                             
+                            <!-- Rejection Alert -->
+                            <div v-if="org.status === 'rejected' && org.rejection_reason" class="mx-5 mb-4 p-3 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900 rounded-xl">
+                                <p class="text-[10px] font-bold text-red-600 dark:text-red-400 uppercase tracking-wider mb-1 flex items-center gap-1">
+                                    <AlertCircle class="w-3 h-3" /> Motif du rejet :
+                                </p>
+                                <p class="text-xs text-red-700 dark:text-red-300 leading-relaxed italic">
+                                    "{{ org.rejection_reason }}"
+                                </p>
+                            </div>
+
                             <!-- Actions -->
                             <div class="flex gap-3 pt-3 border-t border-zinc-100 dark:border-zinc-800">
                                 <Link 
                                     :href="edit(org.slug).url" 
-                                    class="group/btn flex-1 inline-flex items-center justify-center gap-2 bg-zinc-900 dark:bg-zinc-800 text-white text-xs font-semibold py-2.5 rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-700 transition-all duration-300 hover:scale-105"
+                                    :class="[
+                                        'group/btn flex-1 inline-flex items-center justify-center gap-2 text-xs font-semibold py-2.5 rounded-xl transition-all duration-300 hover:scale-105',
+                                        org.status === 'rejected' 
+                                            ? 'bg-raosc-green text-white hover:bg-raosc-green/90 shadow-md shadow-raosc-green/20' 
+                                            : 'bg-zinc-900 dark:bg-zinc-800 text-white hover:bg-zinc-800 dark:hover:bg-zinc-700'
+                                    ]"
                                 >
                                     <Edit class="w-3.5 h-3.5 group-hover/btn:rotate-12 transition-transform duration-300" />
-                                    Éditer
+                                    {{ org.status === 'rejected' ? 'Corriger & Renvoyer' : 'Éditer' }}
                                 </Link>
                                 <Link 
+                                    v-if="org.status === 'approved'"
                                     :href="show(org.slug).url" 
                                     class="group/btn flex-1 inline-flex items-center justify-center gap-2 border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 text-xs font-semibold py-2.5 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:border-raosc-green/50 transition-all duration-300 hover:scale-105"
                                 >
                                     Détails
                                     <ArrowRight class="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform duration-300" />
                                 </Link>
+                                <div v-else class="flex-1"></div>
                             </div>
                         </div>
                         
