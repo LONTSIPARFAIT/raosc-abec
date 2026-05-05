@@ -26,6 +26,7 @@ const {
 const logoPreview = ref<string | null>(null);
 const galleryPreviews = ref<{file: File, url: string}[]>([]);
 const isDragging = ref(false);
+const showOtherCategory = ref(false);
 const logoInput = ref<HTMLInputElement | null>(null);
 
 const triggerLogoUpload = () => {
@@ -45,8 +46,22 @@ const formData = useForm({
     registration_number: '',
     founded_date: '',
     categories: [] as number[],
+    other_category: '',
     logo: null as File | null,
     gallery: [] as File[],
+    member_count: null as number | null,
+    presentation_doc: null as File | null,
+    legal_docs: [] as File[],
+    responsible_name: '',
+    responsible_email: '',
+    responsible_phone: '',
+    responsible_photo: null as File | null,
+    responsible_id_doc: null as File | null,
+    vice_responsible_name: '',
+    vice_responsible_email: '',
+    vice_responsible_phone: '',
+    vice_responsible_photo: null as File | null,
+    vice_responsible_id_doc: null as File | null,
 });
 
 const handleLogoUpload = (event: Event) => {
@@ -210,10 +225,45 @@ const resetForm = () => {
                                             >
                                                 {{ cat.name }}
                                             </button>
+                                            <button
+                                                type="button"
+                                                @click="showOtherCategory = !showOtherCategory"
+                                                class="px-3 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-300 border"
+                                                :class="showOtherCategory 
+                                                    ? 'bg-raosc-yellow text-zinc-900 border-raosc-yellow shadow-sm' 
+                                                    : 'bg-white dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-600 hover:border-raosc-yellow/50 hover:scale-105'"
+                                            >
+                                                Autre +
+                                            </button>
                                         </div>
+                                        <Transition name="slide-down">
+                                            <div v-if="showOtherCategory" class="mt-3">
+                                                <input
+                                                    v-model="formData.other_category"
+                                                    type="text"
+                                                    placeholder="Saisissez votre catégorie..."
+                                                    class="w-full h-10 px-4 rounded-xl border-2 border-raosc-yellow/30 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-yellow outline-none transition-all"
+                                                />
+                                            </div>
+                                        </Transition>
                                         <Transition name="slide-down">
                                             <p v-if="formData.errors.categories" class="text-raosc-red text-xs mt-1">{{ formData.errors.categories }}</p>
                                         </Transition>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                        <!-- Membres -->
+                                        <div>
+                                            <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
+                                                Nombre de membres
+                                            </label>
+                                            <input
+                                                v-model="formData.member_count"
+                                                type="number"
+                                                placeholder="Ex: 25"
+                                                class="w-full h-11 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-raosc-green focus:ring-4 focus:ring-raosc-green/20 outline-none text-sm transition-all duration-300"
+                                            />
+                                        </div>
                                     </div>
 
                                     <!-- Résumé -->
@@ -334,6 +384,117 @@ const resetForm = () => {
                                             <Transition name="slide-down">
                                                 <p v-if="formData.errors.gallery" class="text-raosc-red text-xs mt-1">{{ formData.errors.gallery }}</p>
                                             </Transition>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Documents Officiels -->
+                            <section>
+                                <div class="flex items-center gap-3 mb-6 pb-3 border-b border-zinc-200 dark:border-zinc-800">
+                                    <div class="h-9 w-9 rounded-lg bg-blue-600/10 flex items-center justify-center text-blue-600">
+                                        <FileText class="h-4 w-4" />
+                                    </div>
+                                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Documents Officiels</h2>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <!-- Document de présentation -->
+                                    <div>
+                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
+                                            Document de présentation (PDF/Doc)
+                                        </label>
+                                        <input
+                                            type="file"
+                                            accept=".pdf,.doc,.docx"
+                                            @input="formData.presentation_doc = ($event.target as HTMLInputElement).files?.[0] || null"
+                                            class="w-full text-xs text-zinc-500 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600/10 file:text-blue-600 hover:file:bg-blue-600/20 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800"
+                                        />
+                                        <p class="text-[10px] text-zinc-400 mt-1">Visible par le public sur votre profil</p>
+                                    </div>
+
+                                    <!-- Documents de légalisation -->
+                                    <div>
+                                        <label class="block text-xs font-semibold text-zinc-600 dark:text-zinc-400 mb-1.5">
+                                            Preuves d'existence (Statuts, Règlements...)
+                                        </label>
+                                        <input
+                                            type="file"
+                                            multiple
+                                            accept=".pdf,.doc,.docx,image/*"
+                                            @input="formData.legal_docs = Array.from(($event.target as HTMLInputElement).files || [])"
+                                            class="w-full text-xs text-zinc-500 dark:text-zinc-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-zinc-600/10 file:text-zinc-600 hover:file:bg-zinc-600/20 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-zinc-800"
+                                        />
+                                        <p class="text-[10px] text-zinc-400 mt-1">🔒 Privé : Uniquement pour les admins et vous</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Équipe Dirigeante -->
+                            <section>
+                                <div class="flex items-center gap-3 mb-6 pb-3 border-b border-zinc-200 dark:border-zinc-800">
+                                    <div class="h-9 w-9 rounded-lg bg-raosc-red/10 flex items-center justify-center text-raosc-red">
+                                        <Briefcase class="h-4 w-4" />
+                                    </div>
+                                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Équipe Dirigeante</h2>
+                                </div>
+
+                                <div class="space-y-8">
+                                    <!-- Responsable -->
+                                    <div class="p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-zinc-200 dark:border-zinc-700">
+                                        <h3 class="text-sm font-bold text-raosc-green mb-4 flex items-center gap-2">
+                                            <span class="h-2 w-2 rounded-full bg-raosc-green"></span> Responsable (Président/Directeur) <span class="text-raosc-red">*</span>
+                                        </h3>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Nom Complet</label>
+                                                <input v-model="formData.responsible_name" type="text" required class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Email (Privé)</label>
+                                                <input v-model="formData.responsible_email" type="email" required class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Téléphone (Privé)</label>
+                                                <input v-model="formData.responsible_phone" type="tel" required class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Photo (Publique) <span class="text-raosc-red">*</span></label>
+                                                <input type="file" required accept="image/*" @input="formData.responsible_photo = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-xs border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
+                                            </div>
+                                            <div class="sm:col-span-2">
+                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Pièce d'Identité / Passeport (Privé) <span class="text-raosc-red">*</span></label>
+                                                <input type="file" required accept=".pdf,image/*" @input="formData.responsible_id_doc = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-xs border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Vice-Responsable -->
+                                    <div class="p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-zinc-200 dark:border-zinc-700">
+                                        <h3 class="text-sm font-bold text-zinc-500 mb-4 flex items-center gap-2">
+                                            <span class="h-2 w-2 rounded-full bg-zinc-400"></span> Vice-Responsable (Optionnel)
+                                        </h3>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Nom Complet</label>
+                                                <input v-model="formData.vice_responsible_name" type="text" class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Email (Privé)</label>
+                                                <input v-model="formData.vice_responsible_email" type="email" class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Téléphone (Privé)</label>
+                                                <input v-model="formData.vice_responsible_phone" type="tel" class="w-full h-10 px-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:border-raosc-green outline-none" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Photo (Publique)</label>
+                                                <input type="file" accept="image/*" @input="formData.vice_responsible_photo = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-xs border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
+                                            </div>
+                                            <div class="sm:col-span-2">
+                                                <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-1">Pièce d'Identité / Passeport (Privé)</label>
+                                                <input type="file" accept=".pdf,image/*" @input="formData.vice_responsible_id_doc = ($event.target as HTMLInputElement).files?.[0] || null" class="w-full text-xs border-2 border-zinc-200 dark:border-zinc-700 rounded-xl p-1.5 bg-white dark:bg-zinc-800" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

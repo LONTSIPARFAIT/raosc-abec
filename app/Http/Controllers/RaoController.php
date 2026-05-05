@@ -104,19 +104,73 @@ class RaoController extends Controller
             'founded_date' => 'nullable|date',
             'categories' => 'required|array',
             'categories.*' => 'exists:organization_categories,id',
+            'other_category' => 'nullable|string|max:100',
             'logo' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
             'gallery' => 'required|array|min:1',
             'gallery.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
+            
+            // Nouveaux champs
+            'member_count' => 'nullable|integer',
+            'presentation_doc' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+            'legal_docs' => 'nullable|array',
+            'legal_docs.*' => 'file|mimes:pdf,doc,docx,jpg,png,jpeg|max:10240',
+            
+            'responsible_name' => 'required|string|max:255',
+            'responsible_email' => 'required|email|max:255',
+            'responsible_phone' => 'required|string|max:255',
+            'responsible_photo' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'responsible_id_doc' => 'required|file|mimes:pdf,jpg,png,jpeg|max:5120',
+            
+            'vice_responsible_name' => 'nullable|string|max:255',
+            'vice_responsible_email' => 'nullable|email|max:255',
+            'vice_responsible_phone' => 'nullable|string|max:255',
+            'vice_responsible_photo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'vice_responsible_id_doc' => 'nullable|file|mimes:pdf,jpg,png,jpeg|max:5120',
         ]);
 
-        $organizationData = collect($validated)->except(['categories', 'logo', 'gallery'])->toArray();
+        $organizationData = collect($validated)->except([
+            'categories', 'other_category', 'logo', 'gallery', 
+            'presentation_doc', 'legal_docs', 
+            'responsible_photo', 'responsible_id_doc',
+            'vice_responsible_photo', 'vice_responsible_id_doc'
+        ])->toArray();
+
         $organization = new Organization($organizationData);
         $organization->user_id = auth()->id();
         $organization->slug = Str::slug($validated['name']) . '-' . uniqid();
-        $organization->status = 'pending'; // Doit être validé par un modérateur/admin ABEC
+        $organization->status = 'pending';
         
+        // Uploads
         if ($request->hasFile('logo')) {
             $organization->logo = $request->file('logo')->store('organizations/logos', 'public');
+        }
+
+        if ($request->hasFile('presentation_doc')) {
+            $organization->presentation_doc = $request->file('presentation_doc')->store('organizations/presentations', 'public');
+        }
+
+        if ($request->hasFile('legal_docs')) {
+            $legalPaths = [];
+            foreach ($request->file('legal_docs') as $file) {
+                $legalPaths[] = $file->store('organizations/legal', 'public');
+            }
+            $organization->legal_docs = $legalPaths;
+        }
+
+        if ($request->hasFile('responsible_photo')) {
+            $organization->responsible_photo = $request->file('responsible_photo')->store('organizations/people', 'public');
+        }
+
+        if ($request->hasFile('responsible_id_doc')) {
+            $organization->responsible_id_doc = $request->file('responsible_id_doc')->store('organizations/ids', 'public');
+        }
+
+        if ($request->hasFile('vice_responsible_photo')) {
+            $organization->vice_responsible_photo = $request->file('vice_responsible_photo')->store('organizations/people', 'public');
+        }
+
+        if ($request->hasFile('vice_responsible_id_doc')) {
+            $organization->vice_responsible_id_doc = $request->file('vice_responsible_id_doc')->store('organizations/ids', 'public');
         }
 
         if ($request->hasFile('gallery')) {
@@ -125,8 +179,6 @@ class RaoController extends Controller
                 $galleryPaths[] = $image->store('organizations/gallery', 'public');
             }
             $organization->gallery = $galleryPaths;
-            
-            // On définit la première image de la galerie comme image de couverture par défaut
             if (count($galleryPaths) > 0) {
                 $organization->cover_image = $galleryPaths[0];
             }
@@ -134,10 +186,21 @@ class RaoController extends Controller
 
         $organization->save();
 
-        // Liaison avec les catégories choisies
-        $organization->categories()->attach($validated['categories']);
+        // Catégories
+        $categoryIds = $validated['categories'];
+        
+        // Gérer la catégorie "Autre"
+        if (!empty($validated['other_category'])) {
+            $newCategory = OrganizationCategory::firstOrCreate(
+                ['name' => $validated['other_category']],
+                ['slug' => Str::slug($validated['other_category'])]
+            );
+            $categoryIds[] = $newCategory->id;
+        }
 
-        // Le créateur devient automatiquement administrateur de son organisation
+        $organization->categories()->attach($categoryIds);
+
+        // Membre par défaut
         $organization->members()->create([
             'user_id' => auth()->id(),
             'role' => 'admin',
@@ -184,7 +247,7 @@ class RaoController extends Controller
     public function update(Request $request, Organization $organization)
     {
         abort_if(! $organization->members()->where('user_id', auth()->id())->exists(), 403);
-
+        
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'short_description' => 'required|string|max:500',
@@ -199,15 +262,67 @@ class RaoController extends Controller
             'founded_date' => 'nullable|date',
             'categories' => 'required|array',
             'categories.*' => 'exists:organization_categories,id',
+            'other_category' => 'nullable|string|max:100',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'gallery' => 'nullable|array',
             'gallery.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
+            
+            // Nouveaux champs
+            'member_count' => 'nullable|integer',
+            'presentation_doc' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+            'legal_docs' => 'nullable|array',
+            'legal_docs.*' => 'file|mimes:pdf,doc,docx,jpg,png,jpeg|max:10240',
+            
+            'responsible_name' => 'required|string|max:255',
+            'responsible_email' => 'required|email|max:255',
+            'responsible_phone' => 'required|string|max:255',
+            'responsible_photo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'responsible_id_doc' => 'nullable|file|mimes:pdf,jpg,png,jpeg|max:5120',
+            
+            'vice_responsible_name' => 'nullable|string|max:255',
+            'vice_responsible_email' => 'nullable|email|max:255',
+            'vice_responsible_phone' => 'nullable|string|max:255',
+            'vice_responsible_photo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'vice_responsible_id_doc' => 'nullable|file|mimes:pdf,jpg,png,jpeg|max:5120',
         ]);
 
-        $organizationData = collect($validated)->except(['categories', 'logo', 'gallery'])->toArray();
+        $organizationData = collect($validated)->except([
+            'categories', 'other_category', 'logo', 'gallery', 
+            'presentation_doc', 'legal_docs', 
+            'responsible_photo', 'responsible_id_doc',
+            'vice_responsible_photo', 'vice_responsible_id_doc'
+        ])->toArray();
 
         if ($request->hasFile('logo')) {
             $organizationData['logo'] = $request->file('logo')->store('organizations/logos', 'public');
+        }
+
+        if ($request->hasFile('presentation_doc')) {
+            $organizationData['presentation_doc'] = $request->file('presentation_doc')->store('organizations/presentations', 'public');
+        }
+
+        if ($request->hasFile('legal_docs')) {
+            $legalPaths = $organization->legal_docs ?? [];
+            foreach ($request->file('legal_docs') as $file) {
+                $legalPaths[] = $file->store('organizations/legal', 'public');
+            }
+            $organizationData['legal_docs'] = $legalPaths;
+        }
+
+        if ($request->hasFile('responsible_photo')) {
+            $organizationData['responsible_photo'] = $request->file('responsible_photo')->store('organizations/people', 'public');
+        }
+
+        if ($request->hasFile('responsible_id_doc')) {
+            $organizationData['responsible_id_doc'] = $request->file('responsible_id_doc')->store('organizations/ids', 'public');
+        }
+
+        if ($request->hasFile('vice_responsible_photo')) {
+            $organizationData['vice_responsible_photo'] = $request->file('vice_responsible_photo')->store('organizations/people', 'public');
+        }
+
+        if ($request->hasFile('vice_responsible_id_doc')) {
+            $organizationData['vice_responsible_id_doc'] = $request->file('vice_responsible_id_doc')->store('organizations/ids', 'public');
         }
 
         if ($request->hasFile('gallery')) {
@@ -217,14 +332,23 @@ class RaoController extends Controller
             }
             $organizationData['gallery'] = $galleryPaths;
 
-            // Si aucune image de couverture n'existe encore, on prend la première de la nouvelle galerie
             if (!$organization->cover_image && count($galleryPaths) > 0) {
                 $organizationData['cover_image'] = $galleryPaths[0];
             }
         }
 
         $organization->update($organizationData);
-        $organization->categories()->sync($validated['categories']);
+
+        // Catégories
+        $categoryIds = $validated['categories'];
+        if (!empty($validated['other_category'])) {
+            $newCategory = OrganizationCategory::firstOrCreate(
+                ['name' => $validated['other_category']],
+                ['slug' => Str::slug($validated['other_category'])]
+            );
+            $categoryIds[] = $newCategory->id;
+        }
+        $organization->categories()->sync($categoryIds);
 
         return redirect()->route('dashboard')
             ->with('success', 'Organisation mise à jour avec succès.');

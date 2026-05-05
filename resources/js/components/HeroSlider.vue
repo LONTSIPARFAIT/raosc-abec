@@ -10,22 +10,22 @@ defineProps<{
 
 const slides = [
     {
-        image: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=2070&auto=format&fit=crop',
-        title: 'Fédérer pour Bâtir un Avenir Meilleur',
-        description: 'Découvrez la plateforme collaborative du Réseau Africain des Organisations de la Société Civile.',
-        badge: 'Initiative de l\'Organisation ABEC'
+        image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop',
+        title: 'Fédérer pour Bâtir un Avenir Africain',
+        description: 'Le RAOSC est une initiative de l\'ABEC visant à unir les forces de la société civile pour le développement durable du continent.',
+        badge: 'Initiative de l\'Association ABEC'
     },
     {
-        image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=2070&auto=format&fit=crop',
-        title: "L'Humain au Cœur de l'Innovation Sociale",
-        description: "L'ABEC soutient le développement durable et les droits de l'homme à travers le réseau RAOSC.",
-        badge: 'Innovation Sociale'
+        image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=2070&auto=format&fit=crop',
+        title: "L'ABEC : L'Éveil des Consciences",
+        description: "Découvrez les actions de l'Association Béninoise pour l'Éveil des Consciences à travers son réseau panafricain.",
+        badge: 'Impact Social'
     },
     {
-        image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2113&auto=format&fit=crop',
-        title: 'Promotion de la Paix et du Bien-être',
-        description: "Rejoignez-nous pour promouvoir l'égalité et l'équité au sein de nos communautés.",
-        badge: 'Paix & Solidarité'
+        image: 'https://images.unsplash.com/photo-1524069290683-0457abfe42c3?q=80&w=2070&auto=format&fit=crop',
+        title: 'Promotion de l\'Égalité et du Bien-être',
+        description: "Rejoignez-nous pour promouvoir l'équité et le développement communautaire au sein de nos nations.",
+        badge: 'Solidarité Africaine'
     }
 ];
 

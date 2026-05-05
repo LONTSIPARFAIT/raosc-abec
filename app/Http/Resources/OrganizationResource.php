@@ -36,6 +36,25 @@ class OrganizationResource extends JsonResource
             'status' => $this->status,
             'is_featured' => $this->is_featured,
             
+            // Nouvelles informations
+            'member_count' => $this->member_count,
+            'presentation_doc' => $this->presentation_doc_url,
+            'responsible_name' => $this->responsible_name,
+            'responsible_photo' => $this->responsible_photo_url,
+            'vice_responsible_name' => $this->vice_responsible_name,
+            'vice_responsible_photo' => $this->vice_responsible_photo_url,
+
+            // Informations privées (Admin ou Créateur uniquement)
+            $this->mergeWhen(auth()->check() && (auth()->user()->role === 'admin' || auth()->id() === $this->user_id), [
+                'legal_docs' => $this->legal_docs ? collect($this->legal_docs)->map(fn($doc) => str_starts_with($doc, 'http') ? $doc : asset('storage/' . $doc))->toArray() : [],
+                'responsible_email' => $this->responsible_email,
+                'responsible_phone' => $this->responsible_phone,
+                'responsible_id_doc' => $this->responsible_id_doc ? (str_starts_with($this->responsible_id_doc, 'http') ? $this->responsible_id_doc : asset('storage/' . $this->responsible_id_doc)) : null,
+                'vice_responsible_email' => $this->vice_responsible_email,
+                'vice_responsible_phone' => $this->vice_responsible_phone,
+                'vice_responsible_id_doc' => $this->vice_responsible_id_doc ? (str_starts_with($this->vice_responsible_id_doc, 'http') ? $this->vice_responsible_id_doc : asset('storage/' . $this->vice_responsible_id_doc)) : null,
+            ]),
+            
             // On charge conditionnellement les relations si elles ont été "eager loaded"
             'categories' => OrganizationCategoryResource::collection($this->whenLoaded('categories')),
             'members' => OrganizationMemberResource::collection($this->whenLoaded('members')),

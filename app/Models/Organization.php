@@ -32,6 +32,19 @@ class Organization extends Model
         'approved_at',
         'is_featured',
         'gallery',
+        'presentation_doc',
+        'legal_docs',
+        'member_count',
+        'responsible_name',
+        'responsible_email',
+        'responsible_phone',
+        'responsible_photo',
+        'responsible_id_doc',
+        'vice_responsible_name',
+        'vice_responsible_email',
+        'vice_responsible_phone',
+        'vice_responsible_photo',
+        'vice_responsible_id_doc',
     ];
 
     protected $casts = [
@@ -42,6 +55,7 @@ class Organization extends Model
         'approved_at' => 'datetime',
         'is_featured' => 'boolean',
         'gallery' => 'array',
+        'legal_docs' => 'array',
     ];
 
     /**
@@ -114,6 +128,42 @@ class Organization extends Model
 
                 return null;
             }
+        );
+    }
+
+    /**
+     * Accesseur pour le document de présentation.
+     */
+    protected function presentationDocUrl(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn () => $this->presentation_doc 
+                ? (str_starts_with($this->presentation_doc, 'http') ? $this->presentation_doc : asset('storage/' . $this->presentation_doc)) 
+                : null,
+        );
+    }
+
+    /**
+     * Accesseur pour la photo du responsable.
+     */
+    protected function responsiblePhotoUrl(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn () => $this->responsible_photo 
+                ? (str_starts_with($this->responsible_photo, 'http') ? $this->responsible_photo : asset('storage/' . $this->responsible_photo)) 
+                : null,
+        );
+    }
+
+    /**
+     * Accesseur pour la photo du vice-responsable.
+     */
+    protected function viceResponsiblePhotoUrl(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn () => $this->vice_responsible_photo 
+                ? (str_starts_with($this->vice_responsible_photo, 'http') ? $this->vice_responsible_photo : asset('storage/' . $this->vice_responsible_photo)) 
+                : null,
         );
     }
 }

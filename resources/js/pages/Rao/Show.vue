@@ -32,6 +32,19 @@ interface Organization {
     members?: { id: number, user: { name: string }, job_title?: string }[];
     projects?: { id: number, title: string, type: string, status: string, description: string, cover_image?: string, gallery?: string[] }[];
     gallery?: string[];
+    member_count?: number;
+    presentation_doc?: string;
+    legal_docs?: string[];
+    responsible_name?: string;
+    responsible_email?: string;
+    responsible_phone?: string;
+    responsible_photo?: string;
+    responsible_id_doc?: string;
+    vice_responsible_name?: string;
+    vice_responsible_email?: string;
+    vice_responsible_phone?: string;
+    vice_responsible_photo?: string;
+    vice_responsible_id_doc?: string;
 }
 
 const {
@@ -54,7 +67,7 @@ const backUrl = computed(() => isPublic ? raoIndex().url : dashboardIndex().url)
 const stats = {
     projects: org.projects?.length || 0,
     activeProjects: org.projects?.filter(p => p.status === 'active').length || 0,
-    members: org.members?.length || 0,
+    members: org.member_count || org.members?.length || 0,
     categories: org.categories?.length || 0
 };
 </script>
@@ -223,6 +236,98 @@ const stats = {
                                     <div>
                                         <p class="text-[10px] text-zinc-400 uppercase tracking-wider mb-0.5">N° Enregistrement</p>
                                         <p class="text-sm font-medium text-zinc-800 dark:text-zinc-200">{{ org.registration_number }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bloc Document de présentation -->
+                        <div v-if="org.presentation_doc" class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-5 border border-blue-100 dark:border-blue-800">
+                            <h3 class="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4 flex items-center gap-2">
+                                <div class="h-px w-4 bg-blue-600"></div>
+                                <FileText class="w-3.5 h-3.5" /> Documentation
+                            </h3>
+                            <a 
+                                :href="org.presentation_doc" 
+                                target="_blank"
+                                class="flex items-center justify-between p-3 rounded-lg bg-white dark:bg-zinc-800 border border-blue-200 dark:border-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-all group"
+                            >
+                                <div class="flex items-center gap-3">
+                                    <div class="h-10 w-10 rounded bg-blue-100 dark:bg-blue-800 flex items-center justify-center text-blue-600">
+                                        <FileText class="w-6 h-6" />
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs font-bold text-zinc-900 dark:text-white truncate">Fiche de présentation</p>
+                                        <p class="text-[10px] text-zinc-500">Document PDF/DOC</p>
+                                    </div>
+                                </div>
+                                <Award class="w-4 h-4 text-blue-400 group-hover:text-blue-600 transition-colors" />
+                            </a>
+                        </div>
+
+                        <!-- Bloc Équipe Dirigeante -->
+                        <div v-if="org.responsible_name" class="bg-zinc-50 dark:bg-zinc-900/50 rounded-xl p-5">
+                            <h3 class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-4 flex items-center gap-2">
+                                <div class="h-px w-4 bg-raosc-green"></div>
+                                <Briefcase class="w-3.5 h-3.5" /> Direction
+                            </h3>
+                            <div class="space-y-6">
+                                <!-- Responsable -->
+                                <div class="flex items-center gap-3">
+                                    <div class="h-12 w-12 rounded-xl overflow-hidden border-2 border-raosc-green/20 shrink-0 bg-zinc-200">
+                                        <img v-if="org.responsible_photo" :src="org.responsible_photo" class="h-full w-full object-cover" />
+                                        <Users v-else class="h-full w-full p-2 text-zinc-400" />
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-[9px] font-black text-raosc-green uppercase tracking-widest mb-0.5">Responsable</p>
+                                        <p class="text-sm font-bold text-zinc-900 dark:text-white truncate">{{ org.responsible_name }}</p>
+                                        <div v-if="org.responsible_email || org.responsible_phone" class="mt-1 flex gap-2">
+                                            <span v-if="org.responsible_phone" class="text-[10px] text-zinc-500">{{ org.responsible_phone }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Vice-Responsable -->
+                                <div v-if="org.vice_responsible_name" class="flex items-center gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                                    <div class="h-10 w-10 rounded-xl overflow-hidden border-2 border-zinc-200 shrink-0 bg-zinc-200">
+                                        <img v-if="org.vice_responsible_photo" :src="org.vice_responsible_photo" class="h-full w-full object-cover" />
+                                        <Users v-else class="h-full w-full p-2 text-zinc-400" />
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-0.5">Vice-Responsable</p>
+                                        <p class="text-xs font-bold text-zinc-700 dark:text-zinc-300 truncate">{{ org.vice_responsible_name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bloc Documents Privés (Admin/Propriétaire) -->
+                        <div v-if="org.legal_docs || org.responsible_id_doc" class="bg-red-50 dark:bg-red-950/20 rounded-xl p-5 border border-red-100 dark:border-red-900/30">
+                            <h3 class="text-[11px] font-bold uppercase tracking-wider text-red-600 mb-4 flex items-center gap-2">
+                                <Shield class="w-3.5 h-3.5" /> Accès Restreint
+                            </h3>
+                            <div class="space-y-3">
+                                <div v-if="org.responsible_id_doc" class="flex items-center justify-between text-xs">
+                                    <span class="text-zinc-500">ID Responsable</span>
+                                    <a :href="org.responsible_id_doc" target="_blank" class="text-red-600 font-bold hover:underline">Voir</a>
+                                </div>
+                                <div v-if="org.vice_responsible_id_doc" class="flex items-center justify-between text-xs">
+                                    <span class="text-zinc-500">ID Vice-Resp.</span>
+                                    <a :href="org.vice_responsible_id_doc" target="_blank" class="text-red-600 font-bold hover:underline">Voir</a>
+                                </div>
+                                <div v-if="org.legal_docs && org.legal_docs.length > 0">
+                                    <p class="text-[10px] text-zinc-400 uppercase mb-2">Documents légaux</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <a 
+                                            v-for="(doc, i) in org.legal_docs" 
+                                            :key="i" 
+                                            :href="doc" 
+                                            target="_blank"
+                                            class="h-8 w-8 rounded bg-white dark:bg-zinc-800 border border-red-200 flex items-center justify-center text-red-600 hover:bg-red-600 hover:text-white transition-all"
+                                            :title="`Document ${i+1}`"
+                                        >
+                                            <FileText class="w-4 h-4" />
+                                        </a>
                                     </div>
                                 </div>
                             </div>

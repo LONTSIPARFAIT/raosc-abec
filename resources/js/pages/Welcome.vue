@@ -9,6 +9,7 @@ import HeroSlider from '@/components/HeroSlider.vue';
 import OrganizationsSection from '@/components/OrganizationsSection.vue';
 import StatsSection from '@/components/StatsSection.vue';
 import RecentNewsSection from '@/components/RecentNewsSection.vue';
+import AbecSection from '@/components/AbecSection.vue';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 
 interface Category {
@@ -111,9 +112,13 @@ const overlayOpacity = 0.35;
                 <HeroSlider :user="$page.props.auth.user" />
             </div>
 
-            <!-- Stats Section avec glassmorphism -->
             <div class="transform transition-all duration-500 hover:translate-y-[-4px]">
                 <StatsSection :stats="resolvedStats" />
+            </div>
+
+            <!-- Promotion ABEC -->
+            <div class="animate-on-scroll">
+                <AbecSection />
             </div>
 
             <!-- Recent News Section -->
