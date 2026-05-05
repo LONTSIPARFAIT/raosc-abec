@@ -304,7 +304,7 @@ class RaoController extends Controller
         }
 
         if ($request->hasFile('legal_docs')) {
-            $legalPaths = $organization->legal_docs ?? [];
+            $legalPaths = is_array($organization->legal_docs) ? $organization->legal_docs : [];
             foreach ($request->file('legal_docs') as $file) {
                 $legalPaths[] = $file->store('organizations/legal', 'public');
             }
@@ -328,7 +328,7 @@ class RaoController extends Controller
         }
 
         if ($request->hasFile('gallery')) {
-            $galleryPaths = $organization->gallery ?? [];
+            $galleryPaths = is_array($organization->gallery) ? $organization->gallery : [];
             foreach ($request->file('gallery') as $image) {
                 $galleryPaths[] = $image->store('organizations/gallery', 'public');
             }
