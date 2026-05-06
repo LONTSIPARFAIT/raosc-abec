@@ -67,12 +67,12 @@ const abecFeatures = [
                     </div>
 
                     <div class="pt-6">
-                        <Link href="https://universalwelfare.org/" target="_blank">
+                        <a href="https://universalwelfare.org/#about" target="_blank">
                             <Button class="bg-zinc-950 dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-zinc-950 font-bold rounded-xl px-8 py-6 group transition-all duration-300">
                                 En savoir plus sur l'ABEC
                                 <ArrowRight class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </Button>
-                        </Link>
+                        </a>
                     </div>
                 </div>
 
