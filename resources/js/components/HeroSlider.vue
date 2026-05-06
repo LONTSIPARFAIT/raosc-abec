@@ -12,7 +12,7 @@ defineProps<{
 const slides = [
     {
         id: 1,
-        image: 'https://images.unsplash.com/photo-1509099955921-f0b4ed0c175c?q=80&w=872&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        image: '/image/fotos2.jpg',
         title: "Bâtir l'Avenir de l'Afrique Ensemble",
         description: 'Le RAOSC est une initiative de l\'ABEC (Cameroun) pour unir les forces de la société civile africaine et promouvoir un développement durable et inclusif.',
         badge: 'Initiative ABEC Cameroun',
@@ -20,7 +20,7 @@ const slides = [
     },
     {
         id: 2,
-        image: 'https://plus.unsplash.com/premium_photo-1706108824585-9469a63469db?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        image: '/image/p.png',
         title: "L'Impact Social au Cœur du Continent",
         description: 'Découvrez les actions concrètes menées par nos organisations membres à travers toute l\'Afrique. Ensemble, nous faisons la différence.',
         badge: 'Solidarité Africaine',
