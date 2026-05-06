@@ -47,11 +47,11 @@ const abecFeatures = [
                     </div>
                     
                     <h2 class="text-4xl sm:text-5xl font-black text-zinc-900 dark:text-white leading-tight tracking-tight">
-                        L'Association Camerounaise pour <span class="text-raosc-green text-gradient">l'Éveil des Consciences</span>
+                        L'Association du Bien-Être Communautaire (<span class="text-raosc-green text-gradient">ABEC</span>)
                     </h2>
                     
                     <p class="text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed">
-                        L'ABEC est l'organisation visionnaire camerounaise derrière le réseau RAOSC. Notre mission est de transformer la société africaine en renforçant les capacités des organisations locales et en promouvant l'excellence opérationnelle.
+                        L'Association du Bien-Être Communautaire (ABEC) est une organisation internationale à but non lucratif, légalement reconnue et enregistrée auprès des institutions locales sous le numéro de déclaration 00001901/RDA/J06/SAAJP/BAPP. Fondée par des jeunes visionnaires, elle rassemble des membres de plusieurs nationalités et place l'équité femmes-hommes au cœur de sa gouvernance.
                     </p>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
@@ -67,7 +67,7 @@ const abecFeatures = [
                     </div>
 
                     <div class="pt-6">
-                        <Link href="/about">
+                        <Link href="https://universalwelfare.org/" target="_blank">
                             <Button class="bg-zinc-950 dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-zinc-950 font-bold rounded-xl px-8 py-6 group transition-all duration-300">
                                 En savoir plus sur l'ABEC
                                 <ArrowRight class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
