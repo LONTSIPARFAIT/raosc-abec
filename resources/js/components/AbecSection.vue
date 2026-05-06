@@ -81,7 +81,7 @@ const abecFeatures = [
                     <div class="absolute -inset-4 bg-gradient-to-tr from-raosc-green/20 to-raosc-yellow/20 rounded-[2.5rem] blur-2xl opacity-30 dark:opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
                     <div class="relative rounded-[2rem] overflow-hidden border border-zinc-200 dark:border-white/10 shadow-2xl">
                         <img 
-                            src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=2070&auto=format&fit=crop" 
+                            src="/image/6.jpg" 
                             alt="Réunion ABEC" 
                             class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
                         />
