@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/TextLink.vue_vue_type_script_setup_true_lang-Ctqejldm.js
-import{d as a,c as n,u as r,n as o,w as s,R as d,o as i}from"./app-CH-o_ydi.js";const h=a({__name:"TextLink",props:{href:{},tabindex:{},method:{},as:{}},setup(e){return(t,f)=>(i(),n(r(o),{href:e.href,tabindex:e.tabindex,method:e.method,as:e.as,class:"text-raosc-green font-medium transition-all duration-200 hover:text-raosc-green/80 hover:underline underline-offset-4"},{default:s(()=>[d(t.$slots,"default")]),_:3},8,["href","tabindex","method","as"]))}});export{h as _};
-========
-import{d as a,c as n,u as r,n as o,w as s,R as d,o as i}from"./app-DWHxwAR_.js";const h=a({__name:"TextLink",props:{href:{},tabindex:{},method:{},as:{}},setup(e){return(t,f)=>(i(),n(r(o),{href:e.href,tabindex:e.tabindex,method:e.method,as:e.as,class:"text-raosc-green font-medium transition-all duration-200 hover:text-raosc-green/80 hover:underline underline-offset-4"},{default:s(()=>[d(t.$slots,"default")]),_:3},8,["href","tabindex","method","as"]))}});export{h as _};
->>>>>>>> 443682bea0ea4f6449e9e6ca43caecf0afd42fb9:public/build/assets/TextLink.vue_vue_type_script_setup_true_lang-C4dKTMKe.js

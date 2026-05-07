@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/index-FeIh5B2q.js
-import{q as s}from"./index-CavwcagY.js";const o=t=>({url:o.url(t),method:"post"});o.definition={methods:["post"],url:"/two-factor-challenge"};o.url=t=>o.definition.url+s(t);o.post=t=>({url:o.url(t),method:"post"});const r=t=>({action:o.url(t),method:"post"});r.post=t=>({action:o.url(t),method:"post"});o.form=r;const l={store:Object.assign(o,o)};export{l,o as s};
-========
-import{q as s}from"./index-ButVPxUw.js";const o=t=>({url:o.url(t),method:"post"});o.definition={methods:["post"],url:"/two-factor-challenge"};o.url=t=>o.definition.url+s(t);o.post=t=>({url:o.url(t),method:"post"});const r=t=>({action:o.url(t),method:"post"});r.post=t=>({action:o.url(t),method:"post"});o.form=r;const l={store:Object.assign(o,o)};export{l,o as s};
->>>>>>>> 443682bea0ea4f6449e9e6ca43caecf0afd42fb9:public/build/assets/index-BnA4WZKM.js

@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/DashboardController-M7nDXIOB.js
-import{q as u}from"./index-CavwcagY.js";const r=e=>({url:r.url(e),method:"get"});r.definition={methods:["get","head"],url:"/dashboard"};r.url=e=>r.definition.url+u(e);r.get=e=>({url:r.url(e),method:"get"});r.head=e=>({url:r.url(e),method:"head"});const t=e=>({action:r.url(e),method:"get"});t.get=e=>({action:r.url(e),method:"get"});t.head=e=>({action:r.url({[e?.mergeQuery?"mergeQuery":"query"]:{_method:"HEAD",...e?.query??e?.mergeQuery??{}}}),method:"get"});r.form=t;export{r as i};
-========
-import{q as u}from"./index-ButVPxUw.js";const r=e=>({url:r.url(e),method:"get"});r.definition={methods:["get","head"],url:"/dashboard"};r.url=e=>r.definition.url+u(e);r.get=e=>({url:r.url(e),method:"get"});r.head=e=>({url:r.url(e),method:"head"});const t=e=>({action:r.url(e),method:"get"});t.get=e=>({action:r.url(e),method:"get"});t.head=e=>({action:r.url({[e?.mergeQuery?"mergeQuery":"query"]:{_method:"HEAD",...e?.query??e?.mergeQuery??{}}}),method:"get"});r.form=t;export{r as i};
->>>>>>>> 443682bea0ea4f6449e9e6ca43caecf0afd42fb9:public/build/assets/DashboardController-DB16H0Dc.js
