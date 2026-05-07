@@ -117,28 +117,29 @@ const overlayOpacity = 0.35;
             </div>
 
             <!-- Promotion ABEC -->
-            <div class="animate-on-scroll">
-                <AbecSection />
-            </div>
-
+            
             <!-- Recent News Section -->
             <div class="animate-on-scroll">
                 <RecentNewsSection :news="recentNews" />
             </div>
-
+            
             <!-- Features Section améliorée -->
             <div class="py-8 animate-on-scroll stagger-delay-1">
                 <FeaturesSection :features="features" />
             </div>
-
+            
             <!-- Categories Section -->
             <div class="animate-on-scroll stagger-delay-2">
                 <CategoriesSection :categories="categories" />
             </div>
-
+            
             <!-- Organizations Section -->
             <div class="animate-on-scroll stagger-delay-3">
                 <OrganizationsSection :organizations="organizations" />
+            </div>
+            
+            <div class="animate-on-scroll">
+                <AbecSection />
             </div>
 
             <!-- CTA Section avec glassmorphism -->

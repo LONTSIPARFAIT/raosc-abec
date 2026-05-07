@@ -1,4 +1,4 @@
-<!-- HeroSlider.vue - Version Refonte Full Width -->
+<!-- HeroSlider.vue - Version corrigée (flèches centrées sur desktop, cachées sur mobile) -->
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { ArrowRightIcon, ChevronLeft, ChevronRight, Sparkles, TrendingUp, Heart, Award, Globe, Shield } from 'lucide-vue-next';
@@ -128,6 +128,27 @@ onUnmounted(() => {
         </div>
 
         <!-- ============================================ -->
+        <!-- FLÈCHES DE NAVIGATION (centrées verticalement) -->
+        <!-- ============================================ -->
+        <!-- Flèche gauche -->
+        <button
+            @click="prevSlide"
+            class="absolute left-4 top-1/2 -translate-y-1/2 z-30 hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white hover:bg-raosc-green hover:scale-110 transition-all duration-300"
+            aria-label="Diapositive précédente"
+        >
+            <ChevronLeft class="w-5 h-5" />
+        </button>
+
+        <!-- Flèche droite -->
+        <button
+            @click="nextSlide"
+            class="absolute right-4 top-1/2 -translate-y-1/2 z-30 hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white hover:bg-raosc-green hover:scale-110 transition-all duration-300"
+            aria-label="Diapositive suivante"
+        >
+            <ChevronRight class="w-5 h-5" />
+        </button>
+
+        <!-- ============================================ -->
         <!-- CONTENU TEXTUEL AVEC ANIMATIONS -->
         <!-- ============================================ -->
         <div class="relative z-20 h-full flex items-center">
@@ -167,7 +188,7 @@ onUnmounted(() => {
         <!-- ============================================ -->
         <!-- BOUTONS D'ACTION -->
         <!-- ============================================ -->
-        <div class="absolute bottom-28 left-0 right-0 z-20">
+        <div class="absolute bottom-6 sm:bottom-28 left-0 right-0 z-20">
             <div class="container mx-auto px-6 lg:px-12">
                 <div class="flex flex-wrap gap-4 items-center">
                     <!-- Bouton principal -->
@@ -199,30 +220,12 @@ onUnmounted(() => {
         </div>
 
         <!-- ============================================ -->
-        <!-- CONTROLES DE NAVIGATION -->
+        <!-- INDICATEURS DE PROGRESSION (dots) EN BAS -->
         <!-- ============================================ -->
         <div class="absolute bottom-6 inset-x-0 z-20">
             <div class="container mx-auto px-6 lg:px-12">
-                <div class="flex justify-between items-center">
-                    <!-- Boutons précédent/suivant -->
-                    <div class="flex gap-3">
-                        <button
-                            @click="prevSlide"
-                            class="h-10 w-10 backdrop-blur-md bg-white/10 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-raosc-green hover:border-raosc-green transition-all duration-300 hover:scale-110 group"
-                            aria-label="Diapositive précédente"
-                        >
-                            <ChevronLeft class="h-4 w-4 group-hover:-translate-x-0.5 transition-transform duration-300" />
-                        </button>
-                        <button
-                            @click="nextSlide"
-                            class="h-10 w-10 backdrop-blur-md bg-white/10 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-raosc-green hover:border-raosc-green transition-all duration-300 hover:scale-110 group"
-                            aria-label="Diapositive suivante"
-                        >
-                            <ChevronRight class="h-4 w-4 group-hover:translate-x-0.5 transition-transform duration-300" />
-                        </button>
-                    </div>
-
-                    <!-- Indicateurs de progression (dots) -->
+                <div class="flex justify-center items-center">
+                    <!-- Dots -->
                     <div class="flex gap-2">
                         <button
                             v-for="(slide, index) in slides"
@@ -240,8 +243,8 @@ onUnmounted(() => {
                         </button>
                     </div>
 
-                    <!-- Barre de progression -->
-                    <div class="hidden md:block w-32 h-px bg-white/20 rounded-full overflow-hidden">
+                    <!-- Barre de progression (optionnel) -->
+                    <div class="hidden md:block w-32 h-px bg-white/20 rounded-full overflow-hidden ml-4">
                         <div 
                             class="h-full bg-gradient-to-r from-raosc-green to-raosc-yellow rounded-full transition-all duration-[7000ms] linear"
                             :class="isHovering ? 'paused' : 'running'"
